@@ -1,0 +1,11 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parserOptions": { "ecmaVersion": 2020, "sourceType": "module" },
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {}
+}
