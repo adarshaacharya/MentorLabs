@@ -2,14 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "description": "server code for mentor labs",
-  "main": "src/server.ts",
+  "main": "server/server.ts",
   "license": "MIT",
   "scripts": {
     "start": "node build/server.js",
-    "start:dev": "cross-env NODE_ENV=dev nodemon",
+    "start:dev": "cross-env NODE_ENV=dev nodemon server/server.ts",
     "build": "rm -rf ./build && tsc",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix"
+    "lint": "eslint server/**/*.ts",
+    "lint:fix": "eslint server/**/*.ts --fix",
+    "dotenv-types:gen": "npx gen-env-types .env -o server/types/env.d.ts -e ."
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
@@ -29,6 +30,10 @@
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.34",
+    "typeorm-naming-strategies": "^2.0.0"
   }
 }

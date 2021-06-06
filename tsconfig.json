@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "allowJs": true,
+    "target": "ES2018",
     "module": "CommonJS",
+    "lib": ["dom", "es2017"],
+    "paths": {
+      "server/*": ["./server/*"],
+    },
     "moduleResolution": "node",
     "sourceMap": true,
     "downlevelIteration": true,
     "strict": true,
-    "noImplicitAny": false, // shoudl always assign value to params (recheck it)
+    "noImplicitAny": false, // should always assign value to params (recheck it)
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
@@ -17,8 +22,13 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false // optional
+    "strictPropertyInitialization": false, // optional,
+    "baseUrl": "./server",
+    "typeRoots": [
+      "server/types",
+      "node_modules/@types"
+   ]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["server/**/*.ts"],
+  "exclude": ["node_modules", "client"]
 }
