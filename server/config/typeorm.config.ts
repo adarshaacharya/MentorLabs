@@ -2,6 +2,7 @@ import { ConnectionOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const ormconfig: ConnectionOptions = {
+  name: 'default',
   type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
@@ -10,6 +11,6 @@ export const ormconfig: ConnectionOptions = {
   database: process.env.DB_NAME,
   synchronize: process.env.NODE_ENV !== 'prod',
   logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-  entities: [],
+  entities: ['server/modules/**/*.entity.ts'],
   namingStrategy: new SnakeNamingStrategy(),
 };

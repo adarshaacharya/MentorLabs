@@ -7,5 +7,7 @@
     "node": true,
     "jest": true
   },
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
 }

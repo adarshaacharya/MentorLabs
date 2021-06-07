@@ -6,13 +6,14 @@
   "license": "MIT",
   "scripts": {
     "start": "node build/server.js",
-    "start:dev": "cross-env NODE_ENV=dev nodemon server/server.ts",
+    "start:dev": "cross-env NODE_ENV=dev nodemon server/main.ts",
     "build": "rm -rf ./build && tsc",
     "lint": "eslint server/**/*.ts",
     "lint:fix": "eslint server/**/*.ts --fix",
     "dotenv-types:gen": "npx gen-env-types .env -o server/types/env.d.ts -e ."
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
     "@types/jsonwebtoken": "^8.5.1",
@@ -26,10 +27,12 @@
     "typescript": "^4.3.2"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
