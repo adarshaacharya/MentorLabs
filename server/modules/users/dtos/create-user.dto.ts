@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { list } from 'utils/enum.util'
+import { list } from '../../../utils/enum.util'
 import { UserRole } from '../entities/user.entity'
 
 export const createAccountDto = Joi.object().keys({
