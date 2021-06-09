@@ -1,8 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { Length, IsNotEmpty, IsEAN, IsEmail, IsString, IsEnum } from 'class-validator';
-
+import { IsEmail, IsEnum, IsString, Length } from 'class-validator';
 import {
-  BaseEntity,
   BeforeInsert,
   BeforeUpdate,
   Column,
@@ -18,7 +16,7 @@ export enum UserRole {
 }
 
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 

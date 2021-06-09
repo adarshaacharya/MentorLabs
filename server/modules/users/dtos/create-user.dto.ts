@@ -1,10 +1,22 @@
-import Joi from 'joi'
-import { list } from '../../../utils/enum.util'
-import { UserRole } from '../entities/user.entity'
+import { Length, IsEmail, IsString, IsEnum } from 'class-validator';
+import { UserRole } from '../user.entity';
 
-export const createAccountDto = Joi.object().keys({
-  name: Joi.string().min(2).required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().min(5).required(),
-  role : Joi.any().valid(...list(UserRole))
-})
+export class CreateAccountInput {
+  @IsString()
+  @Length(4, 20)
+  name: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  @Length(4, 100)
+  password: string;
+
+  @IsEnum(UserRole)
+  role: UserRole;
+}
+
+export class CreateAccountOutput {
+  token: string;
+}

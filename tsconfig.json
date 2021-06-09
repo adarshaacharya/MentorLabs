@@ -13,7 +13,7 @@
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false, // params should be used
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
@@ -22,7 +22,7 @@
     "baseUrl": "./server",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./server/types", "./node_modules/@types"]
+    "typeRoots": ["server/common/types", "./node_modules/@types"]
   },
   "include": ["server/**/*.ts"],
   "exclude": ["node_modules", "client"]

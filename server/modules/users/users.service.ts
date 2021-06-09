@@ -1,30 +1,32 @@
+import { generateJwtToken } from '../../common/token/generate-jwt.ts';
+import { Service } from 'typedi';
+import { Repository } from 'typeorm';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest } from '../../common/exceptions';
-import { User, UserRole } from './entities/user.entity';
+import { CreateAccountInput, CreateAccountOutput } from './dtos/create-user.dto';
+import { User } from './user.entity';
 
-interface IUserData {
-  name: string;
-  email: string;
-  role: UserRole;
-  password: string;
-}
+@Service()
+export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
-class UsersService {
-  public async createAccount({ name, email, password, role }: IUserData): Promise<void> {
+  public async createAccount({ name, email, password, role }: CreateAccountInput): Promise<CreateAccountOutput> {
     if (await this.findOneByEmail(email)) {
       throw new BadRequest('User with provided email already exists');
     }
-    console.log(role)
-    const user = User.create({ name, email, password, role });
-    await user.save();
+    const user = await this.userRepository.save(this.userRepository.create({ name, email, password, role }));
+
+    const token = generateJwtToken({ id: user.id, role: user.role });
+    return { token };
   }
 
   public async findOneByEmail(email: string): Promise<User | undefined> {
-    const user = await User.findOne({
+    const user = await this.userRepository.findOne({
       where: { email },
     });
-
     return user;
   }
 }
-
-export const usersService = new UsersService();

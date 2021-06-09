@@ -1,9 +1,9 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
-import { usersController } from './users.controller'
+import { usersController } from './users.controller';
+import { validationMiddleware } from '../../common/middlewares/validaton.middleware';
+import { CreateAccountInput } from './dtos/create-user.dto';
 
-export const router : Router = Router()
+export const router: Router = Router();
 
-
-
-router.post('/',  usersController.createAccount)
+router.post('/', validationMiddleware(CreateAccountInput), usersController.createAccount);
