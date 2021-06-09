@@ -1,4 +1,3 @@
-
 import { BaseHttpError } from './base-http-error';
 
 export class Unauthorized extends BaseHttpError {
