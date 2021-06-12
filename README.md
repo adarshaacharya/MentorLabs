@@ -1,3 +1,5 @@
 # MentorLabs
 
-<img src="media/logo.jpg" />
+<p align="center">
+<img src="media/logo.png"  alt="logo"/>
+</p>
