@@ -12,6 +12,16 @@ class UsersController {
       next(e);
     }
   }
+
+  public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const usersServiceInstance = Container.get(UsersService);
+      const { token } = await usersServiceInstance.login(req.body);
+      res.json({ ok: true, token });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const usersController = new UsersController();

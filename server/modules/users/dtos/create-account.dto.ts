@@ -1,5 +1,5 @@
 import { Length, IsEmail, IsString, IsEnum } from 'class-validator';
-import { UserRole } from '../user.entity';
+import { User, UserRole } from '../user.entity';
 
 export class CreateAccountInput {
   @IsString()
@@ -20,3 +20,5 @@ export class CreateAccountInput {
 export class CreateAccountOutput {
   token: string;
 }
+
+export type IUserView = Omit<User, 'password'>;
