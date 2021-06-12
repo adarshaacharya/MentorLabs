@@ -10,7 +10,7 @@
     "build": "rm -rf ./build && tsc",
     "lint": "eslint server/**/*.ts",
     "lint:fix": "eslint server/**/*.ts --fix",
-    "format": "prettier --write \"server/**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --write \"server/**/*.{ts,tsx,js,jsx}\" \"client/**/*.{ts,tsx,js,jsx}\"",
     "dotenv-types:gen": "npx gen-env-types .env -o server/types/env.d.ts -e .",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
