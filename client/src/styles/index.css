@@ -1,0 +1,43 @@
+@import '~antd/dist/antd.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#app {
+  background: #fff;
+}
+.content {
+  margin-left: 150px;
+  background: #fff;
+}
+
+/* app header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  z-index: 99;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 0;
+  backdrop-filter: blur(20px);
+}
+
+.app-header__logo {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+.app-header__logo img {
+  height: 45px;
+}
+
+.app-header__menu-section {
+  float: right;
+}
+
+.app-header__menu {
+  width: 100%;
+  border: 0;
+}

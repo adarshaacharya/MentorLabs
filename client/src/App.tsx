@@ -1,20 +1,22 @@
-import { Box, Text, Link, VStack, Code, Grid } from '@chakra-ui/react';
+import { Affix, Layout } from 'antd';
+import { Routes } from 'react-router-dom';
+import { useRouters } from './router/routes';
+import { AppHeader } from './sections';
+import './styles/index.css';
 
-function App() {
+const App = () => {
+  const routes = useRouters();
+
   return (
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <VStack spacing={8}>
-          <Text>
-            Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-          </Text>
-          <Link color="teal.500" href="https://chakra-ui.com" fontSize="2xl" target="_blank" rel="noopener noreferrer">
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <>
+      <Layout id="app">
+        <Affix offsetTop={0} className="app__affix-header">
+          <AppHeader />
+        </Affix>
+        <Routes>{routes}</Routes>
+      </Layout>
+    </>
   );
-}
+};
 
 export default App;

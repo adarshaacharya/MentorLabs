@@ -53,6 +53,9 @@
     "typeorm-typedi-extensions": "^0.4.1"
   },
   "lint-staged": {
+    "client/src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "yarn format"
+    ],
     "server/**/*.{js,ts}": [
       "yarn format"
     ]
