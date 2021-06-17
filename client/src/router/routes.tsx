@@ -1,6 +1,12 @@
-import { Route } from 'react-router-dom';
-import { Home } from '../sections';
+import { Route, Routes } from 'react-router-dom';
+import { CreateAccount, Home, Login } from '../sections';
 
 export const useRouters = () => {
-  return <Route path="/" element={<Home />} />;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/create-account" element={<CreateAccount />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
 };

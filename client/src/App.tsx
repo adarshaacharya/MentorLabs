@@ -13,7 +13,7 @@ const App = () => {
         <Affix offsetTop={0} className="app__affix-header">
           <AppHeader />
         </Affix>
-        <Routes>{routes}</Routes>
+        {routes}
       </Layout>
     </>
   );

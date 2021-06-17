@@ -1,10 +1,19 @@
 @import '~antd/dist/antd.css';
 
+:root {
+  --primary-color: #3182ce;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  font-size: 62.5%;
+}
+
 #app {
   background: #fff;
 }
@@ -34,10 +43,29 @@
 }
 
 .app-header__menu-section {
-  float: right;
+  display: flex;
 }
 
 .app-header__menu {
   width: 100%;
   border: 0;
+}
+
+.app-header__menu-item {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.app-header__menu-item::after {
+  border-bottom: none !important;
+}
+
+.app-header__create-account {
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.app-header__create-account:hover {
+  background-color: #2b6cb0;
 }
