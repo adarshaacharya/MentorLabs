@@ -1,5 +1,8 @@
 @import '~antd/dist/antd.css';
 
+/*=====================
+  Global Styles
+========================*/
 :root {
   --primary-color: #3182ce;
 }
@@ -14,15 +17,22 @@ html {
   font-size: 62.5%;
 }
 
+body {
+  font-size: 1.6rem;
+}
+
 #app {
   background: #fff;
 }
+
 .content {
   margin-left: 150px;
   background: #fff;
 }
 
-/* app header */
+/*=====================
+  Section : AppHeader
+========================*/
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -69,3 +79,7 @@ html {
 .app-header__create-account:hover {
   background-color: #2b6cb0;
 }
+
+/*=====================
+  Section : Home
+========================*/
