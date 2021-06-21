@@ -8,6 +8,7 @@
   --primary-color: #374ebe;
 
   --light-color: #fff;
+  --bg-color: #f7fafc;
 }
 
 *,
@@ -29,7 +30,7 @@ body {
 }
 
 #app {
-  background: var(--light-color);
+  background: var(--bg-color);
 }
 
 .container {
@@ -93,7 +94,7 @@ body {
 ========================*/
 
 .hero {
-  height: 95vh;
+  height: 90vh;
   display: flex;
   padding: 4em 0;
 }
@@ -121,8 +122,12 @@ body {
   background-color: var(--primary-color);
   color: var(--light-color);
   border-radius: 5px;
-  /* box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%); */
+  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
   cursor: pointer;
+}
+
+.hero__signup-btn:hover {
+  opacity: 0.9;
 }
 
 .hero__img {
@@ -132,4 +137,55 @@ body {
 
 .hero__img img {
   width: 100%;
+}
+
+/*=====================
+  Section : Create Account
+========================*/
+.signup {
+}
+
+.signup__wrapper {
+  display: flex;
+}
+
+.signup__img {
+}
+
+.signup__img img {
+  width: 100%;
+}
+
+.signup__banner {
+  flex-basis: 100%;
+  padding: 2em;
+}
+
+.signup__form {
+  flex-basis: 100%;
+  padding: 2em;
+  margin: 2em 0;
+  border: none;
+  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+}
+
+.signup__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+
+.signup__btn {
+  display: block;
+  width: 100%;
+  font-size: 1.1em;
+  border: none;
+  padding: 0.7em 0;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
+  cursor: pointer;
 }
