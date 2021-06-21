@@ -1,13 +1,18 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 /*=====================
   Global Styles
 ========================*/
 :root {
-  --primary-color: #3182ce;
+  --primary-color: #374ebe;
+
+  --light-color: #fff;
 }
 
-* {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -19,15 +24,18 @@ html {
 
 body {
   font-size: 1.6rem;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
 }
 
 #app {
-  background: #fff;
+  background: var(--light-color);
 }
 
-.content {
-  margin-left: 150px;
-  background: #fff;
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 1rem;
 }
 
 /*=====================
@@ -37,7 +45,7 @@ body {
   display: flex;
   justify-content: space-between;
   z-index: 99;
-  background: #fff;
+  background: var(--light-color);
   box-shadow: 0 2px 8px #f0f1f2;
   padding: 0;
   backdrop-filter: blur(20px);
@@ -77,9 +85,51 @@ body {
 }
 
 .app-header__create-account:hover {
-  background-color: #2b6cb0;
+  opacity: 0.8;
 }
 
 /*=====================
   Section : Home
 ========================*/
+
+.hero {
+  height: 95vh;
+  display: flex;
+  padding: 4em 0;
+}
+
+.hero__about {
+  width: 50%;
+}
+
+.hero__about > h1 {
+  font-size: 6rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.966);
+  margin-bottom: 0.3em;
+}
+
+.hero__about p {
+  font-size: 2rem;
+  margin-bottom: 1em;
+}
+
+.hero__signup-btn {
+  font-size: 1em;
+  padding: 0.6em 2em;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  /* box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%); */
+  cursor: pointer;
+}
+
+.hero__img {
+  flex-basis: 41%;
+  align-self: flex-end;
+}
+
+.hero__img img {
+  width: 100%;
+}
