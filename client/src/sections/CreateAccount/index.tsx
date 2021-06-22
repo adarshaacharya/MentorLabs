@@ -4,9 +4,14 @@ import signupImg from './assets/signup.svg';
 
 const { Content } = Layout;
 const { Item } = Form;
+const { Option } = Select;
 const { Password } = Input;
 
 export const CreateAccount = () => {
+  const onFormSubmit = (formData: any) => {
+    console.log(formData);
+  };
+
   return (
     <Content className="signup">
       <div className="container">
@@ -17,9 +22,9 @@ export const CreateAccount = () => {
             </div>
           </div>
 
-          <Card className="signup__form">
+          <Card className="signup__card">
             <h1 className="signup__title">Create your account for free.</h1>
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFormSubmit} size="large">
               <Item
                 label="Name"
                 name="name"
@@ -89,14 +94,14 @@ export const CreateAccount = () => {
                 <Password />
               </Item>
 
-              <Item label="Role">
-                <Select defaultValue={UserRole.Student}>
-                  <Select.Option value={UserRole.Student}>Student</Select.Option>
-                  <Select.Option value={UserRole.Teacher}>Teacher</Select.Option>
+              <Item name="role" label="Role" initialValue={UserRole.Student}>
+                <Select>
+                  <Option value={UserRole.Student}>Student</Option>
+                  <Option value={UserRole.Teacher}>Teacher</Option>
                 </Select>
               </Item>
 
-              <button className="signup__btn">Create Account</button>
+              <button className="btn--primary signup__btn">Create Account</button>
             </Form>
           </Card>
         </div>

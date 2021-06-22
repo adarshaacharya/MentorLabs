@@ -14,7 +14,7 @@ export const Home = () => {
               all around the globe.
             </p>
 
-            <button onClick={() => navigate('/create-account')} className="hero__signup-btn">
+            <button onClick={() => navigate('/create-account')} className="btn--primary hero__signup-btn">
               Get Started Now
             </button>
           </div>

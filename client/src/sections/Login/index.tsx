@@ -1,5 +1,59 @@
-import React from 'react';
+import { Card, Form, Input } from 'antd';
+import loginImg from './assets/login.svg';
+
+const { Item } = Form;
 
 export const Login = () => {
-  return <div>Login welcome guys</div>;
+  return (
+    <section className="login">
+      <div className="container">
+        <div className="login__wrapper">
+          <div className="login__banner">
+            <div className="login__img">
+              <img src={loginImg} alt="login" />
+            </div>
+          </div>
+
+          <Card className="login__card">
+            <h1 className="login__title">Sign in to your account.</h1>
+            <Form layout="vertical" size="large">
+              <Item
+                name="email"
+                label="E-mail"
+                rules={[
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                  },
+                  {
+                    required: true,
+                    message: 'Please input your E-mail!',
+                  },
+                ]}
+              >
+                <Input />
+              </Item>
+
+              <Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: 'Please input your password' },
+                  { min: 4, message: 'Password must be minimum 4 characters long.' },
+                ]}
+              >
+                <Input.Password />
+              </Item>
+
+              <Item>
+                <button type="submit" className="btn--primary login__btn">
+                  Log In
+                </button>
+              </Item>
+            </Form>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
 };

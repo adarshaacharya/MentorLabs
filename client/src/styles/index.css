@@ -39,6 +39,20 @@ body {
   padding: 0 1rem;
 }
 
+.btn--primary {
+  border: none;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
+  cursor: pointer;
+}
+
+.btn--primary:hover {
+  opacity: 0.9;
+}
+
 /*=====================
   Section : AppHeader
 ========================*/
@@ -118,12 +132,6 @@ body {
 .hero__signup-btn {
   font-size: 1em;
   padding: 0.6em 2em;
-  border: none;
-  background-color: var(--primary-color);
-  color: var(--light-color);
-  border-radius: 5px;
-  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
-  cursor: pointer;
 }
 
 .hero__signup-btn:hover {
@@ -161,7 +169,7 @@ body {
   padding: 2em;
 }
 
-.signup__form {
+.signup__card {
   flex-basis: 100%;
   padding: 2em;
   margin: 2em 0;
@@ -177,15 +185,54 @@ body {
 }
 
 .signup__btn {
+  font-size: 1.1em;
   display: block;
   width: 100%;
-  font-size: 1.1em;
-  border: none;
   padding: 0.7em 0;
+  margin-top: 2em;
+}
+
+/*=====================
+  Section : LogIn
+========================*/
+.login {
+  height: 89vh;
+}
+
+.login__wrapper {
+  display: flex;
+}
+
+.login__banner {
+  padding: 1em 2em;
+}
+
+.login__card {
+  flex-basis: 70%;
+  padding: 2em;
+  margin: 2em 0;
   border: none;
-  background-color: var(--primary-color);
-  color: var(--light-color);
-  border-radius: 5px;
-  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
-  cursor: pointer;
+  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+}
+
+.login__img {
+}
+
+.login__img img {
+  width: 100%;
+}
+
+.login__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+
+.login__btn {
+  font-size: 1.1em;
+  display: block;
+  width: 100%;
+  padding: 0.7em 0;
+  margin-top: 1em;
 }
