@@ -8,7 +8,9 @@ export const Home = () => {
       <div className="container">
         <div className="hero">
           <div className="hero__about">
-            <h1>Mentor Labs.</h1>
+            <h1>
+              Mentor <span className="text--primary">Labs.</span>
+            </h1>
             <p>
               We are building next generation collaborative learning platform for connecting the mentors and students
               all around the globe.

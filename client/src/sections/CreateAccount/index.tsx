@@ -1,6 +1,9 @@
 import { Layout, Form, Input, Select, Button, Card } from 'antd';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { UserRole } from 'constants/options';
+import { CreateAccountData } from 'types';
 import signupImg from './assets/signup.svg';
+import { createAccount } from 'slices/auth';
 
 const { Content } = Layout;
 const { Item } = Form;
@@ -8,8 +11,10 @@ const { Option } = Select;
 const { Password } = Input;
 
 export const CreateAccount = () => {
-  const onFormSubmit = (formData: any) => {
-    console.log(formData);
+  const dispatch = useAppDispatch();
+
+  const onFormSubmit = (formData: CreateAccountData) => {
+    dispatch(createAccount(formData));
   };
 
   return (

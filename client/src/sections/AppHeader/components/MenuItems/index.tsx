@@ -7,7 +7,7 @@ const { Item, SubMenu } = Menu;
 const publicLinks = (
   <>
     <Item key="/login" className="app-header__menu-item">
-      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/login">Sign In</NavLink>
     </Item>
     <Item key="/create-account" className="app-header__menu-item">
       <NavLink to="/create-account" className="app-header__create-account" style={{ color: '#fff' }}>

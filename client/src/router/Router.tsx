@@ -2,7 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 import { CreateAccount, Home, Login } from 'sections';
 import * as routes from 'constants/routes';
 
-// Top level application router.
+/**
+ * Top level application router
+ *
+ * @returns {Component}
+ */
 export const Router = () => {
   return (
     <Routes>
