@@ -7,6 +7,7 @@ interface PrivateRouteProps extends RouteProps {}
 /**
  * Component to authenticate routes.
  */
+
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ ...props }) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 

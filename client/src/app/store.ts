@@ -6,7 +6,23 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+/**
+ * store subscription listener to set token in LOcalstorage
+ */
+let currentState = store.getState();
+
+store.subscribe(() => {
+  let prevState = currentState;
+  currentState = store.getState();
+
+  if (prevState.auth.token !== currentState.auth.token) {
+    const token = currentState.auth.token;
+  }
+});
+
+/**
+ * define data types for redux utilities
+ */
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
