@@ -1,5 +1,6 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import rootReducer from 'slices';
+import { setAuthToken } from 'services/token';
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -17,6 +18,9 @@ store.subscribe(() => {
 
   if (prevState.auth.token !== currentState.auth.token) {
     const token = currentState.auth.token;
+    if (token) {
+      setAuthToken(token);
+    }
   }
 });
 

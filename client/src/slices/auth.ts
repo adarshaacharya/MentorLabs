@@ -1,9 +1,10 @@
-import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, CreateAccountData, User } from 'types';
 import http from 'utils/http';
 import * as storage from 'utils/storage';
 import config from 'config';
 import { AppDispatch, AppThunk } from 'app/store';
+import { ACCESS_TOKEN } from 'constants/storage';
 
 export const createAccount =
   ({ name, email, password, role }: CreateAccountData): AppThunk =>
@@ -27,7 +28,7 @@ export const createAccount =
   };
 
 export const initialState: AuthState = Object.freeze({
-  token: storage.get(config.authToken),
+  token: storage.get(ACCESS_TOKEN),
   isAuthenticated: false,
   error: '',
   loading: false,
@@ -56,7 +57,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
     },
-    logOut: (state) => {
+    logoutSuccess: (state) => {
       state.isAuthenticated = false;
       state.user = null;
       state.error = '';
@@ -66,7 +67,7 @@ const authSlice = createSlice({
 });
 
 // actions from slice
-export const { authStart, authSuccess, authError, logOut, setUser } = authSlice.actions;
+export const { authStart, authSuccess, authError, logoutSuccess, setUser } = authSlice.actions;
 
 // The reducer
 export default authSlice.reducer;

@@ -33,6 +33,6 @@ export interface AuthState {
   token: string | null;
   loading: boolean;
   isAuthenticated: boolean;
-  error?: string;
+  error: string;
   user: User | null;
 }

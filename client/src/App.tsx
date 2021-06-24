@@ -6,9 +6,7 @@ import './styles/index.css';
 const App = () => {
   return (
     <Layout id="app">
-      <Affix offsetTop={0} className="app__affix-header">
-        <AppHeader />
-      </Affix>
+      <AppHeader />
       <Router />
     </Layout>
   );

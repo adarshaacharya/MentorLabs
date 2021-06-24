@@ -36,6 +36,7 @@ body {
   max-width: 1100px;
   margin: auto;
   padding: 0 1rem;
+  padding-top: 10vh;
 }
 
 .text--primary {
@@ -60,13 +61,18 @@ body {
  Section : App Header
 ==============================================================================*/
 .app-header {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   z-index: 99;
-  background: var(--light-color);
-  box-shadow: 0 2px 8px #f0f1f2;
   padding: 0;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(80px);
+  backdrop-filter: saturate(200%) blur(10px);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .app-header__logo {
@@ -85,6 +91,7 @@ body {
 .app-header__menu {
   width: 100%;
   border: 0;
+  background-color: inherit;
 }
 
 .app-header__menu-item {
@@ -133,8 +140,8 @@ body {
 }
 
 .hero__signup-btn {
-  font-size: 1em;
-  padding: 0.6em 2em;
+  padding: 0.6em 1.4em;
+  font-size: 1.6rem;
 }
 
 .hero__signup-btn:hover {
@@ -238,4 +245,34 @@ body {
   width: 100%;
   padding: 0.7em 0;
   margin-top: 1em;
+}
+
+/*==============================================================================
+ Section : Not Found
+==============================================================================*/
+.not-found {
+}
+
+.not-found__wrapper {
+  height: 89vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found__description-title {
+  display: block;
+  margin-bottom: 1em;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.not-found__description-subtitle {
+  font-size: 1.6rem;
+}
+
+.not-found__btn {
+  padding: 0.6em 1.3em;
+  margin-top: 2em;
 }

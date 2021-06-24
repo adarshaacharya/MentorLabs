@@ -17,7 +17,7 @@ export const Home = () => {
             </p>
 
             <button onClick={() => navigate('/create-account')} className="btn--primary hero__signup-btn">
-              Get Started Now
+              Get started now
             </button>
           </div>
 
