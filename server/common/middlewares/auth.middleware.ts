@@ -5,12 +5,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { Unauthorized } from '../../common/exceptions';
 import { AuthRequest } from 'common/interfaces/auth-request.interface';
-
-interface DecodedPayload {
-  user: {
-    id: number;
-  };
-}
+import { JwtPayload } from 'common/interfaces/jwt-payload.interface';
 
 /**
  * Middleware to check if user is authticated or not
@@ -26,7 +21,7 @@ export const authJwt = (req: AuthRequest, _res: Response, next: NextFunction) =>
   if (!token) throw new Unauthorized('No token, authorization denied');
 
   try {
-    const decoded: DecodedPayload = <any>jwt.verify(token, process.env.JWT_SECRET as string);
+    const decoded: JwtPayload = <any>jwt.verify(token, process.env.JWT_SECRET as string);
 
     req.user = decoded.user; // attach user from decoded.user to req.user so it can be accessed easily
     next();
