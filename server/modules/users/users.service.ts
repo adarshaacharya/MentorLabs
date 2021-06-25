@@ -14,6 +14,15 @@ export class UsersService {
     private readonly userRepository: UserRepository,
   ) {}
 
+  public async me(id: number) {
+    const user = await this.userRepository.findOne({
+      select: ['id', 'name', 'email', 'role'],
+      where: { id },
+    });
+
+    return user;
+  }
+
   public async createAccount({ name, email, password, role }: CreateAccountInput): Promise<CreateAccountOutput> {
     if (await this.userRepository.findOneByEmail(email)) {
       throw new BadRequest('User with provided email already exists');
