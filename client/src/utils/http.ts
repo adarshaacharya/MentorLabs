@@ -2,7 +2,7 @@ import { store } from 'store';
 import Axios from 'axios';
 import config from 'config';
 import * as status from 'constants/http-status';
-import { logoutSuccess } from 'store/auth/auth.slice';
+import { logOutSuccess } from 'store/auth/auth.slice';
 
 const http = Axios.create({
   baseURL: config.baseURI,
@@ -19,7 +19,7 @@ http.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response.data.status === status.UNAUTHORIZED) {
-      store.dispatch(logoutSuccess());
+      store.dispatch(logOutSuccess());
     }
 
     return Promise.reject(err);

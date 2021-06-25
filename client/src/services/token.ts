@@ -8,7 +8,7 @@ import * as storage from '../utils/storage';
  * if there is a token - store it in local storage and set the headers.
  * if there is no token - token is null - remove it from storage and delete the headers.
  */
-export const setAuthToken = (token: string) => {
+export const setAuthToken = (token: string | null) => {
   if (token) {
     http.defaults.headers.common[X_AUTH_TOKEN] = token;
     storage.set(ACCESS_TOKEN, token);

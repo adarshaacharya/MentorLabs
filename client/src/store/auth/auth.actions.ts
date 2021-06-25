@@ -1,7 +1,7 @@
 import { AppDispatch, AppThunk } from 'store';
 import config from 'config';
-import { authError, authStart, authSuccess, setCurrentUser } from 'store/auth/auth.slice';
-import { CreateAccountData } from 'types';
+import { authError, authStart, authSuccess, logOutSuccess, setCurrentUser } from 'store/auth/auth.slice';
+import { CreateAccountData, LoginData } from 'types';
 import http from 'utils/http';
 
 export const loadCurrentUser = (): AppThunk => async (dispatch: AppDispatch) => {
@@ -34,7 +34,6 @@ export const createAccount =
       dispatch(loadCurrentUser());
     } catch (err) {
       console.log(err.response.data);
-
       const {
         response: {
           data: { message },
@@ -43,3 +42,27 @@ export const createAccount =
       dispatch(authError(message));
     }
   };
+
+export const logIn =
+  ({ email, password }: LoginData): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(authStart());
+      const url = config.endpoints.auth.login;
+      const {
+        data: { token },
+      } = await http.post(url, { email, password });
+      dispatch(authSuccess(token));
+      dispatch(loadCurrentUser());
+    } catch (err) {
+      console.log(err.response.data);
+      const {
+        response: {
+          data: { message },
+        },
+      } = err;
+      dispatch(authError(message));
+    }
+  };
+
+export const logOut = () => logOutSuccess();

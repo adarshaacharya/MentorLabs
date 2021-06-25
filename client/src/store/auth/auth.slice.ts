@@ -4,7 +4,7 @@ import { AuthState, User } from 'types';
 import * as storage from 'utils/storage';
 
 export const initialState: AuthState = Object.freeze({
-  token: storage.get(ACCESS_TOKEN),
+  token: storage.get(ACCESS_TOKEN) || '',
   isAuthenticated: false,
   error: '',
   loading: false,
@@ -33,8 +33,9 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
     },
-    logoutSuccess: (state) => {
+    logOutSuccess: (state) => {
       state.isAuthenticated = false;
+      state.token = '';
       state.user = null;
       state.error = '';
       state.loading = false;
@@ -43,7 +44,7 @@ const authSlice = createSlice({
 });
 
 // actions from slice
-export const { authStart, authSuccess, authError, logoutSuccess, setCurrentUser } = authSlice.actions;
+export const { authStart, authSuccess, authError, logOutSuccess, setCurrentUser } = authSlice.actions;
 
 // The reducer
 export default authSlice.reducer;
