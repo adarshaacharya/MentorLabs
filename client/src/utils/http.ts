@@ -1,6 +1,7 @@
 import { store } from 'app/store';
 import Axios from 'axios';
 import config from 'config';
+import * as status from 'constants/status-code';
 import { logoutSuccess } from 'slices/auth';
 
 const http = Axios.create({
@@ -17,7 +18,7 @@ If such a status exists then we log out the user and clear the profile from redu
 http.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response.status === 401) {
+    if (err.response.data.status === status.UNAUTHORIZED) {
       store.dispatch(logoutSuccess());
     }
 

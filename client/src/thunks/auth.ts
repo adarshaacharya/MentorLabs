@@ -33,6 +33,8 @@ export const createAccount =
       dispatch(authSuccess(token));
       dispatch(loadCurrentUser());
     } catch (err) {
+      console.log(err.response.data);
+
       const {
         response: {
           data: { message },

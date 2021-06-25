@@ -11,7 +11,7 @@ import { loadCurrentUser } from 'thunks/auth';
 import { logoutSuccess } from 'slices/auth';
 
 const App = () => {
-  // logic to set access token
+  // logic to set/check access token **Heart of Application*
   useEffect(() => {
     if (storage.get(ACCESS_TOKEN)) {
       setAuthToken(storage.get(ACCESS_TOKEN));

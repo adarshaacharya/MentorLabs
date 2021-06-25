@@ -8,7 +8,11 @@ interface PublicRouteProps extends RouteProps {
 }
 
 export const PublicRoute = ({ element, ...rest }: PublicRouteProps) => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
+
+  if (loading) {
+    return <p>Checking auth</p>;
+  }
 
   if (isAuthenticated) {
     return <Navigate to={routes.DASHBOARD} />;

@@ -20,9 +20,9 @@ export const CreateAccount = () => {
   const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
 
   // If logged in and user navigates to Login page, should redirect them to dashboard
-  useEffect(() => {
-    if (isAuthenticated) navigate('/dashboard');
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (isAuthenticated) navigate('/dashboard');
+  // }, [isAuthenticated, navigate]);
 
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
