@@ -1,9 +1,12 @@
-import { Layout, Form, Input, Select, Button, Card } from 'antd';
-import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { Card, Form, Input, Layout, Select } from 'antd';
 import { UserRole } from 'constants/options';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createAccount } from 'thunks/auth';
 import { CreateAccountData } from 'types';
+import { displayErrorMessage } from 'utils/notifications';
 import signupImg from './assets/signup.svg';
-import { createAccount } from 'slices/auth';
 
 const { Content } = Layout;
 const { Item } = Form;
@@ -11,11 +14,23 @@ const { Option } = Select;
 const { Password } = Input;
 
 export const CreateAccount = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
+
+  // If logged in and user navigates to Login page, should redirect them to dashboard
+  useEffect(() => {
+    if (isAuthenticated) navigate('/dashboard');
+  }, [isAuthenticated, navigate]);
 
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
   };
+
+  if (error) {
+    displayErrorMessage(error);
+  }
 
   return (
     <Content className="signup">
@@ -106,7 +121,13 @@ export const CreateAccount = () => {
                 </Select>
               </Item>
 
-              <button className="btn--primary signup__btn">Create Account</button>
+              <button
+                className={`btn--primary signup__btn ${loading ? 'btn--loading' : ''}`}
+                type="submit"
+                disabled={loading}
+              >
+                Create Account
+              </button>
             </Form>
           </Card>
         </div>

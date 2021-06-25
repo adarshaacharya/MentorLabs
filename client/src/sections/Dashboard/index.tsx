@@ -1,7 +1,9 @@
 export const Dashboard = () => {
   return (
-    <div>
-      <h1>User Dashboard </h1>
+    <div className="dashboard">
+      <div className="container">
+        <h1>User Dashboard </h1>
+      </div>
     </div>
   );
 };

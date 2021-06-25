@@ -45,7 +45,6 @@ body {
 
 .btn--primary {
   border: none;
-  border: none;
   background-color: var(--primary-color);
   color: var(--light-color);
   border-radius: 5px;
@@ -57,19 +56,22 @@ body {
   opacity: 0.9;
 }
 
+.btn--loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
 /*==============================================================================
  Section : App Header
 ==============================================================================*/
 .app-header {
+  display: flex;
+  justify-content: space-between;
   position: fixed;
   right: 0;
   top: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
   z-index: 99;
-  padding: 0;
-  backdrop-filter: blur(80px);
+  padding: 0 2em;
   backdrop-filter: saturate(200%) blur(10px);
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -77,7 +79,6 @@ body {
 
 .app-header__logo {
   display: inline-block;
-  padding: 0 20px;
 }
 
 .app-header__logo img {
@@ -275,4 +276,8 @@ body {
 .not-found__btn {
   padding: 0.6em 1.3em;
   margin-top: 2em;
+}
+
+.not-found__btn:hover {
+  color: var(--light-color);
 }

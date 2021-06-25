@@ -1,6 +1,6 @@
+import { Empty, Typography } from 'antd';
 import { useScrollToTop } from 'hooks';
 import { Link } from 'react-router-dom';
-import { Empty, Layout, Typography } from 'antd';
 
 const { Text } = Typography;
 

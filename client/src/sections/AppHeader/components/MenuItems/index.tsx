@@ -1,8 +1,10 @@
-import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import React from 'react';
+import { LogoutOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
-const { Item, SubMenu } = Menu;
+import { useSelector } from 'react-redux';
+import { useAppSelector } from 'hooks';
+
+const { Item } = Menu;
 
 const publicLinks = (
   <>
@@ -17,10 +19,20 @@ const publicLinks = (
   </>
 );
 
+const privateLinks = (
+  <>
+    <Item key="/logout" className="app-header__menu-item">
+      <LogoutOutlined></LogoutOutlined> Log out
+    </Item>
+  </>
+);
+
 export const MenuItems = () => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
   return (
     <Menu mode="horizontal" selectable={false} className="app-header__menu">
-      {publicLinks}
+      {isAuthenticated ? privateLinks : publicLinks}
     </Menu>
   );
 };

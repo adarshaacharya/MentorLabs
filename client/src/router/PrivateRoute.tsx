@@ -1,19 +1,17 @@
-import { useAppSelector } from 'hooks/reduxHooks';
-import { Navigate, Route, RouteProps } from 'react-router';
+import { useAppSelector } from 'hooks';
+import { RouteProps } from 'react-router';
+import { Route, Navigate, useLocation } from 'react-router-dom';
 import * as routes from 'constants/routes';
 
-interface PrivateRouteProps extends RouteProps {}
+interface PrivateRouteProps extends RouteProps {
+  element: any;
+}
 
-/**
- * Component to authenticate routes.
- */
-
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({ ...props }) => {
+export const PrivateRoute = ({ element, ...rest }: PrivateRouteProps) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   if (!isAuthenticated) {
     return <Navigate to={routes.LOGIN} />;
   }
-
-  return <Route {...props} />;
+  return <Route {...rest} element={element} />;
 };

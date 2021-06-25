@@ -8,7 +8,7 @@ export const store = configureStore({
 });
 
 /**
- * store subscription listener to set token in LOcalstorage
+ * store subscription listener to set token in Localstorage
  */
 let currentState = store.getState();
 

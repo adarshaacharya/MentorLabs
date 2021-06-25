@@ -1,31 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, CreateAccountData, User } from 'types';
-import http from 'utils/http';
-import * as storage from 'utils/storage';
-import config from 'config';
-import { AppDispatch, AppThunk } from 'app/store';
 import { ACCESS_TOKEN } from 'constants/storage';
-
-export const createAccount =
-  ({ name, email, password, role }: CreateAccountData): AppThunk =>
-  async (dispatch: AppDispatch) => {
-    try {
-      authStart();
-      const url = config.endpoints.auth.createAccount;
-      const {
-        data: { token },
-      } = await http.post(url, { name, email, password, role });
-
-      dispatch(authSuccess(token));
-    } catch (err) {
-      const {
-        response: {
-          data: { message },
-        },
-      } = err;
-      dispatch(authError(message));
-    }
-  };
+import { AuthState, User } from 'types';
+import * as storage from 'utils/storage';
 
 export const initialState: AuthState = Object.freeze({
   token: storage.get(ACCESS_TOKEN),
@@ -52,7 +28,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
     },
-    setUser: (state, { payload }: PayloadAction<User>) => {
+    setCurrentUser: (state, { payload }: PayloadAction<User>) => {
       state.user = payload;
       state.isAuthenticated = true;
       state.loading = false;
@@ -67,7 +43,7 @@ const authSlice = createSlice({
 });
 
 // actions from slice
-export const { authStart, authSuccess, authError, logoutSuccess, setUser } = authSlice.actions;
+export const { authStart, authSuccess, authError, logoutSuccess, setCurrentUser } = authSlice.actions;
 
 // The reducer
 export default authSlice.reducer;

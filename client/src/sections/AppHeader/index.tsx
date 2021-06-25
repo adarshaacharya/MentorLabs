@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from './assets/logo.png';
 import { MenuItems } from './components';
 

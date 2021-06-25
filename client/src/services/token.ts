@@ -5,6 +5,9 @@ import * as storage from '../utils/storage';
 
 /**
  * Set token in header and save token to localstorage
+ * if there is a token - store it in local storage and set the headers.
+ * if there is no token - token is null - remove it from storage and delete the headers.
+
  */
 export const setAuthToken = (token: string) => {
   if (token) {

@@ -7,6 +7,7 @@ const config = {
     auth: {
       login: '/users/login',
       createAccount: '/users/create-account',
+      me: '/users/me',
     },
   },
 };
