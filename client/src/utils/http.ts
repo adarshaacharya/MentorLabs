@@ -1,8 +1,8 @@
-import { store } from 'app/store';
+import { store } from 'store';
 import Axios from 'axios';
 import config from 'config';
-import * as status from 'constants/status-code';
-import { logoutSuccess } from 'slices/auth';
+import * as status from 'constants/http-status';
+import { logoutSuccess } from 'store/auth/auth.slice';
 
 const http = Axios.create({
   baseURL: config.baseURI,

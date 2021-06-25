@@ -1,6 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
-import { CreateAccount, Dashboard, Home, Login, NotFound } from 'sections';
 import * as routes from 'constants/routes';
+import { Routes } from 'react-router-dom';
+import { CreateAccount, Dashboard, Home, Login, NotFound } from 'sections';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 

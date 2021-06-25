@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from './assets/logo.png';
 import { MenuItems } from './components';

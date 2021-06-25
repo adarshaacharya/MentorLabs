@@ -1,7 +1,7 @@
+import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
 import { RouteProps } from 'react-router';
-import { Route, Navigate, useLocation } from 'react-router-dom';
-import * as routes from 'constants/routes';
+import { Navigate, Route } from 'react-router-dom';
 
 interface PrivateRouteProps extends RouteProps {
   element: any;

@@ -1,6 +1,6 @@
-import { AppDispatch, AppThunk } from 'app/store';
+import { AppDispatch, AppThunk } from 'store';
 import config from 'config';
-import { authError, authStart, authSuccess, setCurrentUser } from 'slices/auth';
+import { authError, authStart, authSuccess, setCurrentUser } from 'store/auth/auth.slice';
 import { CreateAccountData } from 'types';
 import http from 'utils/http';
 

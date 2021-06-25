@@ -1,14 +1,14 @@
 import { Layout } from 'antd';
-import { useCallback, useEffect } from 'react';
+import { store } from 'store';
+import { ACCESS_TOKEN } from 'constants/storage';
+import { useEffect } from 'react';
+import { setAuthToken } from 'services/token';
+import { logoutSuccess } from 'store/auth/auth.slice';
+import { loadCurrentUser } from 'store/auth/auth.actions';
+import * as storage from 'utils/storage';
 import { Router } from './router/Router';
 import { AppHeader } from './sections';
 import './styles/index.css';
-import * as storage from 'utils/storage';
-import { ACCESS_TOKEN } from 'constants/storage';
-import { setAuthToken } from 'services/token';
-import { store } from 'app/store';
-import { loadCurrentUser } from 'thunks/auth';
-import { logoutSuccess } from 'slices/auth';
 
 const App = () => {
   // logic to set/check access token **Heart of Application*

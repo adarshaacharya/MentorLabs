@@ -1,9 +1,8 @@
 import { Card, Form, Input, Layout, Select } from 'antd';
 import { UserRole } from 'constants/options';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createAccount } from 'thunks/auth';
+import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
 import signupImg from './assets/signup.svg';

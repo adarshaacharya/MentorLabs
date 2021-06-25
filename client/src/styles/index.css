@@ -86,11 +86,11 @@ body {
 }
 
 .app-header__menu-section {
-  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .app-header__menu {
-  width: 100%;
   border: 0;
   background-color: inherit;
 }
@@ -108,6 +108,7 @@ body {
   background-color: var(--primary-color);
   padding: 1rem;
   border-radius: 5px;
+  color: var(--light-color);
 }
 
 .app-header__create-account:hover {
@@ -207,7 +208,7 @@ body {
  Section : Login
 ==============================================================================*/
 .login {
-  height: 89vh;
+  height: 100vh;
 }
 
 .login__wrapper {
