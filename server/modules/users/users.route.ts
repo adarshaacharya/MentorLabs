@@ -4,7 +4,7 @@ import { usersController } from './users.controller';
 import { validationMiddleware } from '../../common/middlewares/validaton.middleware';
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
-import { authJwt } from 'common/middlewares/auth.middleware';
+import { authJwt } from '../../common/middlewares/auth.middleware';
 
 export const router: Router = Router();
 

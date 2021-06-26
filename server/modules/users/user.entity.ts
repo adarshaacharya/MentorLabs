@@ -38,6 +38,10 @@ export class User {
   @IsEnum(UserRole)
   role: UserRole;
 
+  @Column({ nullable: false })
+  @IsString()
+  avatar: string;
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;

@@ -1,11 +1,11 @@
 import { X_AUTH_TOKEN } from '../../common/constants/header';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 
 import * as jwt from 'jsonwebtoken';
 
 import { Unauthorized } from '../../common/exceptions';
-import { AuthRequest } from 'common/interfaces/auth-request.interface';
-import { JwtPayload } from 'common/interfaces/jwt-payload.interface';
+import { AuthRequest } from '../../common/interfaces/auth-request.interface';
+import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
 
 /**
  * Middleware to check if user is authticated or not

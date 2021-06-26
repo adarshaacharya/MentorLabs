@@ -1,11 +1,12 @@
-import { generateJwtToken } from '../../common/token/generate-jwt.ts';
 import { Service } from 'typedi';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, Unauthorized } from '../../common/exceptions';
+import { generateJwtToken } from '../../common/token/generate-jwt.ts';
+import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
-import { User } from './user.entity';
-import { UserRepository } from './repositories/users.repository';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
+import { UserRepository } from './repositories/users.repository';
+import { User } from './user.entity';
 
 @Service()
 export class UsersService {
@@ -14,9 +15,9 @@ export class UsersService {
     private readonly userRepository: UserRepository,
   ) {}
 
-  public async me(id: number) {
+  public async me(id: number | undefined) {
     const user = await this.userRepository.findOne({
-      select: ['id', 'name', 'email', 'role'],
+      select: ['id', 'name', 'email', 'role', 'avatar'],
       where: { id },
     });
 
@@ -27,7 +28,10 @@ export class UsersService {
     if (await this.userRepository.findOneByEmail(email)) {
       throw new BadRequest('User with provided email already exists');
     }
-    const user = await this.userRepository.save(this.userRepository.create({ name, email, password, role }));
+
+    const avatar = Gravatar.generateUrl(email);
+    console.log(avatar);
+    const user = await this.userRepository.save(this.userRepository.create({ name, email, password, role, avatar }));
 
     const token = generateJwtToken({ id: user.id, role: user.role });
     return { token };
