@@ -20,9 +20,9 @@ export const CreateAccount = () => {
     dispatch(createAccount(formData));
   };
 
-  if (error) {
-    displayErrorMessage(error);
-  }
+  // if (error) {
+  //   displayErrorMessage(error);
+  // }
 
   return (
     <Content className="signup">

@@ -1,6 +1,6 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import rootReducer from 'store/rootReducer';
+import { configureStore } from '@reduxjs/toolkit';
 import { setAuthToken } from 'services/token';
+import rootReducer from 'store/rootReducer';
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -21,12 +21,3 @@ store.subscribe(() => {
     setAuthToken(token);
   }
 });
-
-/**
- * define data types for redux utilities
- */
-export type RootState = ReturnType<typeof store.getState>;
-
-export type AppDispatch = typeof store.dispatch;
-
-export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;

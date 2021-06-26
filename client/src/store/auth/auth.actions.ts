@@ -1,7 +1,6 @@
-import { AppDispatch, AppThunk } from 'store';
 import config from 'config';
 import { authError, authStart, authSuccess, logOutSuccess, setCurrentUser } from 'store/auth/auth.slice';
-import { CreateAccountData, LoginData } from 'types';
+import { AppDispatch, AppThunk, CreateAccountData, LoginData } from 'types';
 import http from 'utils/http';
 
 export const loadCurrentUser = (): AppThunk => async (dispatch: AppDispatch) => {

@@ -1,4 +1,6 @@
+import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { UserRole } from 'constants/options';
+import { store } from 'store';
 
 //==============================================================================
 // Form Data
@@ -22,7 +24,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  password: string;
+  avatar: string;
   role: UserRole;
 }
 
@@ -36,3 +38,13 @@ export interface AuthState {
   error: string;
   user: User | null;
 }
+
+//==============================================================================
+// Redux Utilities data types
+//==============================================================================
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;

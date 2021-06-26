@@ -1,15 +1,15 @@
 import { Menu } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { displaySuccessNotification } from 'utils/notifications';
-import { Avatar } from 'antd';
+import { Avatar, Button } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { logOut } from 'store/auth/auth.actions';
 
 const { Item, SubMenu } = Menu;
 
 export const MenuItems = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const onLogOut = () => {
@@ -17,23 +17,29 @@ export const MenuItems = () => {
     displaySuccessNotification("You've successfully logged out!");
   };
 
+  if (isAuthenticated && !user && !user) return <p>Loading user..</p>;
+
+  if (isAuthenticated && !user?.avatar) return <p>Loading avatar</p>;
+
   const publicLinks = (
-    <>
-      <Item key="/login" className="app-header__menu-item--public">
-        <NavLink to="/login">Sign In</NavLink>
-      </Item>
-      <Item key="/create-account" className="app-header__menu-item--public">
+    <div className="app-header__menu--public">
+      <div key="/login" className="app-header__menu-item--public">
+        <NavLink to="/login" style={{ color: '#000000cf' }}>
+          Sign In
+        </NavLink>
+      </div>
+      <div key="/create-account" className="app-header__menu-item--public">
         <NavLink to="/create-account" className="app-header__create-account" style={{ color: '#fff' }}>
           Create Account
         </NavLink>
-      </Item>
-    </>
+      </div>
+    </div>
   );
 
   const privateLinks = (
-    <>
+    <Menu mode="horizontal" selectable={false} className="app-header__menu--private">
       <SubMenu
-        title={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+        title={<Avatar size="large" src={user?.avatar} />}
         className="app-header__sub-menu--private"
         key="submenu"
       >
@@ -46,12 +52,8 @@ export const MenuItems = () => {
           <LogoutOutlined></LogoutOutlined> Log out
         </Item>
       </SubMenu>
-    </>
-  );
-
-  return (
-    <Menu mode="horizontal" selectable={false} className="app-header__menu">
-      {user?.id ? privateLinks : publicLinks}
     </Menu>
   );
+
+  return user?.id && user.avatar ? privateLinks : publicLinks;
 };

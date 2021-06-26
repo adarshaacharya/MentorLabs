@@ -88,31 +88,32 @@ body {
 .app-header__menu-section {
 }
 
-.app-header__menu {
-  padding: 0 1em;
-  border: 0;
-  background-color: inherit;
-  line-height: 63px;
+.app-header__menu--public {
+  display: flex;
+  column-gap: 35px;
 }
 
 .app-header__menu-item--public {
-  text-transform: uppercase;
   font-weight: bold;
-}
-
-.app-header__menu-item--public::after {
-  border-bottom: none !important;
+  font-size: 1.7rem;
 }
 
 .app-header__create-account {
+  border: none;
   background-color: var(--primary-color);
-  padding: 1rem;
+  padding: 0.4em 0.7em;
   border-radius: 5px;
   color: var(--light-color);
 }
 
 .app-header__create-account:hover {
   opacity: 0.8;
+}
+
+.app-header__menu--private {
+  padding: 0 1em;
+  border: 0;
+  background-color: inherit;
 }
 
 /*==============================================================================

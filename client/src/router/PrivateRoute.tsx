@@ -12,8 +12,6 @@ const PrivateElement = ({ element }) => {
   let location = useLocation();
   const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
 
-  if (loading) <p>Checking auth..</p>;
-
   return isAuthenticated ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
 };
 
