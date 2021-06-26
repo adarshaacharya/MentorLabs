@@ -1,22 +1,23 @@
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
-import { RouteProps } from 'react-router';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Route, useLocation } from 'react-router-dom';
 
-interface PrivateRouteProps extends RouteProps {
-  element: any;
-}
-
-export const PrivateRoute = ({ element, ...rest }: PrivateRouteProps) => {
+/**
+ * A wrapper around the element which checks if the user is authenticated
+ * If authenticated, renders the passed element
+ * If not authenticated, redirects the user to Login page.
+ */
+//@ts-ignore
+const PrivateElement = ({ element }) => {
+  let location = useLocation();
   const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
 
-  if (loading) {
-    return <p>Checking auth</p>;
-  }
+  if (loading) <p>Checking auth..</p>;
 
-  if (!isAuthenticated) {
-    return <Navigate to={routes.LOGIN} />;
-  }
+  return isAuthenticated ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
+};
 
-  return <Route {...rest} element={element} />;
+//@ts-ignore
+export const PrivateRoute = ({ element, ...rest }) => {
+  return <Route {...rest} element={<PrivateElement element={element} />} />;
 };

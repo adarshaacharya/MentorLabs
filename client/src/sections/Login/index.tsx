@@ -1,9 +1,22 @@
 import { Card, Form, Input } from 'antd';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { logIn } from 'store/auth/auth.actions';
+import { LoginData } from 'types';
+import { displayErrorMessage } from 'utils/notifications';
 import loginImg from './assets/login.svg';
 
 const { Item } = Form;
 
 export const Login = () => {
+  const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const onFormSubmit = ({ email, password }: LoginData) => {
+    dispatch(logIn({ email, password }));
+  };
+
+  // error && displayErrorMessage(error);
+
   return (
     <section className="login">
       <div className="container">
@@ -16,7 +29,7 @@ export const Login = () => {
 
           <Card className="login__card">
             <h1 className="login__title">Sign in to your account.</h1>
-            <Form layout="vertical" size="large">
+            <Form layout="vertical" size="large" onFinish={onFormSubmit}>
               <Item
                 name="email"
                 label="E-mail"
@@ -45,11 +58,13 @@ export const Login = () => {
                 <Input.Password />
               </Item>
 
-              <Item>
-                <button type="submit" className="btn--primary login__btn">
-                  Log In
-                </button>
-              </Item>
+              <button
+                type="submit"
+                className={`btn--primary login__btn ${loading ? 'btn--loading' : ''}`}
+                disabled={loading}
+              >
+                Log In
+              </button>
             </Form>
           </Card>
         </div>

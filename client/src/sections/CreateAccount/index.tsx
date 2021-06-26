@@ -1,7 +1,6 @@
 import { Card, Form, Input, Layout, Select } from 'antd';
 import { UserRole } from 'constants/options';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import { useNavigate } from 'react-router-dom';
 import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
@@ -13,15 +12,9 @@ const { Option } = Select;
 const { Password } = Input;
 
 export const CreateAccount = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
-
-  // If logged in and user navigates to Login page, should redirect them to dashboard
-  // useEffect(() => {
-  //   if (isAuthenticated) navigate('/dashboard');
-  // }, [isAuthenticated, navigate]);
+  const { error, loading } = useAppSelector((state) => state.auth);
 
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
