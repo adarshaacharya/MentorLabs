@@ -9,8 +9,8 @@ export const ormconfig: ConnectionOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  synchronize: process.env.NODE_ENV !== 'prod',
-  logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+  synchronize: process.env.NODE_ENV !== 'production',
+  logging: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test',
   entities: ['server/modules/**/*.entity.ts'],
   namingStrategy: new SnakeNamingStrategy(),
 };

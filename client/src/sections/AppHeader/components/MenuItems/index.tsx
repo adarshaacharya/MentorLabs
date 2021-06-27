@@ -17,7 +17,7 @@ export const MenuItems = () => {
     displaySuccessNotification("You've successfully logged out!");
   };
 
-  if (isAuthenticated && !user && !user) return <p>Loading user..</p>;
+  if (isAuthenticated && !user) return <p>Loading user..</p>;
 
   if (isAuthenticated && !user?.avatar) return <p>Loading avatar</p>;
 
