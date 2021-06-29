@@ -1,10 +1,10 @@
+import { checkRole } from '../../common/middlewares/roles.middleware';
 import { Router } from 'express';
-
-import { usersController } from './users.controller';
+import { checkJwt } from '../../common/middlewares/auth.middleware';
 import { validationMiddleware } from '../../common/middlewares/validaton.middleware';
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
-import { authJwt } from '../../common/middlewares/auth.middleware';
+import { usersController } from './users.controller';
 
 export const router: Router = Router();
 
@@ -14,7 +14,7 @@ export const router: Router = Router();
  * @description : fetch logged in user details
  * @acces private
  */
-router.get('/me', [authJwt], usersController.me);
+router.get('/me', [checkJwt, checkRole(['Student'])], usersController.me);
 
 /**
  * @method POST
@@ -31,3 +31,11 @@ router.post('/create-account', validationMiddleware(CreateAccountInput), usersCo
  * @acces public
  */
 router.post('/login', validationMiddleware(LoginInput), usersController.login);
+
+/**
+ * @method POST
+ * @route /api/users/logout
+ * @description : logout user
+ * @acces public
+ */
+router.post('/logout', [checkJwt], usersController.logout);

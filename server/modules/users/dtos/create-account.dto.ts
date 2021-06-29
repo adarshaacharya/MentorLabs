@@ -1,5 +1,6 @@
 import { Length, IsEmail, IsString, IsEnum } from 'class-validator';
-import { User, UserRole } from '../user.entity';
+import { ROLE } from '../../../common/enums/role.enum';
+import { User } from '../user.entity';
 
 export class CreateAccountInput {
   @IsString()
@@ -13,8 +14,8 @@ export class CreateAccountInput {
   @Length(4, 100)
   password: string;
 
-  @IsEnum(UserRole)
-  role: UserRole;
+  @IsEnum(ROLE)
+  role: ROLE;
 }
 
 export class CreateAccountOutput {

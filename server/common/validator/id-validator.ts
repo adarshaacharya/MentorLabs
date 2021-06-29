@@ -2,7 +2,7 @@
  * validates id or throw error
  */
 
-import { BadRequest } from '../common/exceptions';
+import { BadRequest } from '../exceptions';
 
 function validateIdOrThrow(num: any): number {
   if (isNaN(num) || num > Number.MAX_SAFE_INTEGER || num <= 0) {

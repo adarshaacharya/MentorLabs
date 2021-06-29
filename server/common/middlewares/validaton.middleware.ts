@@ -1,9 +1,11 @@
-// class validator middleware
 import { plainToClass } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { BadRequest } from '../../common/exceptions';
 import { RequestHandler } from 'express';
 
+/**
+ * validation middleware for class-validator
+ */
 export function validationMiddleware(type: any, skipMissingProperties = false): RequestHandler {
   return (req, _, next) => {
     validate(plainToClass(type, req.body), { skipMissingProperties }).then((errors: ValidationError[]) => {

@@ -30,10 +30,10 @@ export class UsersService {
     }
 
     const avatar = Gravatar.generateUrl(email);
-    console.log(avatar);
     const user = await this.userRepository.save(this.userRepository.create({ name, email, password, role, avatar }));
 
     const token = generateJwtToken({ id: user.id, role: user.role });
+
     return { token };
   }
 

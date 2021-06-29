@@ -1,8 +1,9 @@
 import { AuthRequest } from '../../common/interfaces/auth-request.interface';
 import { Request, Response, NextFunction } from 'express';
 import Container from 'typedi';
-import validateIdOrThrow from '../../utils/validator.util';
+import validateIdOrThrow from '../../common/validator/id-validator';
 import { UsersService } from './users.service';
+import { AUTH_COOKIE, THIRTY_DAY_COOKIE } from '../../common/constants/cookies';
 
 class UsersController {
   public async me(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
@@ -20,7 +21,8 @@ class UsersController {
     try {
       const usersServiceInstance = Container.get(UsersService);
       const { token } = await usersServiceInstance.createAccount(req.body);
-      res.json({ ok: true, token });
+      res.cookie(AUTH_COOKIE, token, THIRTY_DAY_COOKIE);
+      res.json({ ok: true });
     } catch (e) {
       next(e);
     }
@@ -30,10 +32,16 @@ class UsersController {
     try {
       const usersServiceInstance = Container.get(UsersService);
       const { token } = await usersServiceInstance.login(req.body);
-      res.json({ ok: true, token });
+      res.cookie(AUTH_COOKIE, token, THIRTY_DAY_COOKIE);
+      res.status(200).json({ ok: true });
     } catch (e) {
       next(e);
     }
+  }
+
+  public logout(_: Request, res: Response): void {
+    res.clearCookie(AUTH_COOKIE);
+    res.status(200).json({ ok: true });
   }
 }
 
