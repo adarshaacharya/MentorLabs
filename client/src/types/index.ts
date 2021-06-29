@@ -1,5 +1,5 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
-import { UserRole } from 'constants/options';
+import { ROLE } from 'constants/options';
 import { store } from 'store';
 
 //==============================================================================
@@ -9,7 +9,7 @@ export interface CreateAccountData {
   name: string;
   email: string;
   password: string;
-  role: UserRole;
+  role: ROLE;
 }
 
 export interface LoginData {
@@ -25,14 +25,13 @@ export interface User {
   name: string;
   email: string;
   avatar: string;
-  role: UserRole;
+  role: ROLE;
 }
 
 //==============================================================================
 // State
 //==============================================================================
 export interface AuthState {
-  token: string | null;
   loading: boolean;
   isAuthenticated: boolean;
   error: string;

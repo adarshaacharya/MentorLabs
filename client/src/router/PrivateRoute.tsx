@@ -10,7 +10,9 @@ import { Navigate, Route, useLocation } from 'react-router-dom';
 //@ts-ignore
 const PrivateElement = ({ element }) => {
   let location = useLocation();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
+
+  if (!user && isAuthenticated && loading) return <h1>Checking auth.</h1>;
 
   return isAuthenticated ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
 };

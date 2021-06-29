@@ -1,5 +1,5 @@
 import { Card, Form, Input, Layout, Select } from 'antd';
-import { UserRole } from 'constants/options';
+import { ROLE } from 'constants/options';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';
@@ -20,9 +20,9 @@ export const CreateAccount = () => {
     dispatch(createAccount(formData));
   };
 
-  // if (error) {
-  //   displayErrorMessage(error);
-  // }
+  if (error) {
+    displayErrorMessage(error);
+  }
 
   return (
     <Content className="signup">
@@ -106,10 +106,10 @@ export const CreateAccount = () => {
                 <Password />
               </Item>
 
-              <Item name="role" label="Role" initialValue={UserRole.Student}>
+              <Item name="role" label="Role" initialValue={ROLE.Student}>
                 <Select>
-                  <Option value={UserRole.Student}>Student</Option>
-                  <Option value={UserRole.Teacher}>Teacher</Option>
+                  <Option value={ROLE.Student}>Student</Option>
+                  <Option value={ROLE.Teacher}>Teacher</Option>
                 </Select>
               </Item>
 

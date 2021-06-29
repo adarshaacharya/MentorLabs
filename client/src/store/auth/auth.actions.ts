@@ -26,10 +26,8 @@ export const createAccount =
     try {
       dispatch(authStart());
       const url = config.endpoints.auth.createAccount;
-      const {
-        data: { token },
-      } = await http.post(url, { name, email, password, role });
-      dispatch(authSuccess(token));
+      await http.post(url, { name, email, password, role });
+      dispatch(authSuccess());
       dispatch(loadCurrentUser());
     } catch (err) {
       console.log(err.response.data);
@@ -48,10 +46,8 @@ export const logIn =
     try {
       dispatch(authStart());
       const url = config.endpoints.auth.login;
-      const {
-        data: { token },
-      } = await http.post(url, { email, password });
-      dispatch(authSuccess(token));
+      await http.post(url, { email, password });
+      dispatch(authSuccess());
       dispatch(loadCurrentUser());
     } catch (err) {
       console.log(err.response.data);
@@ -64,4 +60,8 @@ export const logIn =
     }
   };
 
-export const logOut = () => logOutSuccess();
+export const logOut = (): AppThunk => async (dispatch: AppDispatch) => {
+  const url = config.endpoints.auth.logout;
+  await http.post(url);
+  dispatch(logOutSuccess());
+};
