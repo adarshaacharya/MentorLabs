@@ -3,7 +3,7 @@ import React from 'react';
 interface ErrorBoundaryState {
   hasError: boolean;
 }
-class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
   constructor(props: Readonly<{}>) {
     super(props);
     this.state = { hasError: false };
@@ -31,5 +31,3 @@ class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

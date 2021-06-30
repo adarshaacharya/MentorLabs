@@ -1,3 +1,4 @@
+import { ROLE } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
 import { Navigate, Route, useLocation } from 'react-router-dom';
@@ -5,9 +6,13 @@ import { Navigate, Route, useLocation } from 'react-router-dom';
 const PublicElement = ({ element }: any) => {
   const location = useLocation();
 
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
 
-  return isAuthenticated === false ? element : <Navigate to={routes.DASHBOARD} state={{ from: location }} />;
+  if (loading) return <p className="container">Checking auth..</p>;
+
+  const dashboard = user.role === ROLE.Student ? routes.STUDENT_DASHBOARD : routes.TEACHER_DASHBOARD;
+
+  return !isAuthenticated ? element : <Navigate to={dashboard} state={{ from: location }} />;
 };
 
 //@ts-ignore

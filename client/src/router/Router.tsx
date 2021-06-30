@@ -1,6 +1,7 @@
+import { ROLE, USER_ROLES } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { Route, Routes } from 'react-router-dom';
-import { CreateAccount, Dashboard, Home, Login, NotFound } from 'sections';
+import { CreateAccount, Student, Teacher, Home, Login, NotFound } from 'sections';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
@@ -15,7 +16,8 @@ export const Router = () => {
       <PublicRoute path={routes.HOME} element={<Home />} />
       <PublicRoute path={routes.CREATE_ACCOUNT} element={<CreateAccount />} />
       <PublicRoute path={routes.LOGIN} element={<Login />} />
-      <PrivateRoute path={routes.DASHBOARD} element={<Dashboard />} />
+      <PrivateRoute path={routes.STUDENT_DASHBOARD} element={<Student />} requiredRoles={[ROLE.Student]} />
+      <PrivateRoute path={routes.TEACHER_DASHBOARD} element={<Teacher />} requiredRoles={[ROLE.Teacher]} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

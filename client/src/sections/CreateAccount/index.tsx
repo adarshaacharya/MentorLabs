@@ -1,5 +1,5 @@
 import { Card, Form, Input, Layout, Select } from 'antd';
-import { ROLE } from 'constants/options';
+import { ROLE } from 'constants/roles';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';

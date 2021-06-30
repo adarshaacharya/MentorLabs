@@ -1,10 +1,9 @@
-import { Menu } from 'antd';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { displaySuccessNotification } from 'utils/notifications';
-import { Avatar, Button } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { NavLink } from 'react-router-dom';
 import { logOut } from 'store/auth/auth.actions';
+import { displaySuccessNotification } from 'utils/notifications';
 
 const { Item, SubMenu } = Menu;
 
@@ -17,9 +16,9 @@ export const MenuItems = () => {
     displaySuccessNotification("You've successfully logged out!");
   };
 
-  if (isAuthenticated && !user) return <p>Loading user..</p>;
+  if (loading) return <p>Loading nav.</p>;
 
-  if (isAuthenticated && !user?.avatar) return <p>Loading avatar</p>;
+  if (isAuthenticated && !user) return <p>Loading user.</p>;
 
   const publicLinks = (
     <div className="app-header__menu--public">

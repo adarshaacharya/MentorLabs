@@ -1,23 +1,29 @@
+import { ROLE } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
 import { Navigate, Route, useLocation } from 'react-router-dom';
 
+interface Props {
+  element: React.ReactElement;
+  requiredRoles: Array<ROLE>;
+  path?: string;
+}
 /**
  * A wrapper around the element which checks if the user is authenticated
  * If authenticated, renders the passed element
  * If not authenticated, redirects the user to Login page.
  */
-//@ts-ignore
-const PrivateElement = ({ element }) => {
+const PrivateElement: React.FC<Props> = ({ element, requiredRoles }) => {
   let location = useLocation();
   const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
 
-  if (!user && isAuthenticated && loading) return <h1>Checking auth.</h1>;
+  if (loading) return <p className="container">Checking auth..</p>;
 
-  return isAuthenticated ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
+  const userHasRequiredRole = requiredRoles.includes(user.role!);
+
+  return isAuthenticated && userHasRequiredRole ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
 };
 
-//@ts-ignore
-export const PrivateRoute = ({ element, ...rest }) => {
-  return <Route {...rest} element={<PrivateElement element={element} />} />;
+export const PrivateRoute: React.FC<Props> = ({ element, requiredRoles, ...rest }) => {
+  return <Route {...rest} element={<PrivateElement element={element} requiredRoles={requiredRoles} />} />;
 };

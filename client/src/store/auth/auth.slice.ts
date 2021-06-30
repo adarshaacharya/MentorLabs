@@ -4,8 +4,8 @@ import { AuthState, User } from 'types';
 export const initialState: AuthState = Object.freeze({
   isAuthenticated: false,
   error: '',
-  loading: false,
-  user: null,
+  loading: true,
+  user: {},
 });
 
 const authSlice = createSlice({
@@ -29,9 +29,10 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
     },
+
     logOutSuccess: (state) => {
       state.isAuthenticated = false;
-      state.user = null;
+      state.user = {};
       state.error = '';
       state.loading = false;
     },

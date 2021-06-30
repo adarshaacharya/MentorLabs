@@ -5,6 +5,7 @@ import http from 'utils/http';
 
 export const loadCurrentUser = (): AppThunk => async (dispatch: AppDispatch) => {
   try {
+    dispatch(authStart());
     const url = config.endpoints.auth.me;
     const {
       data: { user },

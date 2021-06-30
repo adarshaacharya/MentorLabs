@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'sections/ErrorBoundary';
 import { store } from 'store';
 import { loadCurrentUser } from 'store/auth/auth.actions';
 import { Router } from './router/Router';
