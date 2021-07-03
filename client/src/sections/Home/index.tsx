@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import heroImg from './assets/landing.svg';
 
@@ -5,6 +6,9 @@ export const Home = () => {
   const navigate = useNavigate();
   return (
     <section className="home">
+      <Helmet>
+        <title>Home | Mentor Labs</title>
+      </Helmet>
       <div className="container">
         <div className="hero">
           <div className="hero__about">

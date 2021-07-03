@@ -1,7 +1,7 @@
-import { ROLE, USER_ROLES } from 'constants/roles';
+import { ROLE } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { Route, Routes } from 'react-router-dom';
-import { CreateAccount, Student, Teacher, Home, Login, NotFound } from 'sections';
+import { CreateAccount, Home, Login, NotFound, Student, Teacher } from 'sections';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 

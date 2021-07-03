@@ -19,7 +19,7 @@ const PrivateElement: React.FC<Props> = ({ element, requiredRoles }) => {
 
   if (loading) return <p className="container">Checking auth..</p>;
 
-  const userHasRequiredRole = requiredRoles.includes(user.role!);
+  const userHasRequiredRole = user.role && requiredRoles.includes(user.role);
 
   return isAuthenticated && userHasRequiredRole ? element : <Navigate to={routes.LOGIN} state={{ from: location }} />;
 };

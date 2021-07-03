@@ -1,6 +1,8 @@
 import { Card, Form, Input, Layout, Select } from 'antd';
 import { ROLE } from 'constants/roles';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
@@ -20,12 +22,13 @@ export const CreateAccount = () => {
     dispatch(createAccount(formData));
   };
 
-  if (error) {
-    displayErrorMessage(error);
-  }
+  error && displayErrorMessage(error);
 
   return (
     <Content className="signup">
+      <Helmet>
+        <title>Create Account | Mentor Labs</title>
+      </Helmet>
       <div className="container">
         <div className="signup__wrapper">
           <div className="signup__banner">

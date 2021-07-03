@@ -1,5 +1,6 @@
 import { Empty, Typography } from 'antd';
 import { useScrollToTop } from 'hooks';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 const { Text } = Typography;
@@ -9,6 +10,9 @@ export const NotFound = () => {
 
   return (
     <section className="not-found">
+      <Helmet>
+        <title>Not Found | Mentor Labs</title>
+      </Helmet>
       <div className="container">
         <div className="not-found__wrapper">
           <Empty

@@ -1,9 +1,8 @@
 import { Card, Form, Input } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { logIn } from 'store/auth/auth.actions';
 import { LoginData } from 'types';
-import { displayErrorMessage } from 'utils/notifications';
 import loginImg from './assets/login.svg';
 
 const { Item } = Form;
@@ -20,6 +19,9 @@ export const Login = () => {
 
   return (
     <section className="login">
+      <Helmet>
+        <title>Login | Mentor Labs</title>
+      </Helmet>
       <div className="container">
         <div className="login__wrapper">
           <div className="login__banner">

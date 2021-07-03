@@ -153,7 +153,7 @@ body {
 
 .hero__img {
   flex-basis: 41%;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .hero__img img {
