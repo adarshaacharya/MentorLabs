@@ -18,6 +18,14 @@ export const Login = () => {
     dispatch(logIn({ email, password }));
   };
 
+  // @TODO : need to fix this , error should be displayed on screen not as toast
+  useEffect(() => {
+    if (error) {
+      displayErrorMessage(error);
+      dispatch(clearAuthError());
+    }
+  }, [dispatch, error]);
+
   return (
     <section className="login">
       <Helmet>
@@ -70,7 +78,6 @@ export const Login = () => {
                 Log In
               </button>
             </Form>
-            {error && <Alert message={error} type="error" showIcon style={{ marginTop: '20px' }} />}
           </Card>
         </div>
       </div>

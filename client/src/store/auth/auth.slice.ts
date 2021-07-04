@@ -44,8 +44,8 @@ const authSlice = createSlice({
       state.user = payload;
     });
 
-    builder.addCase(createAccount.rejected, (state, action) => {
-      state.error = action.error as string;
+    builder.addCase(createAccount.rejected, (state, { payload }) => {
+      state.error = payload as string;
       state.isAuthenticated = false;
       state.status = 'rejected';
     });

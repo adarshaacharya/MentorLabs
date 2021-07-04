@@ -1,9 +1,12 @@
 import { Alert, Card, Form, Input, Layout, Select } from 'antd';
 import { ROLE } from 'constants/roles';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { createAccount } from 'store/auth/auth.actions';
+import { clearAuthError } from 'store/auth/auth.slice';
 import { CreateAccountData } from 'types';
+import { displayErrorMessage } from 'utils/notifications';
 import signupImg from './assets/signup.svg';
 
 const { Content } = Layout;
@@ -19,6 +22,14 @@ export const CreateAccount = () => {
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
   };
+
+  // @TODO : need to fix this , error should be displayed on screen not as toast
+  useEffect(() => {
+    if (error) {
+      displayErrorMessage(error);
+      dispatch(clearAuthError());
+    }
+  }, [dispatch, error]);
 
   return (
     <Content className="signup">
@@ -120,7 +131,6 @@ export const CreateAccount = () => {
                 Create Account
               </button>
             </Form>
-            {error && <Alert message={error} type="error" style={{ marginTop: '20px' }} />}
           </Card>
         </div>
       </div>

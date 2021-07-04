@@ -1,6 +1,6 @@
-import { createAsyncThunk, SerializedError } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import config from 'config';
-import { AppDispatch, AppThunk, CreateAccountData, LoginData, User } from 'types';
+import { CreateAccountData, LoginData, User } from 'types';
 import http from 'utils/http';
 
 export const loadCurrentUser = createAsyncThunk('auth/loadUser', async (_, thunkAPI) => {
