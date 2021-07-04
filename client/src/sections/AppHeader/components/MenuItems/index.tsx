@@ -1,15 +1,14 @@
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { loadCurrentUser, logOut } from 'store/auth/auth.actions';
+import { logOut } from 'store/auth/auth.actions';
 import { displaySuccessNotification } from 'utils/notifications';
 
 const { Item, SubMenu } = Menu;
 
 export const MenuItems = () => {
-  const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
+  const { user, isAuthenticated, status } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const onLogOut = () => {
@@ -17,7 +16,7 @@ export const MenuItems = () => {
     displaySuccessNotification("You've successfully logged out!");
   };
 
-  if (loading === 'pending' || loading === 'idle') return <p>Loading nav.</p>;
+  if (status === 'pending' || status === 'idle') return <p>Loading nav.</p>;
 
   const publicLinks = (
     <div className="app-header__menu--public">

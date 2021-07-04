@@ -1,19 +1,18 @@
-import { Alert, Card, Form, Input, notification } from 'antd';
+import { Alert, Card, Form, Input } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
-import { loadCurrentUser, logIn } from 'store/auth/auth.actions';
+import { logIn } from 'store/auth/auth.actions';
 import { clearAuthError } from 'store/auth/auth.slice';
 import { LoginData } from 'types';
+import { displayErrorMessage } from 'utils/notifications';
 import loginImg from './assets/login.svg';
 
 const { Item } = Form;
 
 export const Login = () => {
-  const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { error, status } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onFormSubmit = ({ email, password }: LoginData) => {
     dispatch(logIn({ email, password }));
@@ -65,13 +64,13 @@ export const Login = () => {
 
               <button
                 type="submit"
-                className={`btn--primary login__btn ${loading === 'pending' ? 'btn--loading' : ''}`}
-                disabled={loading === 'pending'}
+                className={`btn--primary login__btn ${status === 'pending' ? 'btn--loading' : ''}`}
+                disabled={status === 'pending'}
               >
                 Log In
               </button>
             </Form>
-            {error && <Alert message={error} type="error" style={{ marginTop: '20px' }} />}
+            {error && <Alert message={error} type="error" showIcon style={{ marginTop: '20px' }} />}
           </Card>
         </div>
       </div>

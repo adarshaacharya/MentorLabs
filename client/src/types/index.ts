@@ -33,7 +33,7 @@ export interface User {
 //==============================================================================
 
 export interface AuthState {
-  loading: 'idle' | 'pending' | 'resolved' | 'rejected';
+  status: 'idle' | 'pending' | 'resolved' | 'rejected';
   isAuthenticated: boolean;
   error: string;
   user: User;

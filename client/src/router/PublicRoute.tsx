@@ -6,9 +6,7 @@ import { Navigate, Route, useLocation } from 'react-router-dom';
 const PublicElement = ({ element }: any) => {
   const location = useLocation();
 
-  const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
-
-  // if (loading === 'pending') return <p className="container">Checking auth..</p>;
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   const dashboard = user?.role === ROLE.Student ? routes.STUDENT_DASHBOARD : routes.TEACHER_DASHBOARD;
 

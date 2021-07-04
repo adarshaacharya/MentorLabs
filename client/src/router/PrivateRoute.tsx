@@ -19,9 +19,9 @@ interface Props {
 const PrivateElement: React.FC<Props> = ({ element, requiredRoles }) => {
   let location = useLocation();
 
-  const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user, status } = useAppSelector((state) => state.auth);
 
-  if (loading === 'idle' || loading === 'pending') return <p className="container">Checking in..</p>;
+  if (status === 'idle' || status === 'pending') return <p className="container">Checking in..</p>;
 
   const userHasRequiredRole = user.role && requiredRoles.includes(user.role);
 

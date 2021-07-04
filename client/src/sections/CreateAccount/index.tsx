@@ -14,7 +14,7 @@ const { Password } = Input;
 export const CreateAccount = () => {
   const dispatch = useAppDispatch();
 
-  const { error, loading } = useAppSelector((state) => state.auth);
+  const { error, status } = useAppSelector((state) => state.auth);
 
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
@@ -113,9 +113,9 @@ export const CreateAccount = () => {
               </Item>
 
               <button
-                className={`btn--primary signup__btn ${loading === 'pending' ? 'btn--loading' : ''}`}
+                className={`btn--primary signup__btn ${status === 'pending' ? 'btn--loading' : ''}`}
                 type="submit"
-                disabled={loading === 'pending'}
+                disabled={status === 'pending'}
               >
                 Create Account
               </button>
