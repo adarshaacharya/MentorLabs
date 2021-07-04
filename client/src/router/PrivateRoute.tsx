@@ -1,7 +1,10 @@
 import { ROLE } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
+import { memo, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Navigate, Route, useLocation } from 'react-router-dom';
+import { loadCurrentUser } from 'store/auth/auth.actions';
 
 interface Props {
   element: React.ReactElement;
@@ -15,9 +18,10 @@ interface Props {
  */
 const PrivateElement: React.FC<Props> = ({ element, requiredRoles }) => {
   let location = useLocation();
+
   const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
 
-  if (loading) return <p className="container">Checking auth..</p>;
+  if (loading === 'idle' || loading === 'pending') return <p className="container">Checking in..</p>;
 
   const userHasRequiredRole = user.role && requiredRoles.includes(user.role);
 

@@ -3,8 +3,8 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/token/generate-jwt.ts';
 import { Gravatar } from '../../services/Gravatar';
-import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
-import { LoginInput, LoginOutput } from './dtos/login.dto';
+import { CreateAccountInput } from './dtos/create-account.dto';
+import { LoginInput } from './dtos/login.dto';
 import { UserRepository } from './repositories/users.repository';
 import { User } from './user.entity';
 
@@ -24,7 +24,7 @@ export class UsersService {
     return user;
   }
 
-  public async createAccount({ name, email, password, role }: CreateAccountInput): Promise<CreateAccountOutput> {
+  public async createAccount({ name, email, password, role }: CreateAccountInput) {
     if (await this.userRepository.findOneByEmail(email)) {
       throw new BadRequest('User with provided email already exists');
     }
@@ -34,10 +34,10 @@ export class UsersService {
 
     const token = generateJwtToken({ id: user.id, role: user.role });
 
-    return { token };
+    return { token, id: user.id, name, email, avatar, role };
   }
 
-  public async login({ email, password }: LoginInput): Promise<LoginOutput> {
+  public async login({ email, password }: LoginInput) {
     const user = await this.userRepository.findOneByEmail(email);
     if (!user) {
       throw new Unauthorized("User with given email doesn't exists");
@@ -49,6 +49,8 @@ export class UsersService {
     }
 
     const token = generateJwtToken({ id: user.id, role: user.role });
-    return { token };
+
+    const { id, name, avatar, role } = user;
+    return { token, id, name, email, avatar, role };
   }
 }

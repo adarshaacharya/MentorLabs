@@ -8,9 +8,9 @@ const PublicElement = ({ element }: any) => {
 
   const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
 
-  // if (loading) return <p className="container">Checking auth..</p>;
+  // if (loading === 'pending') return <p className="container">Checking auth..</p>;
 
-  const dashboard = user.role === ROLE.Student ? routes.STUDENT_DASHBOARD : routes.TEACHER_DASHBOARD;
+  const dashboard = user?.role === ROLE.Student ? routes.STUDENT_DASHBOARD : routes.TEACHER_DASHBOARD;
 
   return !isAuthenticated ? element : <Navigate to={dashboard} state={{ from: location }} />;
 };

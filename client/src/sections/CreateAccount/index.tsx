@@ -1,11 +1,9 @@
-import { Card, Form, Input, Layout, Select } from 'antd';
+import { Alert, Card, Form, Input, Layout, Select } from 'antd';
 import { ROLE } from 'constants/roles';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { createAccount } from 'store/auth/auth.actions';
 import { CreateAccountData } from 'types';
-import { displayErrorMessage } from 'utils/notifications';
 import signupImg from './assets/signup.svg';
 
 const { Content } = Layout;
@@ -21,8 +19,6 @@ export const CreateAccount = () => {
   const onFormSubmit = (formData: CreateAccountData) => {
     dispatch(createAccount(formData));
   };
-
-  error && displayErrorMessage(error);
 
   return (
     <Content className="signup">
@@ -117,13 +113,14 @@ export const CreateAccount = () => {
               </Item>
 
               <button
-                className={`btn--primary signup__btn ${loading ? 'btn--loading' : ''}`}
+                className={`btn--primary signup__btn ${loading === 'pending' ? 'btn--loading' : ''}`}
                 type="submit"
-                disabled={loading}
+                disabled={loading === 'pending'}
               >
                 Create Account
               </button>
             </Form>
+            {error && <Alert message={error} type="error" style={{ marginTop: '20px' }} />}
           </Card>
         </div>
       </div>

@@ -20,9 +20,9 @@ class UsersController {
   public async createAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const usersServiceInstance = Container.get(UsersService);
-      const { token } = await usersServiceInstance.createAccount(req.body);
+      const { token, ...user } = await usersServiceInstance.createAccount(req.body);
       res.cookie(AUTH_COOKIE, token, THIRTY_DAY_COOKIE);
-      res.json({ ok: true });
+      res.json({ user });
     } catch (e) {
       next(e);
     }
@@ -31,9 +31,9 @@ class UsersController {
   public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const usersServiceInstance = Container.get(UsersService);
-      const { token } = await usersServiceInstance.login(req.body);
+      const { token, ...user } = await usersServiceInstance.login(req.body);
       res.cookie(AUTH_COOKIE, token, THIRTY_DAY_COOKIE);
-      res.status(200).json({ ok: true });
+      res.status(200).json({ user });
     } catch (e) {
       next(e);
     }

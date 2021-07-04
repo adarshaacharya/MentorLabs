@@ -1,6 +1,5 @@
 import { Length, IsEmail, IsString, IsEnum } from 'class-validator';
 import { ROLE } from '../../../common/enums/role.enum';
-import { User } from '../user.entity';
 
 export class CreateAccountInput {
   @IsString()
@@ -21,5 +20,3 @@ export class CreateAccountInput {
 export class CreateAccountOutput {
   token: string;
 }
-
-export type IUserView = Omit<User, 'password'>;

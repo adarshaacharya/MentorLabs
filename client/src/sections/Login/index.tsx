@@ -1,7 +1,10 @@
-import { Card, Form, Input } from 'antd';
+import { Alert, Card, Form, Input, notification } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { logIn } from 'store/auth/auth.actions';
+import { useNavigate } from 'react-router-dom';
+import { loadCurrentUser, logIn } from 'store/auth/auth.actions';
+import { clearAuthError } from 'store/auth/auth.slice';
 import { LoginData } from 'types';
 import loginImg from './assets/login.svg';
 
@@ -10,12 +13,11 @@ const { Item } = Form;
 export const Login = () => {
   const { error, loading, isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onFormSubmit = ({ email, password }: LoginData) => {
     dispatch(logIn({ email, password }));
   };
-
-  // error && displayErrorMessage(error);
 
   return (
     <section className="login">
@@ -63,12 +65,13 @@ export const Login = () => {
 
               <button
                 type="submit"
-                className={`btn--primary login__btn ${loading ? 'btn--loading' : ''}`}
-                disabled={loading}
+                className={`btn--primary login__btn ${loading === 'pending' ? 'btn--loading' : ''}`}
+                disabled={loading === 'pending'}
               >
                 Log In
               </button>
             </Form>
+            {error && <Alert message={error} type="error" style={{ marginTop: '20px' }} />}
           </Card>
         </div>
       </div>
