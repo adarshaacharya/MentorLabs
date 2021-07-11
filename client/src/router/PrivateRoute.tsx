@@ -1,14 +1,11 @@
-import { ROLE } from 'constants/roles';
+import { Role } from 'constants/roles';
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
-import { memo, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Navigate, Route, useLocation } from 'react-router-dom';
-import { loadCurrentUser } from 'store/auth/auth.actions';
 
 interface Props {
   element: React.ReactElement;
-  requiredRoles: Array<ROLE>;
+  requiredRoles: Array<Role>;
   path?: string;
 }
 /**

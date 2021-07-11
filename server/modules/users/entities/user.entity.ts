@@ -1,6 +1,4 @@
 import * as bcrypt from 'bcrypt';
-import { IsEmail, IsEnum, IsString, Length } from 'class-validator';
-import { ROLE } from '../../common/enums/role.enum';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -10,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Role } from '../../../common/enums/role.enum';
 
 @Entity({ name: 'users' })
 export class User {
@@ -17,25 +16,18 @@ export class User {
   id: number;
 
   @Column({ nullable: false })
-  @IsString()
-  @Length(4, 20)
   name: string;
 
   @Column({ unique: true, nullable: false })
-  @IsEmail()
   email: string;
 
   @Column({ nullable: false })
-  @IsString()
-  @Length(4, 100)
   password: string;
 
-  @Column({ type: 'enum', enum: ROLE, default: ROLE.Student })
-  @IsEnum(ROLE)
-  role: ROLE;
+  @Column({ type: 'enum', enum: Role, default: Role.STUDENT })
+  role: Role;
 
   @Column({ nullable: false })
-  @IsString()
   avatar: string;
 
   @Column()

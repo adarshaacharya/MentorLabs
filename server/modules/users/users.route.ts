@@ -5,7 +5,7 @@ import { validationMiddleware } from '../../common/middlewares/validaton.middlew
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
 import { usersController } from './users.controller';
-import { ROLE } from '../../common/enums/role.enum';
+import { Role } from '../../common/enums/role.enum';
 
 export const router: Router = Router();
 
@@ -15,7 +15,7 @@ export const router: Router = Router();
  * @description : fetch logged in user details
  * @acces private
  */
-router.get('/me', [checkJwt, checkRole([ROLE.Teacher, ROLE.Student])], usersController.me);
+router.get('/me', [checkJwt, checkRole([Role.TEACHER, Role.STUDENT])], usersController.me);
 
 /**
  * @method POST

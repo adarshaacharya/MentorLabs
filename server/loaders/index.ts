@@ -4,6 +4,6 @@ import { dbConnection } from './database';
 import server from './express';
 
 export default async (app: express.Application) => {
-  await dbConnection();
+  await dbConnection.create();
   server(app);
 };

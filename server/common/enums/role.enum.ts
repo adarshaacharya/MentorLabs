@@ -1,15 +1,7 @@
 /**
  * @description Define supported roles
  */
-export enum ROLE {
-  Student = 'STUDENT',
-  Teacher = 'TEACHER',
+export enum Role {
+  STUDENT = 'Student',
+  TEACHER = 'Teacher',
 }
-
-/**
- * @todo refactor above code
- */
-//  export enum ROLE {
-//   student = 'student',
-//   teacher = 'teacher',
-// }

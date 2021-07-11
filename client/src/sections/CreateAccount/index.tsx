@@ -1,5 +1,5 @@
 import { Alert, Card, Form, Input, Layout, Select } from 'antd';
-import { ROLE } from 'constants/roles';
+import { Role } from 'constants/roles';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -116,10 +116,10 @@ export const CreateAccount = () => {
                 <Password />
               </Item>
 
-              <Item name="role" label="Role" initialValue={ROLE.Student}>
+              <Item name="role" label="Role" initialValue={Role.STUDENT}>
                 <Select>
-                  <Option value={ROLE.Student}>Student</Option>
-                  <Option value={ROLE.Teacher}>Teacher</Option>
+                  <Option value={Role.STUDENT}>Student</Option>
+                  <Option value={Role.TEACHER}>Teacher</Option>
                 </Select>
               </Item>
 

@@ -3,10 +3,10 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/token/generate-jwt.ts';
 import { Gravatar } from '../../services/Gravatar';
-import { CreateAccountInput } from './dtos/create-account.dto';
-import { LoginInput } from './dtos/login.dto';
+import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
+import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UserRepository } from './repositories/users.repository';
-import { User } from './user.entity';
+import { User } from './entities/user.entity';
 
 @Service()
 export class UsersService {
@@ -24,7 +24,7 @@ export class UsersService {
     return user;
   }
 
-  public async createAccount({ name, email, password, role }: CreateAccountInput) {
+  public async createAccount({ name, email, password, role }: CreateAccountInput): Promise<CreateAccountOutput> {
     if (await this.userRepository.findOneByEmail(email)) {
       throw new BadRequest('User with provided email already exists');
     }
@@ -37,7 +37,7 @@ export class UsersService {
     return { token, id: user.id, name, email, avatar, role };
   }
 
-  public async login({ email, password }: LoginInput) {
+  public async login({ email, password }: LoginInput): Promise<LoginOutput> {
     const user = await this.userRepository.findOneByEmail(email);
     if (!user) {
       throw new Unauthorized("User with given email doesn't exists");

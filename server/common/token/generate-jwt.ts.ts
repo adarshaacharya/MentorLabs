@@ -1,8 +1,8 @@
 import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
 import jwt from 'jsonwebtoken';
-import { ROLE } from '../enums/role.enum';
+import { Role } from '../enums/role.enum';
 
-export const generateJwtToken = ({ id, role }: { id: number; role: ROLE }): string => {
+export const generateJwtToken = ({ id, role }: { id: number; role: Role }): string => {
   const payload: JwtPayload = {
     user: {
       id,
