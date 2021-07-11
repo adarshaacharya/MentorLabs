@@ -18,13 +18,13 @@ export class StudentProfile {
   @JoinColumn()
   user: User;
 
-  @Column('string', { array: true })
+  @Column('text', { array: true })
   tags: string[];
 
-  @Column('string')
+  @Column()
   country: string;
 
-  @Column('string', { array: true })
+  @Column('text', { array: true })
   languages: string[];
 
   @Column()

@@ -7,17 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Channel } from '.././../../common/interfaces/channel.interface';
 import { User } from './user.entity';
 
-export enum ChannelName {
-  EMAIL = 'email',
-  SLACK = 'slack',
-  LINKED = 'linkedin',
-  FACEBOOK = 'facebook',
-  TWITTER = 'twitter',
-  GITHUB = 'github',
-  WEBSITE = 'website',
-}
 @Entity({ name: 'teacher-profile' })
 export class TeacherProfile {
   @PrimaryGeneratedColumn()
@@ -27,20 +19,20 @@ export class TeacherProfile {
   @JoinColumn()
   user: User;
 
-  @Column('string', { array: true })
+  @Column('text', { array: true })
   tags: string[];
 
-  @Column('string')
+  @Column()
   country: string;
 
-  @Column('string', { array: true })
+  @Column('text', { array: true })
   languages: string[];
 
-  @Column('string')
+  @Column()
   description: string;
 
-  @Column({ type: 'enum', enum: ChannelName })
-  role: ChannelName;
+  @Column({ type: 'json' })
+  channels: Channel;
 
   @Column()
   @CreateDateColumn()
