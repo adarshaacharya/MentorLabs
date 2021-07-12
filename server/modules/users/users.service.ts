@@ -1,18 +1,24 @@
 import { Service } from 'typedi';
+import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/token/generate-jwt.ts';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
+import { CreateProfileInput } from './dtos/create-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
-import { UserRepository } from './repositories/users.repository';
+import { Profile } from './entities/profile.entity';
 import { User } from './entities/user.entity';
+import { UserRepository } from './repositories/users.repository';
 
 @Service()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: UserRepository, // instead of model we pass the custom repository
+
+    @InjectRepository(Profile)
+    private readonly profileRepository: Repository<Profile>,
   ) {}
 
   public async me(id: number | undefined) {
@@ -52,5 +58,19 @@ export class UsersService {
 
     const { id, name, avatar, role } = user;
     return { token, id, name, email, avatar, role };
+  }
+
+  public async createStudentProfile(userId: number, createProfileInput: CreateProfileInput) {
+    const profile = await this.profileRepository.save(this.profileRepository.create({ userId, ...createProfileInput }));
+
+    return {
+      title: profile.title,
+      tags: profile.tags,
+      country: profile.country,
+      languages: profile.languages,
+      description: profile.description,
+      channels: profile.channels,
+      userId: profile.id,
+    };
   }
 }

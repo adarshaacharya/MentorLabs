@@ -1,5 +1,4 @@
 export interface Channel {
-  email: string;
   slack: string;
   linkedin: string;
   facebook: string;

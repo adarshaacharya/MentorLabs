@@ -1,11 +1,12 @@
-import { checkRole } from '../../common/middlewares/roles.middleware';
 import { Router } from 'express';
+import { Role } from '../../common/enums/role.enum';
 import { checkJwt } from '../../common/middlewares/auth.middleware';
-import { validationMiddleware } from '../../common/middlewares/validaton.middleware';
+import { checkRole } from '../../common/middlewares/roles.middleware';
+import { createValidator } from '../../common/middlewares/validaton.middleware';
 import { CreateAccountInput } from './dtos/create-account.dto';
+import { CreateProfileInput } from './dtos/create-profile.dto';
 import { LoginInput } from './dtos/login.dto';
 import { usersController } from './users.controller';
-import { Role } from '../../common/enums/role.enum';
 
 export const router: Router = Router();
 
@@ -23,7 +24,7 @@ router.get('/me', [checkJwt, checkRole([Role.TEACHER, Role.STUDENT])], usersCont
  * @description : login registered user to app
  * @acces public
  */
-router.post('/create-account', validationMiddleware(CreateAccountInput), usersController.createAccount);
+router.post('/create-account', createValidator(CreateAccountInput), usersController.createAccount);
 
 /**
  * @method POST
@@ -31,12 +32,24 @@ router.post('/create-account', validationMiddleware(CreateAccountInput), usersCo
  * @description : login registered user to app
  * @acces public
  */
-router.post('/login', validationMiddleware(LoginInput), usersController.login);
+router.post('/login', createValidator(LoginInput), usersController.login);
 
 /**
  * @method POST
  * @route /api/users/logout
  * @description : logout user
- * @acces public
+ * @acces private
  */
 router.post('/logout', [checkJwt], usersController.logout);
+
+/**
+ * @method POST
+ * @route /api/users/students/profile
+ * @description create student profile
+ * @access private
+ */
+router.post(
+  '/student-profile',
+  [checkJwt, checkRole([Role.STUDENT]), createValidator(CreateProfileInput)],
+  usersController.createStudentProfile,
+);

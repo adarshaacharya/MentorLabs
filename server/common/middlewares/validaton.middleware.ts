@@ -6,7 +6,7 @@ import { RequestHandler } from 'express';
 /**
  * validation middleware for class-validator
  */
-export function validationMiddleware(type: any, skipMissingProperties = false): RequestHandler {
+export function createValidator(type: any, skipMissingProperties = false): RequestHandler {
   return (req, _, next) => {
     validate(plainToClass(type, req.body), { skipMissingProperties }).then((errors: ValidationError[]) => {
       if (errors.length > 0) {

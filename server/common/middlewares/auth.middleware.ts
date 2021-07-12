@@ -18,7 +18,6 @@ export const checkJwt = (req: AuthRequest, _res: Response, next: NextFunction) =
   // check if token exists in cookie on request
   const token = req.cookies[AUTH_COOKIE];
   if (!token) throw new Unauthorized('Access denied. No token provided');
-
   try {
     const decoded: JwtPayload = <any>jwt.verify(token, process.env.JWT_SECRET as string);
 
