@@ -17,3 +17,9 @@
 - It is a style of doing async stuff with redux.
 - redux-toolkit inserts redux-thunk middleware by default.
   \*/
+
+
+- users & profile
+if unidirectional create user field only on profile, so we can query user from profile...
+but there is no way to query from user to profile
+for that we need to create field named profile in User entity and map from both sides

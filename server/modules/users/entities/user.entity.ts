@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { Mentorship } from 'modules/mentorships/entity/mentorship.entity';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import { CoreEntity } from '../../../common/entities/core.entity';
 import { Role } from '../../../common/enums/role.enum';
 
@@ -19,6 +20,12 @@ export class User extends CoreEntity {
 
   @Column({ nullable: false })
   avatar: string;
+
+  @OneToMany(() => Mentorship, (mentorship) => mentorship.mentee)
+  books: Mentorship[]; // user can books many mentorships
+
+  @OneToMany(() => Mentorship, (mentorship) => mentorship.mentor)
+  mentors: Mentorship[]; // mentor can mentors many mentorships
 
   @BeforeInsert()
   @BeforeUpdate()

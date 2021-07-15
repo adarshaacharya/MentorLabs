@@ -44,11 +44,11 @@ class UsersController {
     res.status(200).json({ ok: true });
   }
 
-  public async createStudentProfile(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+  public async creatProfile(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const userId = req.user?.id;
       const usersServiceInstance = Container.get(UsersService);
-      const profile = userId && (await usersServiceInstance.createStudentProfile(userId, req.body));
+      const profile = userId && (await usersServiceInstance.creatProfile(userId, req.body));
       res.status(400).json({ profile });
     } catch (e) {
       next(e);

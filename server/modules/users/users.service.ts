@@ -5,7 +5,7 @@ import { BadRequest, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/token/generate-jwt.ts';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
-import { CreateProfileInput } from './dtos/create-profile.dto';
+import { CreateProfileInput, CreateProfileOutput } from './dtos/create-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { Profile } from './entities/profile.entity';
 import { User } from './entities/user.entity';
@@ -60,7 +60,7 @@ export class UsersService {
     return { token, id, name, email, avatar, role };
   }
 
-  public async createStudentProfile(userId: number, createProfileInput: CreateProfileInput) {
+  public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
     const profile = await this.profileRepository.save(this.profileRepository.create({ userId, ...createProfileInput }));
 
     return {

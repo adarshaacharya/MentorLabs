@@ -49,7 +49,7 @@ router.post('/logout', [checkJwt], usersController.logout);
  * @access private
  */
 router.post(
-  '/student-profile',
-  [checkJwt, checkRole([Role.STUDENT]), createValidator(CreateProfileInput)],
-  usersController.createStudentProfile,
+  '/create-profile',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(CreateProfileInput)],
+  usersController.creatProfile,
 );

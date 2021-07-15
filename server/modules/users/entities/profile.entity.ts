@@ -24,7 +24,7 @@ export class Profile extends CoreEntity {
   channels: Channel;
 
   // this automatically forms column named userId on profile
-  @OneToOne(() => User, { onDelete: 'CASCADE' })
+  @OneToOne(() => User, { onDelete: 'CASCADE' }) // if user gets deletd delete its record in profile too..
   @JoinColumn()
   user: User;
 
