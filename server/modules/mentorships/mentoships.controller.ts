@@ -2,10 +2,12 @@ import { AuthRequest } from '../../common/interfaces/auth-request.interface';
 import { NextFunction, Response } from 'express';
 import Container from 'typedi';
 import { MentorshipsService } from './mentorships.service';
+import validateIdOrThrow from '../../common/validator/id-validator';
 
 class MentorshipsController {
   public async createMentorship(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
+      validateIdOrThrow(+req.params.mentorId);
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
 
       const currentId = req.user && req.user.id;

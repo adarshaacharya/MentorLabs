@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { Mentorship } from 'modules/mentorships/entity/mentorship.entity';
+import { Mentorship } from '../../../modules/mentorships/entity/mentorship.entity';
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import { CoreEntity } from '../../../common/entities/core.entity';
 import { Role } from '../../../common/enums/role.enum';
