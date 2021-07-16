@@ -2,7 +2,7 @@ import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, Unauthorized } from '../../common/exceptions';
-import { generateJwtToken } from '../../common/token/generate-jwt.ts';
+import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
 import { CreateProfileInput, CreateProfileOutput } from './dtos/create-profile.dto';

@@ -1,10 +1,8 @@
-import { Role } from '../../common/enums/role.enum';
-import { checkJwt } from '../../common/middlewares/auth.middleware';
 import { Router } from 'express';
-import { mentorshipsController } from './mentoships.controller';
-import { createValidator } from '../../common/middlewares/validaton.middleware';
+import { Role } from '../../common/enums';
+import { checkRole, createValidator, checkJwt } from '../../common/middlewares';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
-import { checkRole } from '../../common/middlewares/roles.middleware';
+import { mentorshipsController } from './mentoships.controller';
 
 export const router: Router = Router();
 

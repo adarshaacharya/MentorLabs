@@ -1,4 +1,4 @@
-import { errorHandler } from '../common/middlewares/errors.middleware';
+import { errorHandler } from '../common/middlewares';
 import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';

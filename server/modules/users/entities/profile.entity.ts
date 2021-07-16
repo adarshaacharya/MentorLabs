@@ -1,6 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { CoreEntity } from '../../../common/entities/core.entity';
-import { Channel } from '../../../common/interfaces/channel.interface';
+import { Column, Entity, JoinColumn, OneToOne, RelationId } from 'typeorm';
+import { CoreEntity } from '../../../common/entities';
+import { Channel } from '../../../common/interfaces';
 import { User } from './user.entity';
 
 @Entity()
@@ -29,6 +29,6 @@ export class Profile extends CoreEntity {
   user: User;
 
   // created already but implicity defined so that we can pass userid from jwt
-  @Column()
+  @RelationId((profile: Profile) => profile.user)
   userId: number;
 }

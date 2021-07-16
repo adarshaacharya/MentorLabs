@@ -1,8 +1,8 @@
-import { AuthRequest } from '../../common/interfaces/auth-request.interface';
+import { AuthRequest } from '../../common/interfaces';
 import { NextFunction, Response } from 'express';
 import Container from 'typedi';
 import { MentorshipsService } from './mentorships.service';
-import validateIdOrThrow from '../../common/validator/id-validator';
+import { validateIdOrThrow } from '../../common/validator';
 
 class MentorshipsController {
   public async createMentorship(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {

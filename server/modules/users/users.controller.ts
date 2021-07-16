@@ -1,7 +1,7 @@
 import { AuthRequest } from '../../common/interfaces/auth-request.interface';
 import { Request, Response, NextFunction } from 'express';
 import Container from 'typedi';
-import validateIdOrThrow from '../../common/validator/id-validator';
+import { validateIdOrThrow } from '../../common/validator';
 import { UsersService } from './users.service';
 import { AUTH_COOKIE, THIRTY_DAY_COOKIE } from '../../common/constants/cookies';
 

@@ -25,7 +25,7 @@ export class Mentorship extends CoreEntity {
   mentee: User;
 
   @RelationId((mentorship: Mentorship) => mentorship.mentee)
-  menteeId: string;
+  menteeId: number;
 
   // many mentorship have one mentor
   @ManyToOne(() => User, (user) => user.mentors, {
@@ -35,7 +35,7 @@ export class Mentorship extends CoreEntity {
   mentor: User;
 
   @RelationId((mentorship: Mentorship) => mentorship.mentor)
-  mentorId: string;
+  mentorId: number;
 
   @Column({ type: 'enum', enum: Status, default: Status.PENDING })
   status: Status;

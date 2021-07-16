@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { BaseHttpError } from '../exceptions/base-http-error';
+import { BaseHttpError } from '../exceptions';
 
 /**
  *

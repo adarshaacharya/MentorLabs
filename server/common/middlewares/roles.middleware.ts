@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
-import { Role } from '../../common/enums/role.enum';
+import { Role } from '../../common/enums';
 import { Forbidden } from '../../common/exceptions';
-import { AuthRequest } from '../../common/interfaces/auth-request.interface';
+import { AuthRequest } from '../../common/interfaces';
 
 /**
  * middleware to check role of user

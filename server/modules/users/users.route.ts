@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import { Role } from '../../common/enums/role.enum';
-import { checkJwt } from '../../common/middlewares/auth.middleware';
-import { checkRole } from '../../common/middlewares/roles.middleware';
-import { createValidator } from '../../common/middlewares/validaton.middleware';
+import { Role } from '../../common/enums';
+import { checkJwt, checkRole, createValidator } from '../../common/middlewares';
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { CreateProfileInput } from './dtos/create-profile.dto';
 import { LoginInput } from './dtos/login.dto';

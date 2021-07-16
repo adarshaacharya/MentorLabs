@@ -1,4 +1,4 @@
-import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import jwt from 'jsonwebtoken';
 import { Role } from '../enums/role.enum';
 

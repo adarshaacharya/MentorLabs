@@ -1,11 +1,10 @@
-import { AUTH_COOKIE } from '../../common/constants/cookies';
+import { AUTH_COOKIE } from '../../common/constants';
 import { NextFunction, Response } from 'express';
 
 import * as jwt from 'jsonwebtoken';
 
 import { Unauthorized } from '../../common/exceptions';
-import { AuthRequest } from '../../common/interfaces/auth-request.interface';
-import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
+import { AuthRequest, JwtPayload } from '../../common/interfaces';
 
 /**
  * Middleware to check if user is authticated or not
