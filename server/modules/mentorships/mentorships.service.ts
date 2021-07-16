@@ -5,12 +5,15 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest } from '../../common/exceptions';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { Mentorship } from './entity/mentorship.entity';
+import { User } from '../users/entities/user.entity';
 
 @Service()
 export class MentorshipsService {
   constructor(
     @InjectRepository(Mentorship)
     private readonly mentorshipRepository: Repository<Mentorship>,
+
+    @InjectRepository(User)
     private readonly userRepository: UserRepository,
   ) {}
 

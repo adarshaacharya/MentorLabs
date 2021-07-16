@@ -8,8 +8,8 @@ class MentorshipsController {
   public async createMentorship(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       validateIdOrThrow(+req.params.mentorId);
+      console.log(req.params.mentorId);
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
-
       const currentId = req.user && req.user.id;
       const mentorId = req.params.mentorId;
 

@@ -9,7 +9,7 @@ export const router: Router = Router();
 /**
  * @method POST
  * @route /api/mentorships
- * @description : fetch logged in user details
+ * @description : apply for mentorships
  * @acces private
  */
 router.post(

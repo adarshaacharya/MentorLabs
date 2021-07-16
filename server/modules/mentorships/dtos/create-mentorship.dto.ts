@@ -1,9 +1,11 @@
-import { IsIn, IsString, Length } from 'class-validator';
+import { IsIn, IsNumber, IsString, Length } from 'class-validator';
 import { Status } from '../../../common/enums/status.enum';
 
 export class CreateMentorshipInput {
+  @IsNumber()
   readonly mentorId: number;
 
+  @IsNumber()
   readonly menteeId: number;
 
   @IsString()
@@ -23,6 +25,4 @@ export class CreateMentorshipInput {
   readonly status: Status;
 }
 
-export class CreateMentorshipOutput {
-  ok: boolean;
-}
+export class CreateMentorshipOutput {}

@@ -31,7 +31,8 @@ export class UsersService {
   }
 
   public async createAccount({ name, email, password, role }: CreateAccountInput): Promise<CreateAccountOutput> {
-    if (await this.userRepository.findOneByEmail(email)) {
+    const userExists = await this.userRepository.findOneByEmail(email);
+    if (userExists) {
       throw new BadRequest('User with provided email already exists');
     }
 
