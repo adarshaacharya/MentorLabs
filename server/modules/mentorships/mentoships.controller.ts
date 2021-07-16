@@ -7,14 +7,28 @@ import { validateIdOrThrow } from '../../common/validator';
 class MentorshipsController {
   public async createMentorship(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      validateIdOrThrow(+req.params.mentorId);
-      console.log(req.params.mentorId);
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
+
+      const mentorId = validateIdOrThrow(+req.params.mentorId);
       const currentId = req.user && req.user.id;
-      const mentorId = req.params.mentorId;
 
       await mentorshipsServiceInstance.createMentorship({ mentorId, menteeId: currentId, ...req.body });
       res.status(201).json({ ok: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async getMentorshipRequests(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const mentorshipsServiceInstance = Container.get(MentorshipsService);
+
+      const userId = validateIdOrThrow(+req.params.userId);
+      const currentUserId = req.user?.id;
+
+      const requests = currentUserId && (await mentorshipsServiceInstance.getMentorshipRequests(userId, currentUserId));
+
+      res.status(201).json({ requests });
     } catch (error) {
       next(error);
     }

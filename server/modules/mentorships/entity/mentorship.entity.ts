@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities/core.entity';
 import { Status } from '../../../common/enums/status.enum';
 import { User } from '../../../modules/users/entities/user.entity';
@@ -24,7 +24,8 @@ export class Mentorship extends CoreEntity {
   })
   mentee: User;
 
-  @RelationId((mentorship: Mentorship) => mentorship.mentee)
+  //explicit mention
+  @Column()
   menteeId: number;
 
   // many mentorship have one mentor
@@ -34,7 +35,8 @@ export class Mentorship extends CoreEntity {
   })
   mentor: User;
 
-  @RelationId((mentorship: Mentorship) => mentorship.mentor)
+  //explicit mention
+  @Column()
   mentorId: number;
 
   @Column({ type: 'enum', enum: Status, default: Status.PENDING })

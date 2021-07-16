@@ -2,7 +2,7 @@ import { UserRepository } from '../users/repositories/users.repository';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { BadRequest } from '../../common/exceptions';
+import { BadRequest, Unauthorized } from '../../common/exceptions';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { Mentorship } from './entity/mentorship.entity';
 import { User } from '../users/entities/user.entity';
@@ -23,7 +23,6 @@ export class MentorshipsService {
    */
   public async createMentorship(createMentorshipInput: CreateMentorshipInput): Promise<void> {
     const { mentorId, menteeId } = createMentorshipInput;
-
     const mentor = await this.userRepository.findOne(mentorId);
 
     if (!mentor) {
@@ -47,6 +46,32 @@ export class MentorshipsService {
     }
 
     await this.mentorshipRepository.save(this.mentorshipRepository.create(createMentorshipInput));
+  }
+
+  /**
+   * Finds mentorship requests to a teacher
+   * @param userId
+   */
+  public async getMentorshipRequests(userId: number, currentUserId: number) {
+    const user = await this.userRepository.findOne(userId);
+
+    if (!user) {
+      throw new BadRequest('User not found');
+    }
+
+    // only same user can view the request
+    if (userId !== currentUserId) {
+      throw new Unauthorized('You are not authorized to perform this operation');
+    }
+
+    // Get the mentorship requests from and to to that user
+    const mentorshipRequests: Mentorship[] = await this.mentorshipRepository.find({
+      where: {
+        mentorId: userId,
+      },
+      relations: ['mentee'], // also give info about mentee (who send req)
+    });
+    return mentorshipRequests;
   }
 
   /**

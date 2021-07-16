@@ -9,7 +9,7 @@ export const router: Router = Router();
 /**
  * @method POST
  * @route /api/mentorships
- * @description : apply for mentorships
+ * @description : Creates a new mentorship request for the given mentor
  * @acces private
  */
 router.post(
@@ -17,3 +17,11 @@ router.post(
   [checkJwt, checkRole([Role.STUDENT]), createValidator(CreateMentorshipInput)],
   mentorshipsController.createMentorship,
 );
+
+/**
+ * @method POST
+ * @route /api/mentorships
+ * @description : Returns the mentorship requests for a mentor
+ * @acces private
+ */
+router.get('/:userId/requests', [checkJwt, checkRole([Role.TEACHER])], mentorshipsController.getMentorshipRequests);

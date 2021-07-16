@@ -1,11 +1,9 @@
-import { IsIn, IsNumber, IsString, Length } from 'class-validator';
+import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
 import { Status } from '../../../common/enums/status.enum';
 
 export class CreateMentorshipInput {
-  @IsNumber()
   readonly mentorId: number;
 
-  @IsNumber()
   readonly menteeId: number;
 
   @IsString()
@@ -20,8 +18,8 @@ export class CreateMentorshipInput {
   @Length(10, 500)
   readonly message: string;
 
-  @IsString()
-  @IsIn(Object.values(Status))
+  @IsOptional()
+  @IsEnum(() => Status)
   readonly status: Status;
 }
 
