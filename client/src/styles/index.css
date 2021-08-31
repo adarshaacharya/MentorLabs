@@ -166,26 +166,39 @@ body {
 }
 
 .about {
-  padding: 7em 0;
+  padding: 8em 0;
   background-color: var(--light-color);
 }
 
-.about__header {
+.about__info {
+  margin-right: 2em;
+}
+
+.about__img img {
+  width: 100%;
+}
+
+.features {
+  padding: 7em 0;
+  background-color: var(--bg-color);
+}
+
+.features__header {
   text-align: center;
   margin-bottom: 2em;
 }
 
-.about__card {
+.features__card {
   margin-right: 1em;
   text-align: center;
   padding: 1em 0;
   cursor: pointer;
 }
 
-.about__card:hover {
+.features__card:hover {
 }
 
-.about__card--title {
+.features__card--title {
   margin: 0.2em 0;
   font-size: 2rem;
   font-weight: bold;
@@ -193,6 +206,7 @@ body {
 
 .contact {
   padding: 8em 0;
+  background-color: var(--light-color);
 }
 .contact__body {
   align-items: center;
@@ -204,6 +218,7 @@ body {
 
 .footer {
   padding: 3em 0;
+  background-color: var(--light-color);
 }
 
 .footer__copyright {

@@ -1,47 +1,37 @@
-import { Card, Col, Row, Typography } from 'antd';
-import { FaVideo } from 'react-icons/fa';
-import { GiProcessor } from 'react-icons/gi';
-import { ImProfile } from 'react-icons/im';
-const { Title, Paragraph, Text, Link } = Typography;
+import aboutImg from '../../assets/about.svg';
+import { Row, Typography, Col } from 'antd';
+
+const { Title, Paragraph } = Typography;
 
 export const About = () => {
   return (
     <div className="about">
       <div className="container">
-        <div className="about__header">
-          <Title>Explore. </Title>
-          <Paragraph>
-            Empower your business with all the right tools to accept online payments and provide the best customer
-            experience.
-          </Paragraph>
-        </div>
-        <Row className="about__features">
-          <Col span={8}>
-            <Card className="about__card">
-              <div className="about__card--icon">
-                <ImProfile size="5em" />
-              </div>
-              <p className="about__card--title">Complete Profile</p>
-              <Paragraph>Fill out all the details and feed the algorithms with your details.</Paragraph>
-            </Card>
+        <Row>
+          <Col span={14} className="about__info">
+            <Title>Our Mission and Values.</Title>
+            <Paragraph>
+              Metor Labs is a free and open-source platform for connecting the subject experts with the students all
+              around the globe. When everything was going in virtual mode in the pandemic times, we feel that the
+              learning process should also pave on the same direction.
+            </Paragraph>
+
+            <Paragraph>
+              We strongly belive that geographical and financial barrier shouldn't stop anyone in learning process. So,
+              this platform is the result of the experiments and the sheer necessity to solve the problems of mentorship
+              in the educational sector.
+            </Paragraph>
+
+            <Paragraph>
+              We have hundreds of experts from Computer Science and Technology domains willing to mentor the students.
+              If you are student join us via Student category and if you want to mentor the students join us via Teacher
+              category.
+            </Paragraph>
           </Col>
           <Col span={8}>
-            <Card className="about__card">
-              <div className="about__card--icon">
-                <GiProcessor size="5em" />
-              </div>
-              <p className="about__card--title">Get Recommendations</p>
-              <Paragraph>Our powerful algorithms will recommend you best mentor.</Paragraph>
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card className="about__card">
-              <div className="about__card--icon">
-                <FaVideo size="5em" />
-              </div>
-              <p className="about__card--title">Sechedule Meeting</p>
-              <Paragraph>Select your favourite mentor and schedule class on single click.</Paragraph>
-            </Card>
+            <div className="about__img">
+              <img src={aboutImg} alt="about" />
+            </div>
           </Col>
         </Row>
       </div>
