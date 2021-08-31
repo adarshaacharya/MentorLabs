@@ -38,6 +38,10 @@ body {
   padding: 0 1em;
 }
 
+.flex {
+  display: flex;
+}
+
 .text--primary {
   color: var(--primary-color);
 }
@@ -187,7 +191,7 @@ body {
 }
 
 .contact {
-  padding: 8em 0;
+  padding: 7em 0;
 }
 .contact__body {
   align-items: center;
@@ -195,6 +199,22 @@ body {
 }
 .contact__img img {
   width: 90%;
+}
+
+.footer {
+  padding: 3em 0;
+}
+
+.footer__copyright {
+  text-align: left;
+}
+
+.footer__links {
+  margin-left: auto;
+}
+
+.footer__links a {
+  margin-right: 2rem;
 }
 
 /*==============================================================================
@@ -205,6 +225,7 @@ body {
 
 .signup__wrapper {
   display: flex;
+  margin-top: 10vh;
 }
 
 .signup__img {
@@ -251,6 +272,7 @@ body {
 
 .login__wrapper {
   display: flex;
+  margin-top: 10vh;
 }
 
 .login__banner {

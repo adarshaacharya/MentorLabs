@@ -20,7 +20,7 @@ export const Hero = () => {
           </button>
         </div>
         <div className="hero__img">
-          <img src={heroImg} alt="hero" />
+          <img src={heroImg} alt="hero" loading="lazy" />
         </div>
       </div>
     </div>

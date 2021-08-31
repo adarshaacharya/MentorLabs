@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { About, Contact, Hero } from './components';
+import { About, Contact, Hero, Footer } from './components';
 
 export const Home = () => {
   return (
@@ -10,6 +10,8 @@ export const Home = () => {
       <Hero />
       <About />
       <Contact />
+
+      <Footer />
     </section>
   );
 };

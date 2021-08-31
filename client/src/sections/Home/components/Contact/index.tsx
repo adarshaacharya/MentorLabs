@@ -9,7 +9,7 @@ export const Contact = () => {
         <Row>
           <Col span={16}>
             <div className="contact__body">
-              <Title>Connect with us</Title>
+              <Title>Connect with us.</Title>
               <Paragraph>
                 We want to hear your thoughts! If you have any suggestions and feedback feel free to write us an email
                 at
