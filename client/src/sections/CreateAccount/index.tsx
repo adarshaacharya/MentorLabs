@@ -40,7 +40,7 @@ export const CreateAccount = () => {
         <div className="signup__wrapper">
           <div className="signup__banner">
             <div className="signup__img">
-              <img src={signupImg} alt="signup" />
+              <img src={signupImg} alt="signup" loading="lazy" />
             </div>
           </div>
 

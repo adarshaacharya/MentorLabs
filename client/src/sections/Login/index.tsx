@@ -35,7 +35,7 @@ export const Login = () => {
         <div className="login__wrapper">
           <div className="login__banner">
             <div className="login__img">
-              <img src={loginImg} alt="login" />
+              <img src={loginImg} alt="login" loading="lazy" />
             </div>
           </div>
 
