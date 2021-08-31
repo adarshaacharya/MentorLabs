@@ -186,6 +186,17 @@ body {
   font-weight: bold;
 }
 
+.contact {
+  padding: 8em 0;
+}
+.contact__body {
+  align-items: center;
+  padding-right: 1em;
+}
+.contact__img img {
+  width: 90%;
+}
+
 /*==============================================================================
  Section : Create account
 ==============================================================================*/
