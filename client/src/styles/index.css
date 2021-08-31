@@ -36,7 +36,6 @@ body {
   max-width: 1100px;
   margin: auto;
   padding: 0 1em;
-  padding-top: 10vh;
 }
 
 .text--primary {
@@ -124,6 +123,7 @@ body {
   height: 90vh;
   display: flex;
   padding: 4em 0;
+  margin-top: 10vh;
 }
 
 .hero__about {
@@ -158,6 +158,32 @@ body {
 
 .hero__img img {
   width: 100%;
+}
+
+.about {
+  padding: 7em 0;
+  background-color: var(--light-color);
+}
+
+.about__header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.about__card {
+  margin-right: 1em;
+  text-align: center;
+  padding: 1em 0;
+  cursor: pointer;
+}
+
+.about__card:hover {
+}
+
+.about__card--title {
+  margin: 0.2em 0;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 /*==============================================================================

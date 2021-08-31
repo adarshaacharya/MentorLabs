@@ -8,10 +8,8 @@ export const Home = () => {
       <Helmet>
         <title>Home | Mentor Labs</title>
       </Helmet>
-      <div className="container">
-        <Hero />
-        <About />
-      </div>
+      <Hero />
+      <About />
     </section>
   );
 };
