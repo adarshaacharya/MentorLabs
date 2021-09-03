@@ -41,6 +41,30 @@ router.post('/login', createValidator(LoginInput), usersController.login);
 router.post('/logout', [checkJwt], usersController.logout);
 
 /**
+ * @method GET
+ * @route /api/users/teachers
+ * @description get all teachers with their profile
+ * @access private
+ */
+router.get('/teachers', [checkJwt, checkRole([Role.STUDENT])], usersController.getTeachers);
+
+/**
+ * @method GET
+ * @route /api/users/students
+ * @description get all students with their profile
+ * @access private
+ */
+router.get('/students', [checkJwt, checkRole([Role.TEACHER])], usersController.getStudents);
+
+/**
+ * @method GET
+ * @route /api/users/:id
+ * @description fetch user details by id
+ * @acces private
+ */
+router.get('/:id', [checkJwt], usersController.findOneById);
+
+/**
  * @method POST
  * @route /api/users/create-profile
  * @description create student and teachers profile

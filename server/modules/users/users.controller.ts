@@ -54,6 +54,37 @@ class UsersController {
       next(e);
     }
   }
+
+  public async findOneById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = validateIdOrThrow(+req.params.userId);
+      const usersServiceInstance = Container.get(UsersService);
+      const user = userId && (await usersServiceInstance.findOneById(userId));
+      res.status(400).json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async getTeachers(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const usersServiceInstance = Container.get(UsersService);
+      const teachers = await usersServiceInstance.getTeachers();
+      res.status(400).json(teachers);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async getStudents(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const usersServiceInstance = Container.get(UsersService);
+      const students = await usersServiceInstance.getStudents();
+      res.status(400).json(students);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const usersController = new UsersController();

@@ -20,7 +20,7 @@ router.post(
 
 /**
  * @method POST
- * @route /api/mentorships
+ * @route /api/:userId/requests
  * @description : Returns the mentorship requests for a mentor
  * @acces private
  */

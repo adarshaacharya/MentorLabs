@@ -1,7 +1,8 @@
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { BadRequest, Unauthorized } from '../../common/exceptions';
+import { Role } from '../../common/enums';
+import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
@@ -73,5 +74,26 @@ export class UsersService {
       channels: profile.channels,
       userId,
     };
+  }
+
+  public async findOneById(userId: number) {
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['profile'] });
+
+    if (!user) {
+      throw new NotFound("User with given id doesn't exists");
+    }
+    return user;
+  }
+
+  public async getTeachers() {
+    const teachers = await this.userRepository.find({ where: { role: Role.TEACHER }, relations: ['profile'] });
+
+    return teachers;
+  }
+
+  public async getStudents() {
+    const students = await this.userRepository.find({ where: { role: Role.STUDENT }, relations: ['profile'] });
+
+    return students;
   }
 }
