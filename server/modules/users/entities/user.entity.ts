@@ -1,8 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { Mentorship } from '../../../modules/mentorships/entity/mentorship.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, OneToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities';
 import { Role } from '../../../common/enums';
+import { Profile } from './profile.entity';
 
 @Entity()
 export class User extends CoreEntity {
@@ -20,6 +21,9 @@ export class User extends CoreEntity {
 
   @Column({ nullable: false })
   avatar: string;
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
 
   @OneToMany(() => Mentorship, (mentorship) => mentorship.mentee)
   books: Mentorship[]; // user can books many mentorships

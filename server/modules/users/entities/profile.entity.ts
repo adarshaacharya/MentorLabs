@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, RelationId } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities';
 import { Channel } from '../../../common/interfaces';
 import { User } from './user.entity';
@@ -23,12 +23,12 @@ export class Profile extends CoreEntity {
   @Column({ type: 'json' })
   channels: Channel;
 
-  // this automatically forms column named userId on profile
-  @OneToOne(() => User, { onDelete: 'CASCADE' }) // if user gets deletd delete its record in profile too..
-  @JoinColumn()
+  // this automatically forms column named userId on profile, plus make it bidirectional
+  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' }) // if user gets deletd delete its record in profile too..
+  @JoinColumn() // create userId on profile table
   user: User;
 
   // created already but implicity defined so that we can pass userid from jwt
-  @RelationId((profile: Profile) => profile.user)
+  @Column()
   userId: number;
 }

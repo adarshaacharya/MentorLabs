@@ -71,7 +71,7 @@ export class UsersService {
       languages: profile.languages,
       description: profile.description,
       channels: profile.channels,
-      userId: profile.id,
+      userId,
     };
   }
 }

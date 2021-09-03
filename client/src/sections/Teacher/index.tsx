@@ -1,1 +1,12 @@
-export const Teacher = () => <h1 className="container">Teacher Dashboard</h1>;
+import { Helmet } from 'react-helmet-async';
+
+export const Teacher = () => {
+  <Helmet>
+    <title>Teacher Dashboard | Mentor Labs</title>
+  </Helmet>;
+  return (
+    <div className="dashboard">
+      <div className="container">Teacher Dashboard</div>
+    </div>
+  );
+};

@@ -42,8 +42,8 @@ router.post('/logout', [checkJwt], usersController.logout);
 
 /**
  * @method POST
- * @route /api/users/students/profile
- * @description create student profile
+ * @route /api/users/create-profile
+ * @description create student and teachers profile
  * @access private
  */
 router.post(
