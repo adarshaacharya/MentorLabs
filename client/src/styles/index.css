@@ -8,6 +8,7 @@
   --primary-color: #374ebe;
   --light-color: #fff;
   --bg-color: #f7fafc;
+  --gray-color: #808080;
 }
 
 *,
@@ -67,6 +68,9 @@ body {
 .dashboard {
   margin-top: 10vh;
   background-color: var(--light-color);
+}
+.mb-5 {
+  margin-bottom: 5em;
 }
 /*==============================================================================
  Section : App Header
@@ -367,3 +371,68 @@ body {
 /*==============================================================================
  Section : Student Dashboard
 ==============================================================================*/
+.dashboard__title {
+  padding-bottom: 1em;
+  color: var(--gray-color);
+}
+
+/*==============================================================================
+ Component : Card
+==============================================================================*/
+.card-lists {
+  padding: 4em 0;
+}
+.card {
+  text-align: center;
+  /* margin: 2em 1em; */
+  padding: 10px;
+  box-shadow: 0 0 4px 0 rgba(17, 22, 26, 0.16), 0 2px 4px 0 rgba(17, 22, 26, 0.08), 0 4px 8px 0 rgba(17, 22, 26, 0.08);
+  border-radius: 4px;
+  margin-top: 2em;
+  margin-bottom: 5em;
+  margin-right: 2em;
+  padding-top: 2em;
+  /* margin-top: 30px;
+  padding-top: 30px;
+  margin-bottom: 50px; */
+}
+
+.card__img {
+  position: absolute;
+  top: -2em;
+  left: 50%;
+  margin-left: -73px;
+  border-radius: 50%;
+  border: 2px solid skyblue;
+  object-fit: cover;
+  height: 120px;
+  cursor: pointer;
+}
+
+.card__location {
+  margin-top: 2.5em;
+  font-size: 1.2rem;
+}
+
+.card__name {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.card__title {
+  color: var(--gray-color);
+  font-size: 1.3rem;
+}
+
+.card__detail {
+  font-size: 1.4rem;
+  padding: 1em 0;
+}
+
+.card__link {
+  padding: 0 0.5em;
+}
+
+.card__tags {
+  margin-bottom: 1em;
+}
