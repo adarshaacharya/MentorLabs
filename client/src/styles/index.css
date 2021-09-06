@@ -1,0 +1,450 @@
+@import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/*==============================================================================
+ Global Styles
+==============================================================================*/
+:root {
+  --primary-color: #374ebe;
+  --light-color: #fff;
+  --bg-color: #f7fafc;
+  --gray-color: #808080;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+#app {
+  background: var(--bg-color);
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 1em;
+}
+
+.flex {
+  display: flex;
+}
+
+.text--primary {
+  color: var(--primary-color);
+}
+
+.btn--primary {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
+  cursor: pointer;
+}
+
+.btn--primary:hover {
+  opacity: 0.9;
+}
+
+.btn--loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.dashboard {
+  margin-top: 10vh;
+  background-color: var(--light-color);
+}
+.mb-5 {
+  margin-bottom: 5em;
+}
+/*==============================================================================
+ Section : App Header
+==============================================================================*/
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  padding: 0 2em;
+  backdrop-filter: saturate(200%) blur(10px);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-top: 2px solid var(--primary-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.app-header__logo {
+  display: inline-block;
+}
+
+.app-header__logo img {
+  height: 45px;
+}
+
+.app-header__menu-section {
+}
+
+.app-header__menu--public {
+  display: flex;
+  column-gap: 35px;
+}
+
+.app-header__menu-item--public {
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+
+.app-header__menu--avatar {
+  border: 2px solid skyblue;
+}
+
+.app-header__create-account {
+  border: none;
+  background-color: var(--primary-color);
+  padding: 0.4em 0.7em;
+  border-radius: 5px;
+  color: var(--light-color);
+}
+
+.app-header__create-account:hover {
+  opacity: 0.8;
+}
+
+.app-header__menu--private {
+  padding: 0 1em;
+  border: 0;
+  background-color: inherit;
+}
+
+/*==============================================================================
+ Section : Home
+==============================================================================*/
+
+.hero {
+  height: 90vh;
+  display: flex;
+  padding: 4em 0;
+  margin-top: 10vh;
+}
+
+.hero__about {
+  width: 50%;
+}
+
+.hero__about > h1 {
+  font-size: 6rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.966);
+  margin-bottom: 0.3em;
+}
+
+.hero__about p {
+  font-size: 2rem;
+  margin-bottom: 1em;
+}
+
+.hero__signup-btn {
+  padding: 0.6em 1.4em;
+  font-size: 1.6rem;
+}
+
+.hero__signup-btn:hover {
+  opacity: 0.9;
+}
+
+.hero__img {
+  flex-basis: 41%;
+  align-self: center;
+}
+
+.hero__img img {
+  width: 100%;
+}
+
+.about {
+  padding: 8em 0;
+  background-color: var(--light-color);
+}
+
+.about__info {
+  margin-right: 2em;
+}
+
+.about__img img {
+  width: 100%;
+}
+
+.features {
+  padding: 7em 0;
+  background-color: var(--bg-color);
+}
+
+.features__header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.features__card {
+  margin-right: 1em;
+  text-align: center;
+  padding: 1em 0;
+  cursor: pointer;
+}
+
+.features__card:hover {
+}
+
+.features__card--title {
+  margin: 0.2em 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.contact {
+  padding: 8em 0;
+  background-color: var(--light-color);
+}
+.contact__body {
+  align-items: center;
+  padding-right: 1em;
+}
+.contact__img img {
+  width: 90%;
+}
+
+.footer {
+  padding: 3em 0;
+  background-color: var(--light-color);
+}
+
+.footer__copyright {
+  text-align: left;
+}
+
+.footer__links {
+  margin-left: auto;
+}
+
+.footer__links a {
+  margin-right: 2rem;
+}
+
+/*==============================================================================
+ Section : Create account
+==============================================================================*/
+.signup {
+}
+
+.signup__wrapper {
+  display: flex;
+  margin-top: 10vh;
+}
+
+.signup__img {
+}
+
+.signup__img img {
+  width: 100%;
+}
+
+.signup__banner {
+  flex-basis: 100%;
+  padding: 2em;
+}
+
+.signup__card {
+  flex-basis: 100%;
+  padding: 2em;
+  margin: 2em 0;
+  border: none;
+  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+}
+
+.signup__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+
+.signup__btn {
+  font-size: 1.1em;
+  display: block;
+  width: 100%;
+  padding: 0.7em 0;
+  margin-top: 2em;
+}
+
+/*==============================================================================
+ Section : Login
+==============================================================================*/
+.login {
+  height: 100vh;
+}
+
+.login__wrapper {
+  display: flex;
+  margin-top: 10vh;
+}
+
+.login__banner {
+  padding: 1em 2em;
+}
+
+.login__card {
+  flex-basis: 70%;
+  padding: 2em;
+  margin: 2em 0;
+  border: none;
+  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+}
+
+.login__img {
+}
+
+.login__img img {
+  width: 100%;
+}
+
+.login__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+
+.login__btn {
+  font-size: 1.1em;
+  display: block;
+  width: 100%;
+  padding: 0.7em 0;
+  margin-top: 1em;
+}
+
+/*==============================================================================
+ Section : Not Found
+==============================================================================*/
+.not-found {
+}
+
+.not-found__wrapper {
+  height: 89vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found__description-title {
+  display: block;
+  margin-bottom: 1em;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.not-found__description-subtitle {
+  font-size: 1.6rem;
+}
+
+.not-found__btn {
+  padding: 0.6em 1.3em;
+  margin-top: 2em;
+}
+
+.not-found__btn:hover {
+  color: var(--light-color);
+}
+
+/*==============================================================================
+ Section : Student Dashboard
+==============================================================================*/
+.dashboard__title {
+  padding-bottom: 1em;
+  color: var(--gray-color);
+}
+
+/*==============================================================================
+ Component : Card
+==============================================================================*/
+.card-lists {
+  padding: 4em 0;
+}
+.card {
+  text-align: center;
+  /* margin: 2em 1em; */
+  padding: 10px;
+  box-shadow: 0 0 4px 0 rgba(17, 22, 26, 0.16), 0 2px 4px 0 rgba(17, 22, 26, 0.08), 0 4px 8px 0 rgba(17, 22, 26, 0.08);
+  border-radius: 4px;
+  margin-top: 2em;
+  margin-bottom: 5em;
+  margin-right: 2em;
+  padding-top: 2em;
+  /* margin-top: 30px;
+  padding-top: 30px;
+  margin-bottom: 50px; */
+}
+
+.card__img {
+  position: absolute;
+  top: -2em;
+  left: 50%;
+  margin-left: -73px;
+  border-radius: 50%;
+  border: 2px solid skyblue;
+  object-fit: cover;
+  height: 120px;
+  cursor: pointer;
+}
+
+.card__location {
+  margin-top: 2.5em;
+  font-size: 1.2rem;
+}
+
+.card__name {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.card__title {
+  color: var(--gray-color);
+  font-size: 1.3rem;
+}
+
+.card__detail {
+  font-size: 1.4rem;
+  padding: 1em 0;
+}
+
+.card__link {
+  padding: 0 0.5em;
+}
+
+.card__tags {
+  margin-bottom: 1em;
+}
+
+/*==============================================================================
+ Section : Profile
+==============================================================================*/
+.profile {
+  margin-top: 10vh;
+  background-color: var(--light-color);
+}

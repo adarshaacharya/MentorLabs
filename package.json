@@ -1,0 +1,76 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server code for mentor labs",
+  "main": "server/server.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"yarn server:dev\" \"yarn client:dev\"",
+    "client:dev": "cd client && yarn start",
+    "server:dev": "cross-env NODE_ENV=development nodemon server/main.ts",
+    "build": "rm -rf ./build && tsc",
+    "lint": "eslint server/**/*.ts",
+    "lint:fix": "eslint server/**/*.ts --fix",
+    "format": "prettier --write \"server/**/*.{ts,tsx,js,jsx}\" \"client/**/*.{ts,tsx,js,jsx}\"",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "test:cov": "NODE_ENV=test jest --coverage",
+    "dotenv-types:gen": "npx gen-env-types .env -o server/types/env.d.ts -e .",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
+    "@types/gravatar": "^1.8.2",
+    "@types/jest": "^26.0.23",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/node": "^15.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "concurrently": "^6.2.0",
+    "eslint": "^7.27.0",
+    "husky": "^6.0.0",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.0.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.0",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "gravatar": "^1.8.1",
+    "helmet": "^4.6.0",
+    "history": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "normalize-url": "^6.1.0",
+    "pg": "^8.6.0",
+    "react-router-dom": "^6.0.0-beta.2",
+    "reflect-metadata": "^0.1.13",
+    "typedi": "^0.10.0",
+    "typeorm": "^0.2.34",
+    "typeorm-naming-strategies": "^2.0.0",
+    "typeorm-typedi-extensions": "^0.4.1"
+  },
+  "lint-staged": {
+    "client/src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "yarn format"
+    ],
+    "server/**/*.{js,ts}": [
+      "yarn format"
+    ]
+  }
+}
