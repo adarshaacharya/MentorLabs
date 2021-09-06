@@ -111,6 +111,10 @@ body {
   font-size: 1.7rem;
 }
 
+.app-header__menu--avatar {
+  border: 2px solid skyblue;
+}
+
 .app-header__create-account {
   border: none;
   background-color: var(--primary-color);
@@ -435,4 +439,12 @@ body {
 
 .card__tags {
   margin-bottom: 1em;
+}
+
+/*==============================================================================
+ Section : Profile
+==============================================================================*/
+.profile {
+  margin-top: 10vh;
+  background-color: var(--light-color);
 }

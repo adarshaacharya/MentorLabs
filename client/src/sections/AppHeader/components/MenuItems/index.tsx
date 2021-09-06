@@ -36,7 +36,7 @@ export const MenuItems = () => {
   const privateLinks = (
     <Menu mode="horizontal" selectable={false} className="app-header__menu--private">
       <SubMenu
-        title={<Avatar size="large" src={user?.avatar} />}
+        title={<Avatar size="large" src={user?.avatar} className="app-header__menu--avatar" />}
         className="app-header__sub-menu--private"
         key="submenu"
       >
