@@ -68,6 +68,11 @@ export interface UsersState {
   mentors: User[];
 }
 
+export interface ProfileState {
+  status: 'idle' | 'pending' | 'resolved' | 'rejected';
+  user: User;
+}
+
 //==============================================================================
 // Redux Utilities data types
 //==============================================================================

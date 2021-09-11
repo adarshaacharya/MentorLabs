@@ -3,7 +3,7 @@ import config from 'config';
 import { CreateAccountData, LoginData, User } from 'types';
 import http from 'utils/http';
 
-export const loadCurrentUser = createAsyncThunk('auth/loadUser', async (_, thunkAPI) => {
+export const loadCurrentUser = createAsyncThunk('auth/loadCurrentUser', async (_, thunkAPI) => {
   try {
     const url = config.endpoints.auth.me;
     const {
@@ -30,7 +30,7 @@ export const createAccount = createAsyncThunk(
   },
 );
 
-export const logIn = createAsyncThunk('auth/login', async ({ email, password }: LoginData, thunkAPI) => {
+export const logIn = createAsyncThunk('auth/logIn', async ({ email, password }: LoginData, thunkAPI) => {
   try {
     const url = config.endpoints.auth.login;
     const {
@@ -42,7 +42,7 @@ export const logIn = createAsyncThunk('auth/login', async ({ email, password }: 
   }
 });
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
   try {
     const url = config.endpoints.auth.logout;
     await http.post(url);
