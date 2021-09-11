@@ -1,8 +1,10 @@
+import normalizeUrl from 'normalize-url';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Role } from '../../common/enums';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
+import { Channel } from '../../common/interfaces';
 import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
@@ -63,7 +65,16 @@ export class UsersService {
   }
 
   public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
-    const profile = await this.profileRepository.save(this.profileRepository.create({ userId, ...createProfileInput }));
+    const channels = { ...createProfileInput.channels };
+    for (const [key, val] of Object.entries(channels)) {
+      if (val && val.length > 0) {
+        channels[key as keyof Channel] = normalizeUrl(val, { forceHttps: true });
+      }
+    }
+
+    const profile = await this.profileRepository.save(
+      this.profileRepository.create({ userId, ...createProfileInput, channels }),
+    );
 
     return {
       title: profile.title,
@@ -88,7 +99,8 @@ export class UsersService {
   public async getTeachers() {
     const teachers = await this.userRepository.find({ where: { role: Role.TEACHER }, relations: ['profile'] });
 
-    return teachers;
+    const teachersWithProfile = teachers.filter((teacher) => teacher.profile !== null);
+    return teachersWithProfile;
   }
 
   public async getStudents() {

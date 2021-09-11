@@ -70,7 +70,6 @@ class UsersController {
     try {
       const usersServiceInstance = Container.get(UsersService);
       const mentors = await usersServiceInstance.getTeachers();
-      console.log(mentors);
       res.status(200).json(mentors);
     } catch (e) {
       next(e);
