@@ -12,13 +12,13 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMentors.pending, (state, _action) => {
+    builder.addCase(fetchMentors.pending, (state) => {
       state.status = 'pending';
     });
 
-    builder.addCase(fetchMentors.fulfilled, (state, action) => {
+    builder.addCase(fetchMentors.fulfilled, (state, { payload }) => {
       state.status = 'resolved';
-      state.mentors.push(...action.payload);
+      state.mentors.push(...payload);
     });
   },
 });

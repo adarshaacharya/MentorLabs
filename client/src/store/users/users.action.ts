@@ -6,8 +6,8 @@ import http from 'utils/http';
 export const fetchMentors = createAsyncThunk('users/fetchMentors', async (_, thunkAPI) => {
   try {
     const url = config.endpoints.users.fetchMentors;
-    const { data } = await http.get(url);
-    return data as User[];
+    const { data } = await http.get<User[]>(url);
+    return data;
   } catch (err) {
     thunkAPI.rejectWithValue(err.response.data.message);
   }

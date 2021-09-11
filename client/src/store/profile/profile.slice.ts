@@ -15,6 +15,11 @@ const profileSlice = createSlice({
     builder.addCase(fetchProfile.pending, (state) => {
       state.status = 'pending';
     });
+
+    builder.addCase(fetchProfile.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+      state.user = payload;
+    });
   },
 });
 
