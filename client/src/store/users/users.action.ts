@@ -1,1 +1,14 @@
-export {};
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import config from 'config';
+import http from 'utils/http';
+
+export const fetchMentors = createAsyncThunk('users/fetchMentors', async (_, thunkAPI) => {
+  try {
+    const url = config.endpoints.users.fetchMentors;
+    const { data } = await http.get(url);
+    console.log(data);
+    return data;
+  } catch (err) {
+    thunkAPI.rejectWithValue(err.response.data.message);
+  }
+});

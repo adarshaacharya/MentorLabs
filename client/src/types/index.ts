@@ -26,6 +26,21 @@ export interface User {
   email?: string;
   avatar?: string;
   role?: Role;
+  profile?: Profile;
+}
+
+//==============================================================================
+// Profile
+//==============================================================================
+export interface Profile {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  country: string;
+  languages: string[];
+  channels: {};
+  userId: number;
 }
 
 //==============================================================================
@@ -41,6 +56,11 @@ export interface AuthState {
 
 export interface ErrorState {
   message: string | null;
+}
+
+export interface UsersState {
+  status: 'idle' | 'pending' | 'resolved' | 'rejected';
+  mentors: User[];
 }
 
 //==============================================================================

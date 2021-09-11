@@ -10,6 +10,10 @@ const config = {
       logout: '/users/logout',
       me: '/users/me',
     },
+    users: {
+      fetchMentors: '/users/mentors',
+      fetchMentees: '/users/mentees',
+    },
   },
 };
 
