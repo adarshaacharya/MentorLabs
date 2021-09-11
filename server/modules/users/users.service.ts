@@ -88,7 +88,11 @@ export class UsersService {
   }
 
   public async findOneById(userId: number) {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['profile'] });
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
     if (!user) {
       throw new NotFound("User with given id doesn't exists");
@@ -97,14 +101,22 @@ export class UsersService {
   }
 
   public async getTeachers() {
-    const teachers = await this.userRepository.find({ where: { role: Role.TEACHER }, relations: ['profile'] });
+    const teachers = await this.userRepository.find({
+      where: { role: Role.TEACHER },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
     const teachersWithProfile = teachers.filter((teacher) => teacher.profile !== null);
     return teachersWithProfile;
   }
 
   public async getStudents() {
-    const students = await this.userRepository.find({ where: { role: Role.STUDENT }, relations: ['profile'] });
+    const students = await this.userRepository.find({
+      where: { role: Role.STUDENT },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
     return students;
   }
