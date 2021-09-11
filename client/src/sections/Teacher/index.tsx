@@ -15,7 +15,6 @@ export const Teacher = () => {
         <div className="dashboard__title mb-5">
           <Title>Teacher Dashboard</Title>
         </div>
-        <UserCard />
       </div>
     </div>
   );

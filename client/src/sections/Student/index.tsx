@@ -1,18 +1,30 @@
-import * as React from 'react';
-import { Col, Row, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import { UserCard } from 'core-ui';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAppDispatch } from 'hooks';
 import { fetchMentors } from 'store/users/users.action';
-
-const { Title } = Typography;
 
 export const Student = () => {
   const dispatch = useAppDispatch();
+  const { mentors, status } = useAppSelector((state) => state.users);
 
   React.useEffect(() => {
     dispatch(fetchMentors());
   }, []);
+
+  const mentorListingsElement =
+    status === 'resolved' ? (
+      <Row>
+        {mentors.map((mentor) => (
+          <Col xs={12} xl={8} key={mentor.id}>
+            <UserCard user={mentor} />
+          </Col>
+        ))}
+      </Row>
+    ) : (
+      <p>Loading mentors...</p>
+    );
 
   return (
     <section className="dashboard">
@@ -20,28 +32,7 @@ export const Student = () => {
         <title>Student Dashboard | Mentor Labs</title>
       </Helmet>
       <div className="container">
-        <div className="card-lists">
-          <Row>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-            <Col xs={12} xl={8}>
-              <UserCard />
-            </Col>
-          </Row>
-        </div>
+        <div className="card-lists">{mentorListingsElement}</div>
       </div>
     </section>
   );

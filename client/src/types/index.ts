@@ -32,6 +32,11 @@ export interface User {
 //==============================================================================
 // Profile
 //==============================================================================
+export interface Channels {
+  facebook?: '';
+  linkedin?: '';
+  twitter?: '';
+}
 export interface Profile {
   id: number;
   title: string;
@@ -39,7 +44,7 @@ export interface Profile {
   tags: string[];
   country: string;
   languages: string[];
-  channels: {};
+  channels: Channels;
   userId: number;
 }
 

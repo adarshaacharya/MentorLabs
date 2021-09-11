@@ -18,7 +18,7 @@ const usersSlice = createSlice({
 
     builder.addCase(fetchMentors.fulfilled, (state, action) => {
       state.status = 'resolved';
-      state.mentors.push(action.payload);
+      state.mentors.push(...action.payload);
     });
   },
 });
