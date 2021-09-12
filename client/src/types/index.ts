@@ -17,6 +17,8 @@ export interface LoginData {
   password: string;
 }
 
+export interface CreateProfileData extends Omit<Profile, 'id' | 'userId'> {}
+
 //==============================================================================
 // User
 //==============================================================================

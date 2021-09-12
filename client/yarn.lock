@@ -2485,7 +2485,14 @@ ansi-styles@^5.0.0:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
 
-antd@^4.16.3:
+antd-input-tag@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/antd-input-tag/-/antd-input-tag-1.0.14.tgz#bb4e2bec2f81351064d72df59b05e57d598e38ec"
+  integrity sha512-oYXlc4RJCcYKlF5w7YPHIHK5SEIcsXtrf2ajpQIHWBqEeKQi/5bLgiOTcXmW/IbvXiL0vqXNqOFCKjZR7f7cng==
+  dependencies:
+    antd "^4.2.0"
+
+antd@^4.16.3, antd@^4.2.0:
   version "4.16.13"
   resolved "https://registry.yarnpkg.com/antd/-/antd-4.16.13.tgz#e9b9b4a590db28747aae1cab98981649a35880af"
   integrity sha512-EMPD3fzKe7oayx9keD/GA1oKatcx7j5CGlkJj5eLS0/eEDDEkxVj3DFmKOPuHYt4BK7ltTzMFS+quSTmqUXPiw==

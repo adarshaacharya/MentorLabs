@@ -79,12 +79,19 @@ body {
 .mb-5 {
   margin-bottom: 5em;
 }
+.my-2 {
+  margin: 2em 0;
+}
 .py-1 {
   padding: 1em 0;
 }
 .pr-2 {
   padding-right: 2em;
 }
+
+/*==============================================================================
+ Section : Ant Design utility classes
+==============================================================================*/
 
 /*==============================================================================
  Section : Loading
@@ -496,4 +503,14 @@ body {
   padding: 1em 0;
 }
 .profile-details__title {
+}
+
+.profile-create {
+  margin-top: 10vh;
+  background-color: var(--light-color);
+  padding: 2em 0;
+}
+
+.profile-create__form-header {
+  margin-bottom: 2em;
 }
