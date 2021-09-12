@@ -79,6 +79,12 @@ body {
 .mb-5 {
   margin-bottom: 5em;
 }
+.py-1 {
+  padding: 1em 0;
+}
+.pr-2 {
+  padding-right: 2em;
+}
 
 /*==============================================================================
  Section : Loading

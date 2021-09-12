@@ -1,6 +1,6 @@
 import { Tag } from 'antd';
 import * as React from 'react';
-import { ImFacebook, ImLocation } from 'react-icons/im';
+import { ImFacebook, ImLinkedin, ImLocation, ImTwitter } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 import { Channels, User } from 'types';
 
@@ -19,12 +19,12 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
         ) : null}
         {socials.linkedin ? (
           <a href={user.profile.channels.linkedin} target="_blank" rel="noopener noreferrer" className="card__link">
-            <ImFacebook size={'1.2em'} />
+            <ImLinkedin size={'1.2em'} />
           </a>
         ) : null}
         {socials.twitter ? (
           <a href={user.profile.channels.twitter} target="_blank" rel="noopener noreferrer" className="card__link">
-            <ImFacebook size={'1.2em'} />
+            <ImTwitter size={'1.2em'} />
           </a>
         ) : null}
       </>

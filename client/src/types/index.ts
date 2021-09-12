@@ -36,6 +36,9 @@ export interface Channels {
   facebook?: '';
   linkedin?: '';
   twitter?: '';
+  website: '';
+  slack: '';
+  github: '';
 }
 export interface Profile {
   id: number;

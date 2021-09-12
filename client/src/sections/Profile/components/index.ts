@@ -1,2 +1,2 @@
 export * from './ProfileMainCard';
-export * from './ProfileMainDetails';
+export * from './ProfileDetails';
