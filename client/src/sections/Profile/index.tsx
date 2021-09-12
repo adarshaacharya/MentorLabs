@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { fetchProfile } from 'store/profile/profile.action';
-import { ProfileMainDetails } from './components';
+import { ProfileMainCard, ProfileDetails } from './components';
 
 export const Profile = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ export const Profile = () => {
 
   React.useEffect(() => {
     dispatch(fetchProfile(id));
-  }, []);
+  }, [id, dispatch]);
 
   if (status === 'pending') {
     return (
@@ -27,7 +27,9 @@ export const Profile = () => {
 
   const viewerIsUser = viewer.id === user.id;
 
-  const userProfileMainElement = <ProfileMainDetails viewerIsUser={viewerIsUser} user={user} />;
+  const userProfileMainElement = <ProfileMainCard viewerIsUser={viewerIsUser} user={user} />;
+
+  const userProfileDetailsElement = <ProfileDetails viewerIsUser={viewerIsUser} user={user} />;
 
   return (
     <section className="profile">
@@ -35,9 +37,12 @@ export const Profile = () => {
         <title> Profile | Mentor Labs</title>
       </Helmet>
       <div className="container">
-        <div className="profile__details">
+        <div className="profile__wrapper">
           <Row>
             <Col span={24}>{userProfileMainElement}</Col>
+          </Row>
+          <Row>
+            <Col span={24}>{userProfileDetailsElement}</Col>
           </Row>
         </div>
       </div>

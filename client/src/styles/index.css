@@ -47,6 +47,10 @@ body {
   color: var(--primary-color);
 }
 
+.text--center {
+  text-align: center;
+}
+
 .btn--primary {
   border: none;
   background-color: var(--primary-color);
@@ -461,7 +465,7 @@ body {
   background-color: var(--bg-color);
 }
 
-.profile__details {
+.profile__wrapper {
   padding: 3em 0;
 }
 
@@ -480,4 +484,10 @@ body {
 .profile-main__details {
   font-size: 1.6rem;
   padding: 0.5em 0;
+}
+
+.profile-details {
+  padding: 1em 0;
+}
+.profile-details__title {
 }

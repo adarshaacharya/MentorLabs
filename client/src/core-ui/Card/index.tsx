@@ -1,6 +1,7 @@
 import { Tag } from 'antd';
 import * as React from 'react';
 import { ImFacebook, ImLocation } from 'react-icons/im';
+import { Link } from 'react-router-dom';
 import { Channels, User } from 'types';
 
 type UserCardProps = {
@@ -42,7 +43,11 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
       <div className="card__location">
         <ImLocation /> {user.profile.country}
       </div>
-      <div className="card__name">{user.name}</div>
+      <div className="card__name">
+        <Link to={`/user/${user.id}`} className="text--primary">
+          {user.name}
+        </Link>
+      </div>
       <div className="card__title">{user.profile.title}</div>
       <div className="card__detail">{user.profile.description}</div>
       <div className="card__tags">{userTagsElement}</div>

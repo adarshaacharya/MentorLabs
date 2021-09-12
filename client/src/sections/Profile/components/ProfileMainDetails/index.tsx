@@ -1,5 +1,5 @@
-import { Avatar, Button, Card, Col, Divider, Row, Tag, Typography } from 'antd';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { Button, Divider, Typography } from 'antd';
+import * as React from 'react';
 import { User } from 'types';
 
 type UserProfileProps = {
@@ -7,30 +7,35 @@ type UserProfileProps = {
   viewerIsUser: boolean;
 };
 
-const { Paragraph, Text } = Typography;
+const { Paragraph, Title } = Typography;
+export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser }) => {
+  const checkUserProfile =
+    !user.profile && !viewerIsUser ? (
+      <Paragraph>
+        This user hasn't yet created his profile.
+        <br />
+        So, our algorithm won't recommend this profile to the public feed. 🙏
+      </Paragraph>
+    ) : !user.profile && viewerIsUser ? (
+      <>
+        <Paragraph>
+          For additional details you have to create your profile first. Our algorithm recommends your profile based on
+          the data you've fed on profile. So, create profile asap. 🙏
+        </Paragraph>
+        <div className="text--center">
+          <Button type="primary">Create Profile</Button>
+        </div>
+      </>
+    ) : null;
 
-export const ProfileMainDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser }) => {
   return (
-    <Card className="profile-main">
-      <div className="profile-main__avatar">
-        <Avatar size={150} src={user.avatar} className="mb-1" />
-        <Paragraph>
-          <Tag icon={<AiOutlineCheckCircle />} color={`${user.role === 'Student' ? 'cyan' : 'magento'}`}>
-            &nbsp; {user.role}
-          </Tag>
-        </Paragraph>
-      </div>
+    <div className="profile-details">
       <Divider orientation="left">
-        <Text strong>Details</Text>
+        <Title level={4} className="profile-details__title">
+          Additional Details
+        </Title>
       </Divider>
-      <div className="profile-main__details">
-        <Paragraph>
-          👉 Name : <Text>{user.name} </Text>
-        </Paragraph>
-        <Paragraph>
-          👉 Contact : <Text>{user.email}</Text>
-        </Paragraph>
-      </div>
-    </Card>
+      {checkUserProfile}
+    </div>
   );
 };

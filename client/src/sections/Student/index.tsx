@@ -11,20 +11,25 @@ export const Student = () => {
 
   React.useEffect(() => {
     dispatch(fetchMentors());
-  }, []);
+  }, [dispatch]);
 
-  const mentorListingsElement =
-    status === 'resolved' ? (
-      <Row>
-        {mentors.map((mentor) => (
-          <Col xs={12} xl={8} key={mentor.id}>
-            <UserCard user={mentor} />
-          </Col>
-        ))}
-      </Row>
-    ) : (
-      <p>Loading mentors...</p>
+  if (status === 'pending') {
+    return (
+      <section className="loading">
+        <div className="container">Loading mentors...</div>
+      </section>
     );
+  }
+
+  const mentorListingsElement = (
+    <Row>
+      {mentors.map((mentor) => (
+        <Col xs={12} xl={8} key={mentor.id}>
+          <UserCard user={mentor} key={mentor.id} />
+        </Col>
+      ))}
+    </Row>
+  );
 
   return (
     <section className="dashboard">
