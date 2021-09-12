@@ -69,9 +69,21 @@ body {
   margin-top: 10vh;
   background-color: var(--light-color);
 }
+.mb-1 {
+  margin-bottom: 1em;
+}
 .mb-5 {
   margin-bottom: 5em;
 }
+
+/*==============================================================================
+ Section : Loading
+==============================================================================*/
+.loading {
+  margin-top: 10vh;
+  background-color: var(--light-color);
+}
+
 /*==============================================================================
  Section : App Header
 ==============================================================================*/
@@ -446,5 +458,26 @@ body {
 ==============================================================================*/
 .profile {
   margin-top: 10vh;
+  background-color: var(--bg-color);
+}
+
+.profile__details {
+  padding: 3em 0;
+}
+
+.profile-main {
   background-color: var(--light-color);
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.profile-main__avatar {
+  text-align: center;
+  padding: 0.3em 0;
+}
+
+.profile-main__details {
+  font-size: 1.6rem;
+  padding: 0.5em 0;
 }
