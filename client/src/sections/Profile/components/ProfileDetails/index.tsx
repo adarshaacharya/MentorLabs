@@ -32,25 +32,29 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
 
   const profileDetailsElement = user.profile ? (
     <Card className="profile-details__wrapper">
-      <div className="profile-details__position py-1">
+      <div className="profile-details__position">
         <Title level={5}>Position</Title>
         <Paragraph>{user.profile.title}</Paragraph>
       </div>
-      <div className="profile-details__about py-1">
+      <Divider />
+      <div className="profile-details__about">
         <Title level={5}>About</Title>
         <Paragraph>{user.profile.description}</Paragraph>
       </div>
-      <div className="profile-details__location py-1">
+      <Divider />
+      <div className="profile-details__location ">
         <Title level={5}>Location</Title>
         {user.profile.country}
       </div>
-      <div className="profile-details__skills py-1">
+      <Divider />
+      <div className="profile-details__skills ">
         <Title level={5}>Skills</Title>
         {user.profile.tags.map((tag) => (
           <Tag key={tag}>{tag}</Tag>
         ))}
       </div>
-      <div className="profile-details__languages py-1">
+      <Divider />
+      <div className="profile-details__languages ">
         <Title level={5}>Languages</Title>
         {user.profile.languages.map((lang) => (
           <span className="pr-2" key={lang}>
@@ -59,7 +63,8 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
           </span>
         ))}
       </div>
-      <div className="profile-details__channels py-1">
+      <Divider />
+      <div className="profile-details__channels">
         <Title level={5}>Links</Title>
         <SocialChannels channels={user.profile.channels} />
       </div>
