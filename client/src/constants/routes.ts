@@ -4,4 +4,3 @@ export const LOGIN = '/login';
 export const STUDENT_DASHBOARD = '/student-dashboard';
 export const TEACHER_DASHBOARD = '/teacher-dashboard';
 export const USER_PROFILE = 'user/:id';
-export const CREATE_PROFILE = '/create-profile';

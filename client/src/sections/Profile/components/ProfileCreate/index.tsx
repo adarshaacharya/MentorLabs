@@ -2,12 +2,11 @@ import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { countries, languages, socials } from 'data';
 import { tags } from 'data/tags';
 import { useAppDispatch } from 'hooks';
-import * as React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
-import { convertStringToArray } from 'utils/form';
 import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
+import { motion } from 'framer-motion';
 
 const { Item, List } = Form;
 const { Title, Text } = Typography;
