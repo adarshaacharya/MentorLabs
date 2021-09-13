@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Col, Divider, Row, Tag, Typography } from 'antd';
+import { Avatar, Card, Divider, Tag, Typography } from 'antd';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { User } from 'types';
 

@@ -1,7 +1,9 @@
 import { Button, Card, Divider, Tag, Typography } from 'antd';
 import { SocialChannels } from 'core-ui';
+import { useAppSelector } from 'hooks';
 import * as React from 'react';
 import { User } from 'types';
+import { ProfileCreate } from '../ProfileCreate';
 
 type UserProfileProps = {
   user: User;
@@ -11,6 +13,17 @@ type UserProfileProps = {
 const { Paragraph, Title } = Typography;
 
 export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser }) => {
+  const { status } = useAppSelector((state) => state.profile);
+  const [showForm, setShowForm] = React.useState(false);
+
+  if (!user) {
+    return (
+      <section className="loading">
+        <div className="container">Loading profile details...</div>
+      </section>
+    );
+  }
+
   const checkUserProfile =
     !user.profile && !viewerIsUser ? (
       <Paragraph>
@@ -24,8 +37,11 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
           For additional details you have to create your profile first. Our algorithm recommends your profile based on
           the data you've fed on profile. So, create profile asap. 🙏
         </Paragraph>
+
         <div className="text--center">
-          <Button type="primary">Create Profile</Button>
+          <Button type="primary" onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Hide Form' : 'Create Profile'}
+          </Button>
         </div>
       </>
     ) : null;
@@ -71,6 +87,8 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
     </Card>
   ) : null;
 
+  const profileCreateElement = showForm && !user.profile ? <ProfileCreate /> : null;
+
   return (
     <div className="profile-details">
       <Divider orientation="left">
@@ -80,6 +98,7 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
       </Divider>
       {checkUserProfile}
       {profileDetailsElement}
+      <div>{profileCreateElement}</div>
     </div>
   );
 };

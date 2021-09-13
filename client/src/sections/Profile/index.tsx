@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useScrollToTop } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
@@ -8,16 +8,18 @@ import { ProfileMainCard, ProfileDetails } from './components';
 
 export const Profile = () => {
   const { id } = useParams();
-  const { user, status } = useAppSelector((state) => state.profile);
+  const { status, user } = useAppSelector((state) => state.profile);
   const { user: viewer } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(fetchProfile(id));
-  }, [id, dispatch]);
+  }, [id]);
 
-  if (status === 'pending') {
+  useScrollToTop();
+
+  if (status === 'pending' && !user) {
     return (
       <section className="loading">
         <div className="container">Loading account...</div>

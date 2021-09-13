@@ -508,7 +508,7 @@ body {
 .profile-create {
   margin-top: 10vh;
   background-color: var(--light-color);
-  padding: 2em 0;
+  padding: 3em 3em;
 }
 
 .profile-create__form-header {

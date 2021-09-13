@@ -1,11 +1,12 @@
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
+import { useNavigate } from 'react-router';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
 import { convertStringToArray } from 'utils/form';
-import { displayErrorMessage } from 'utils/notifications';
+import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
 
 const { Item, List } = Form;
 const { Title, Text } = Typography;
@@ -20,12 +21,16 @@ const socials = [
 
 export const ProfileCreate = () => {
   const dispatch = useAppDispatch();
+  const { status, user } = useAppSelector((state) => state.profile);
+  const navigate = useNavigate();
 
-  const handleCreateProfile = (formData) => {
+  const onFormSubmit = (formData) => {
     const languages = convertStringToArray(formData.languages);
     const tags = convertStringToArray(formData.tags);
     const values: CreateProfileData = { ...formData, languages, tags };
+
     dispatch(createProfile(values));
+    displaySuccessNotification('Profile created successfully');
   };
 
   const onFinishFailed = (error) => {
@@ -36,7 +41,7 @@ export const ProfileCreate = () => {
   return (
     <div className="profile-create">
       <div className="container">
-        <Form layout="vertical" onFinish={handleCreateProfile} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" onFinish={onFormSubmit} onFinishFailed={onFinishFailed}>
           <div className="profile-create__form-header">
             <Title level={3} className="profile-create__form-title">
               Hi! Let's get started filling your profile information.
@@ -117,7 +122,7 @@ export const ProfileCreate = () => {
             {(fields, { add, remove }) => (
               <>
                 {fields.map((field) => (
-                  <Space key={field.key} align="baseline" size="small" style={{ marginRight: '9em' }}>
+                  <Space key={field.key} align="baseline" size="small" style={{ marginRight: '4em' }}>
                     <Item noStyle shouldUpdate={(prevValues, curValues) => prevValues.channel !== curValues.channel}>
                       {() => (
                         <Item
@@ -146,7 +151,6 @@ export const ProfileCreate = () => {
                     >
                       <Input />
                     </Item>
-
                     <AiOutlineMinusCircle onClick={() => remove(field.name)} color="red" />
                   </Space>
                 ))}
