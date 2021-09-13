@@ -16,11 +16,8 @@ const { Option } = Select;
 export const ProfileCreate = () => {
   const dispatch = useAppDispatch();
 
-  const onFormSubmit = (formData) => {
-    const languages = convertStringToArray(formData.languages);
-    const values: CreateProfileData = { ...formData, languages };
-    console.log(values);
-    // dispatch(createProfile(values));
+  const onFormSubmit = (values: CreateProfileData) => {
+    dispatch(createProfile(values));
     displaySuccessNotification('Profile created successfully');
   };
 
@@ -136,7 +133,7 @@ export const ProfileCreate = () => {
               allowClear
               style={{ width: '100%' }}
               placeholder="Please select languages you can speak"
-              defaultValue={['English']}
+              // defaultValue={['English']}
             >
               {languages.map((lang) => (
                 <Option key={lang.code} value={lang.name}>
