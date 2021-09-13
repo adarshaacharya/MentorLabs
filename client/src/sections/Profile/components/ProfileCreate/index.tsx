@@ -1,9 +1,9 @@
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
-import { socials } from 'data';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { countries, languages, socials } from 'data';
+import { tags } from 'data/tags';
+import { useAppDispatch } from 'hooks';
 import * as React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
-import { useNavigate } from 'react-router';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
 import { convertStringToArray } from 'utils/form';
@@ -18,10 +18,9 @@ export const ProfileCreate = () => {
 
   const onFormSubmit = (formData) => {
     const languages = convertStringToArray(formData.languages);
-    const tags = convertStringToArray(formData.tags);
-    const values: CreateProfileData = { ...formData, languages, tags };
-
-    dispatch(createProfile(values));
+    const values: CreateProfileData = { ...formData, languages };
+    console.log(values);
+    // dispatch(createProfile(values));
     displaySuccessNotification('Profile created successfully');
   };
 
@@ -33,7 +32,7 @@ export const ProfileCreate = () => {
   return (
     <div className="profile-create">
       <div className="container">
-        <Form layout="vertical" onFinish={onFormSubmit} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" onFinish={onFormSubmit} onFinishFailed={onFinishFailed} size="large">
           <div className="profile-create__form-header">
             <Title level={3} className="profile-create__form-title">
               Hi! Let's get started filling your profile information.
@@ -44,6 +43,7 @@ export const ProfileCreate = () => {
             </Text>
           </div>
 
+          {/* title start */}
           <Item
             label="Title"
             name="title"
@@ -51,7 +51,9 @@ export const ProfileCreate = () => {
           >
             <Input placeholder="Software Engineer" />
           </Item>
+          {/* title start */}
 
+          {/* description start */}
           <Item
             label="Description"
             extra="Max character count of 400"
@@ -69,7 +71,9 @@ export const ProfileCreate = () => {
               placeholder="Software engineer with 10+ years of experience in Machie Learning, Cloud Computing and BlockChain."
             />
           </Item>
+          {/* description end */}
 
+          {/* countries start */}
           <Item
             label="Country"
             name="country"
@@ -80,9 +84,17 @@ export const ProfileCreate = () => {
               },
             ]}
           >
-            <Input placeholder="Nepal" />
+            <Select showSearch placeholder="Select a country">
+              {countries.map((country) => (
+                <Option value={country.name} key={country.code}>
+                  {country.name} {country.emoji}
+                </Option>
+              ))}
+            </Select>
           </Item>
+          {/* countries end */}
 
+          {/* tags start*/}
           <Item
             label="Tags"
             name="tags"
@@ -93,9 +105,22 @@ export const ProfileCreate = () => {
               },
             ]}
           >
-            <Input placeholder="compiler cloud networking" />
+            <Select
+              mode="tags"
+              style={{ width: '100%' }}
+              tokenSeparators={[',']}
+              placeholder="Start typing tags you specialize on"
+            >
+              {tags.map((tag) => (
+                <Option key={tag} value={tag}>
+                  {tag}
+                </Option>
+              ))}
+            </Select>
           </Item>
+          {/* tags end */}
 
+          {/* languages start */}
           <Item
             label="Languages"
             name="languages"
@@ -106,8 +131,21 @@ export const ProfileCreate = () => {
               },
             ]}
           >
-            <Input placeholder="french nepali" />
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '100%' }}
+              placeholder="Please select languages you can speak"
+              defaultValue={['English']}
+            >
+              {languages.map((lang) => (
+                <Option key={lang.code} value={lang.name}>
+                  {lang.name}
+                </Option>
+              ))}
+            </Select>
           </Item>
+          {/* languages end */}
 
           {/* social channels */}
           <List name="channels">
