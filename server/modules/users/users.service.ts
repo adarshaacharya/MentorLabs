@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Role } from '../../common/enums';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
-import { Channel } from '../../common/interfaces';
 import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
@@ -65,12 +64,15 @@ export class UsersService {
   }
 
   public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
-    const channels = { ...createProfileInput.channels };
-    for (const [key, val] of Object.entries(channels)) {
-      if (val && val.length > 0) {
-        channels[key as keyof Channel] = normalizeUrl(val, { forceHttps: true });
+    const channels = [...createProfileInput.channels];
+
+    channels.forEach((channel) => {
+      for (const [_, val] of Object.entries(channel)) {
+        if (val && val.length > 0) {
+          channel.link = normalizeUrl(val, { forceHttps: true });
+        }
       }
-    }
+    });
 
     const profile = await this.profileRepository.save(
       this.profileRepository.create({ userId, ...createProfileInput, channels }),

@@ -29,7 +29,7 @@ export class CreateProfileInput {
   languages: string[];
 
   // @IsJSON()
-  channels: Channel;
+  channels: Channel[];
 }
 
 export class CreateProfileOutput {}
