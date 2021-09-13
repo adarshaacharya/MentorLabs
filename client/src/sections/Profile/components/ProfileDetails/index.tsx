@@ -39,8 +39,8 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
         </Paragraph>
 
         <div className="text--center">
-          <Button type="primary" onClick={() => setShowForm(!showForm)}>
-            {showForm ? 'Hide Form' : 'Create Profile'}
+          <Button type="dashed" onClick={() => setShowForm(!showForm)}>
+            {showForm ? 'Hide Form 👆' : 'Create Profile 👇'}
           </Button>
         </div>
       </>
