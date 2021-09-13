@@ -1,32 +1,61 @@
-import { Tag } from 'antd';
+import { Tag, Typography } from 'antd';
 import * as React from 'react';
-import { ImFacebook, ImLinkedin, ImLocation, ImTwitter } from 'react-icons/im';
+import { AiOutlineFacebook, AiOutlineLinkedin, AiOutlineSlackSquare, AiOutlineTwitter } from 'react-icons/ai';
+import { FaGithubSquare, FaGlobe } from 'react-icons/fa';
+import { ImLocation } from 'react-icons/im';
 import { Link } from 'react-router-dom';
-import { Channels, User } from 'types';
+import { Channel, User } from 'types';
 
 type UserCardProps = {
   user: User;
 };
 
+const { Paragraph } = Typography;
+
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
-  const renderSocialChannels = (socials: Channels) => {
+  const renderSocialChannels = (channels: Channel[]) => {
+    // show at most 3 channels
+    const filteredChannels = channels.length > 3 ? channels.slice(0, 3) : channels;
+
     return (
       <>
-        {socials.facebook ? (
-          <a href={user.profile.channels.facebook} target="_blank" rel="noopener noreferrer" className="card__link">
-            <ImFacebook size={'1.2em'} />
-          </a>
-        ) : null}
-        {socials.linkedin ? (
-          <a href={user.profile.channels.linkedin} target="_blank" rel="noopener noreferrer" className="card__link">
-            <ImLinkedin size={'1.2em'} />
-          </a>
-        ) : null}
-        {socials.twitter ? (
-          <a href={user.profile.channels.twitter} target="_blank" rel="noopener noreferrer" className="card__link">
-            <ImTwitter size={'1.2em'} />
-          </a>
-        ) : null}
+        {filteredChannels.map((channel) => {
+          const { link, site } = channel;
+          return (
+            <span key={site}>
+              {site === 'facebook' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <AiOutlineFacebook size={'1.8em'} title="Facebook" />
+                </a>
+              )}
+              {site === 'linkedin' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <AiOutlineLinkedin size={'1.8em'} title="Linkedin" />
+                </a>
+              )}
+              {site === 'twitter' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <AiOutlineTwitter size={'1.8em'} title="Twitter" />
+                </a>
+              )}
+              {site === 'github' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <FaGithubSquare size={'1.8em'} title="GitHub" />
+                </a>
+              )}
+              {site === 'slack' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <AiOutlineSlackSquare size={'1.8em'} title="Slack" />
+                </a>
+              )}
+              {site === 'portfolio' && (
+                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
+                  <FaGlobe size={'1.8em'} title="Website" />
+                </a>
+              )}
+            </span>
+          );
+        })}
       </>
     );
   };
@@ -49,7 +78,9 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
         </Link>
       </div>
       <div className="card__title">{user.profile.title}</div>
-      <div className="card__detail">{user.profile.description}</div>
+      <Paragraph className="card__detail" ellipsis={{ rows: 2 }}>
+        {user.profile.description}
+      </Paragraph>
       <div className="card__tags">{userTagsElement}</div>
       <div className="card__links">{renderSocialChannels(user.profile.channels)}</div>
     </div>

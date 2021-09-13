@@ -16,6 +16,7 @@ const config = {
     },
     profile: {
       fetchProfile: '/users',
+      createProfile: '/users/create-profile',
     },
   },
 };
