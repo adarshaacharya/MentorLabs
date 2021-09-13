@@ -1,4 +1,5 @@
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
+import { socials } from 'data';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
@@ -12,17 +13,8 @@ const { Item, List } = Form;
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-const socials = [
-  { label: 'Facebook', value: 'facebook' },
-  { label: 'Twitter', value: 'twitter' },
-  { label: 'Linkedin', value: 'linkedin' },
-  { label: 'Slack', value: 'slack' },
-];
-
 export const ProfileCreate = () => {
   const dispatch = useAppDispatch();
-  const { status, user } = useAppSelector((state) => state.profile);
-  const navigate = useNavigate();
 
   const onFormSubmit = (formData) => {
     const languages = convertStringToArray(formData.languages);
