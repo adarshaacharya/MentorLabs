@@ -1,4 +1,4 @@
-import { Role } from 'constants/roles';
+import { Role } from 'enums';
 import * as routes from 'constants/routes';
 import { Route, Routes } from 'react-router-dom';
 import { CreateAccount, Home, Login, NotFound, StudentDashboard, TeacherDashboard, StudentMentorships } from 'sections';

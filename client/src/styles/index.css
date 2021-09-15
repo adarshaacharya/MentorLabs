@@ -36,7 +36,7 @@ body {
 .container {
   max-width: 1100px;
   margin: auto;
-  padding: 0 1em;
+  padding: 1em 1em;
 }
 
 .flex {
@@ -84,6 +84,9 @@ body {
 }
 .py-1 {
   padding: 1em 0;
+}
+.py-2 {
+  padding: 2em 0;
 }
 .pr-2 {
   padding-right: 2em;
@@ -405,6 +408,11 @@ body {
 /*==============================================================================
  Section : Student Dashboard
 ==============================================================================*/
+.dashboard {
+  background-color: var(--bg-color);
+  margin-top: 10vh;
+}
+
 .dashboard__title {
   padding-bottom: 1em;
   color: var(--gray-color);
@@ -418,7 +426,6 @@ body {
 }
 .card {
   text-align: center;
-  /* margin: 2em 1em; */
   padding: 10px;
   box-shadow: 0 0 4px 0 rgba(17, 22, 26, 0.16), 0 2px 4px 0 rgba(17, 22, 26, 0.08), 0 4px 8px 0 rgba(17, 22, 26, 0.08);
   border-radius: 4px;
@@ -426,9 +433,7 @@ body {
   margin-bottom: 5em;
   margin-right: 2em;
   padding-top: 2em;
-  /* margin-top: 30px;
-  padding-top: 30px;
-  margin-bottom: 50px; */
+  background-color: var(--light-color);
 }
 
 .card__img {
@@ -514,4 +519,12 @@ body {
 
 .profile-create__form-header {
   margin-bottom: 2em;
+}
+
+/*==============================================================================
+ Section : Mentorships(Student)
+==============================================================================*/
+.mentorship-requests {
+  background: var(--bg-color);
+  margin-top: 10vh;
 }

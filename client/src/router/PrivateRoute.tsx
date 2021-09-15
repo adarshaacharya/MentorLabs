@@ -1,4 +1,4 @@
-import { Role } from 'constants/roles';
+import { Role } from 'enums';
 import * as routes from 'constants/routes';
 import { useAppSelector } from 'hooks';
 import { Navigate, Route, useLocation } from 'react-router-dom';

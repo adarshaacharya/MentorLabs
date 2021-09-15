@@ -2,7 +2,7 @@ import { Card, Col, Row, Typography } from 'antd';
 import { FaVideo } from 'react-icons/fa';
 import { GiProcessor } from 'react-icons/gi';
 import { ImProfile } from 'react-icons/im';
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph } = Typography;
 
 export const Features = () => {
   return (

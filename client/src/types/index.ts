@@ -1,5 +1,5 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
-import { Role } from 'constants/roles';
+import { MentorshipRequestStatus, Role } from 'enums';
 import { store } from 'store';
 
 //==============================================================================
@@ -66,10 +66,22 @@ export interface Profile {
 }
 
 //==============================================================================
+// Profile
+//==============================================================================
+export interface Mentorship extends MentorshipRequestData {
+  id: number;
+  menteeId: number;
+  mentorId: number;
+  status: MentorshipRequestStatus;
+  mentor: User;
+}
+
+//==============================================================================
 // State
 //==============================================================================
 
 type Status = 'idle' | 'pending' | 'resolved' | 'rejected';
+
 export interface AuthState {
   status: Status;
   isAuthenticated: boolean;

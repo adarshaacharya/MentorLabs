@@ -1,5 +1,5 @@
-import { Avatar, Button, Card, Divider, Tag, Typography } from 'antd';
-import { Role } from 'constants/roles';
+import { Avatar, Card, Divider, Tag, Typography } from 'antd';
+import { Role } from 'enums';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { User } from 'types';
 import { ProfileMentorshipRequest } from '..';

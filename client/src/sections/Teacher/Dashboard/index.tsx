@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const { Title } = Typography;

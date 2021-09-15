@@ -1,5 +1,3 @@
-import { Col, Row } from 'antd';
-
 export const Footer = () => {
   return (
     <div className="footer">
