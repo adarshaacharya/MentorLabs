@@ -19,16 +19,29 @@ class MentorshipsController {
     }
   }
 
-  public async getMentorshipRequests(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+  public async getMentorshipRequestsOfMentor(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
 
-      const userId = validateIdOrThrow(+req.params.userId);
-      const currentUserId = req.user?.id;
+      const userId = req.user?.id;
 
-      const requests = currentUserId && (await mentorshipsServiceInstance.getMentorshipRequests(userId, currentUserId));
+      const requests = userId && (await mentorshipsServiceInstance.getMentorshipRequestsOfMentor(userId));
 
-      res.status(201).json({ requests });
+      res.status(201).json(requests);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async getMentorshipRequestsByMentee(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const mentorshipsServiceInstance = Container.get(MentorshipsService);
+
+      const userId = req.user?.id;
+
+      const requests = userId && (await mentorshipsServiceInstance.getMentorshipRequestsByMentee(userId));
+
+      res.status(201).json(requests);
     } catch (error) {
       next(error);
     }

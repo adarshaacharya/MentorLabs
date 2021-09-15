@@ -1,11 +1,11 @@
-import { UserRepository } from '../users/repositories/users.repository';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { BadRequest, Unauthorized } from '../../common/exceptions';
+import { BadRequest } from '../../common/exceptions';
+import { User } from '../users/entities/user.entity';
+import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { Mentorship } from './entity/mentorship.entity';
-import { User } from '../users/entities/user.entity';
 
 @Service()
 export class MentorshipsService {
@@ -49,27 +49,30 @@ export class MentorshipsService {
   }
 
   /**
-   * Finds mentorship requests to a teacher
+   * Finds all mentorship requests received by a teacher
    * @param userId
    */
-  public async getMentorshipRequests(userId: number, currentUserId: number) {
-    const user = await this.userRepository.findOne(userId);
-
-    if (!user) {
-      throw new BadRequest('User not found');
-    }
-
-    // only same user can view the request
-    if (userId !== currentUserId) {
-      throw new Unauthorized('You are not authorized to perform this operation');
-    }
-
+  public async getMentorshipRequestsOfMentor(userId: number): Promise<Mentorship[]> {
     // Get the mentorship requests from and to to that user
     const mentorshipRequests: Mentorship[] = await this.mentorshipRepository.find({
       where: {
         mentorId: userId,
       },
       relations: ['mentee'], // also give info about mentee (who send req)
+    });
+    return mentorshipRequests;
+  }
+
+  /**
+   * Finds all mentorship requests send by user
+   * @param userId
+   */
+  public async getMentorshipRequestsByMentee(userId: number): Promise<Mentorship[]> {
+    const mentorshipRequests: Mentorship[] = await this.mentorshipRepository.find({
+      where: {
+        menteeId: userId,
+      },
+      relations: ['mentor'],
     });
     return mentorshipRequests;
   }

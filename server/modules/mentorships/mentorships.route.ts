@@ -8,20 +8,36 @@ export const router: Router = Router();
 
 /**
  * @method POST
- * @route /api/mentorships
+ * @route /api/mentorships/apply/:mentorId
  * @description : Creates a new mentorship request for the given mentor
  * @acces private
  */
 router.post(
-  '/:mentorId/apply',
+  '/apply/:mentorId',
   [checkJwt, checkRole([Role.STUDENT]), createValidator(CreateMentorshipInput)],
   mentorshipsController.createMentorship,
 );
 
 /**
- * @method POST
- * @route /api/:userId/requests
- * @description : Returns the mentorship requests for a mentor
+ * @method GET
+ * @route /api/mentorships/mentor-requests
+ * @description : Finds all mentorship requests received by a mentor
  * @acces private
  */
-router.get('/:userId/requests', [checkJwt, checkRole([Role.TEACHER])], mentorshipsController.getMentorshipRequests);
+router.get(
+  '/mentor-requests',
+  [checkJwt, checkRole([Role.TEACHER])],
+  mentorshipsController.getMentorshipRequestsOfMentor,
+);
+
+/**
+ * @method POST
+ * @route /api/mentorships/mentee-requests
+ * @description : Returns all the mentorship requests for a mentor
+ * @acces private
+ */
+router.get(
+  '/mentee-requests',
+  [checkJwt, checkRole([Role.STUDENT])],
+  mentorshipsController.getMentorshipRequestsByMentee,
+);
