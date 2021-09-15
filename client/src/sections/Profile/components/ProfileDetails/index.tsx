@@ -92,7 +92,7 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
     <div className="profile-details">
       <Divider orientation="left">
         <Title level={3} className="profile-details__title">
-          <span className="text--primary">Additional Details.</span>
+          Additional Details.
         </Title>
       </Divider>
       {checkUserProfile}

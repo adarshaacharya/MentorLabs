@@ -371,10 +371,11 @@ body {
  Section : Not Found
 ==============================================================================*/
 .not-found {
+  margin-top: 10vh;
 }
 
 .not-found__wrapper {
-  height: 89vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
