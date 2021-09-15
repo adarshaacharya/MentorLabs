@@ -1,8 +1,9 @@
 import { Button, Form, Input, Modal, Typography } from 'antd';
-import { useAppDispatch, useModal } from 'hooks';
+import { useAppDispatch, useAppSelector, useModal } from 'hooks';
 import { useParams } from 'react-router';
 import { sendMentorshipRequest } from 'store/mentorship/mentorship.action';
 import { MentorshipRequestData } from 'types';
+import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -19,11 +20,12 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
   handleMentorshipRequest,
   closeModal,
 }) => {
+  const { status } = useAppSelector((state) => state.mentorShip);
   const [form] = Form.useForm();
 
   const onFormSubmit = () => {
     form.validateFields().then((values: MentorshipRequestData) => {
-      form.resetFields();
+      // form.resetFields();
       handleMentorshipRequest(values);
     });
   };
@@ -39,7 +41,7 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
         <Button key="back" onClick={closeModal}>
           Close
         </Button>,
-        <Button key="submit" type="primary" onClick={onFormSubmit}>
+        <Button key="submit" type="primary" onClick={onFormSubmit} loading={status === 'pending'}>
           Send Request
         </Button>,
       ]}
@@ -90,6 +92,8 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
 };
 
 export const ProfileMentorshipRequest = () => {
+  const { status } = useAppSelector((state) => state.mentorShip);
+
   const { closeModal, showModal, visible } = useModal(false);
   const { id } = useParams();
 
@@ -97,7 +101,16 @@ export const ProfileMentorshipRequest = () => {
 
   const handleMentorshipRequest = (values: MentorshipRequestData) => {
     dispatch(sendMentorshipRequest({ values, mentorId: id }));
-    closeModal();
+
+    if (status === 'resolved') {
+      closeModal();
+      displaySuccessNotification('Mentorship request has been successfully submitted.');
+      return;
+    }
+
+    if (status === 'rejected') {
+      displayErrorMessage('An error occurred while submitting request. Try again later.');
+    }
   };
 
   return (

@@ -18,6 +18,10 @@ const mentorshipSlice = createSlice({
     builder.addCase(sendMentorshipRequest.fulfilled, (state, { payload }) => {
       state.status = 'resolved';
     });
+
+    builder.addCase(sendMentorshipRequest.rejected, (state) => {
+      state.status = 'rejected';
+    });
   },
 });
 
