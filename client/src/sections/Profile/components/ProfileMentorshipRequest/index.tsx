@@ -1,5 +1,7 @@
-import { Button, Modal, Form, Input, Radio, Typography } from 'antd';
-import { useModal } from 'hooks';
+import { Button, Form, Input, Modal, Typography } from 'antd';
+import { useAppDispatch, useModal } from 'hooks';
+import { useParams } from 'react-router';
+import { sendMentorshipRequest } from 'store/mentorship/mentorship.slice';
 import { MentorshipRequestData } from 'types';
 
 const { Item } = Form;
@@ -9,16 +11,20 @@ const { Text } = Typography;
 type MentorshipRequestFormProps = {
   visible: boolean;
   closeModal: () => void;
-  onMentorshipRequest: (values: MentorshipRequestData) => void;
+  handleMentorshipRequest: (values: MentorshipRequestData) => void;
 };
 
-const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({ visible, onMentorshipRequest, closeModal }) => {
+const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
+  visible,
+  handleMentorshipRequest,
+  closeModal,
+}) => {
   const [form] = Form.useForm();
 
   const onFormSubmit = () => {
     form.validateFields().then((values: MentorshipRequestData) => {
       form.resetFields();
-      onMentorshipRequest(values);
+      handleMentorshipRequest(values);
     });
   };
 
@@ -52,7 +58,7 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({ visible, 
           <TextArea rows={4} placeholder="Tell mentor about yourself." />
         </Item>
         <Item
-          name="expectations"
+          name="expectation"
           label="My expectations"
           rules={[
             {
@@ -85,9 +91,12 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({ visible, 
 
 export const ProfileMentorshipRequest = () => {
   const { closeModal, showModal, visible } = useModal(false);
+  const { id } = useParams();
 
-  const onMentorshipRequest = (values: MentorshipRequestData) => {
-    console.log('Received values of form: ', values);
+  const dispatch = useAppDispatch();
+
+  const handleMentorshipRequest = (values: MentorshipRequestData) => {
+    dispatch(sendMentorshipRequest({ values, mentorId: id }));
     closeModal();
   };
 
@@ -97,7 +106,11 @@ export const ProfileMentorshipRequest = () => {
         Apply For Mentorship
       </Button>
 
-      <MentorshipRequestForm visible={visible} onMentorshipRequest={onMentorshipRequest} closeModal={closeModal} />
+      <MentorshipRequestForm
+        visible={visible}
+        handleMentorshipRequest={handleMentorshipRequest}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

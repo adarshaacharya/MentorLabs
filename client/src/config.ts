@@ -18,6 +18,9 @@ const config = {
       fetchProfile: '/users',
       createProfile: '/users/create-profile',
     },
+    mentorship: {
+      sendMentorshipRequest: '/mentorships/apply',
+    },
   },
 };
 

@@ -21,7 +21,7 @@ export interface CreateProfileData extends Omit<Profile, 'id' | 'userId'> {}
 
 export interface MentorshipRequestData {
   background: string;
-  expectaions: string;
+  expectaion: string;
   message: string;
 }
 
