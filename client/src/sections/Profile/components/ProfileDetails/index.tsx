@@ -14,7 +14,6 @@ type UserProfileProps = {
 const { Paragraph, Title } = Typography;
 
 export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser }) => {
-  const { status } = useAppSelector((state) => state.profile);
   const [showForm, setShowForm] = React.useState(false);
 
   if (!user) {

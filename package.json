@@ -58,7 +58,6 @@
     "jsonwebtoken": "^8.5.1",
     "normalize-url": "^6.1.0",
     "pg": "^8.6.0",
-    "react-router-dom": "^6.0.0-beta.2",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0",
     "typeorm": "^0.2.34",

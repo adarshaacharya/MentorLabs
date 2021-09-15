@@ -66,6 +66,7 @@ export class UsersService {
   public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
     const channels = [...createProfileInput.channels];
 
+    // normalizing channels url
     channels.forEach((channel) => {
       for (const [_, val] of Object.entries(channel)) {
         if (val && val.length > 0) {
