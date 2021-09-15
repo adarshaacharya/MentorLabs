@@ -73,7 +73,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
         <ImLocation /> {user.profile.country}
       </div>
       <div className="card__name">
-        <Link to={`/user/${user.id}`} className="text--primary">
+        <Link to={`/users/${user.id}`} className="text--primary">
           {user.name}
         </Link>
       </div>

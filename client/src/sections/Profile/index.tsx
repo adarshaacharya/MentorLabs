@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { fetchProfile } from 'store/profile/profile.action';
-import { ProfileMainCard, ProfileDetails } from './components';
+import { ProfileMainCard, ProfileDetails, ProfileMentorshipRequest } from './components';
 
 export const Profile = () => {
   const { id } = useParams();

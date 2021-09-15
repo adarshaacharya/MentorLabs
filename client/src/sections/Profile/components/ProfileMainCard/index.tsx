@@ -1,6 +1,8 @@
-import { Avatar, Card, Divider, Tag, Typography } from 'antd';
+import { Avatar, Button, Card, Divider, Tag, Typography } from 'antd';
+import { Role } from 'constants/roles';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { User } from 'types';
+import { ProfileMentorshipRequest } from '..';
 
 type UserProfileProps = {
   user: User;
@@ -10,6 +12,8 @@ type UserProfileProps = {
 const { Paragraph, Text, Title } = Typography;
 
 export const ProfileMainCard: React.FC<UserProfileProps> = ({ user, viewerIsUser }) => {
+  const mentorshipApplyElement = !viewerIsUser && user.role === Role.TEACHER ? <ProfileMentorshipRequest /> : null;
+
   return (
     <Card className="profile-main">
       <div className="profile-main__avatar">
@@ -34,6 +38,7 @@ export const ProfileMainCard: React.FC<UserProfileProps> = ({ user, viewerIsUser
           👉 Contact : <a href={`emailto: ${user.email}`}>{user.email}</a>
         </Paragraph>
       </div>
+      <div className="profile-main__apply text--center">{mentorshipApplyElement}</div>
     </Card>
   );
 };

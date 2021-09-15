@@ -41,7 +41,7 @@ export const MenuItems = () => {
         key="submenu"
       >
         <Item key="/user">
-          <NavLink to={`/user/${user?.id}`}>
+          <NavLink to={`/users/${user.id}`}>
             <UserOutlined></UserOutlined> Profile
           </NavLink>
         </Item>

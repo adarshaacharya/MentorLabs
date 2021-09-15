@@ -19,6 +19,12 @@ export interface LoginData {
 
 export interface CreateProfileData extends Omit<Profile, 'id' | 'userId'> {}
 
+export interface MentorshipRequestData {
+  background: string;
+  expectaions: string;
+  message: string;
+}
+
 //==============================================================================
 // User
 //==============================================================================

@@ -1,6 +1,5 @@
 import { Button, Card, Divider, Tag, Typography } from 'antd';
 import { SocialChannels } from 'core-ui';
-import { useAppSelector } from 'hooks';
 import * as React from 'react';
 import { User } from 'types';
 import { countryEmoji } from 'utils/form';
