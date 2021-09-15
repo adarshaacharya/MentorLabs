@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal, Typography } from 'antd';
 import { useAppDispatch, useModal } from 'hooks';
 import { useParams } from 'react-router';
-import { sendMentorshipRequest } from 'store/mentorship/mentorship.slice';
+import { sendMentorshipRequest } from 'store/mentorship/mentorship.action';
 import { MentorshipRequestData } from 'types';
 
 const { Item } = Form;

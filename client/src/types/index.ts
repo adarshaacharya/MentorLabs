@@ -69,8 +69,9 @@ export interface Profile {
 // State
 //==============================================================================
 
+type Status = 'idle' | 'pending' | 'resolved' | 'rejected';
 export interface AuthState {
-  status: 'idle' | 'pending' | 'resolved' | 'rejected';
+  status: Status;
   isAuthenticated: boolean;
   error: string;
   user: User;
@@ -81,15 +82,18 @@ export interface ErrorState {
 }
 
 export interface UsersState {
-  status: 'idle' | 'pending' | 'resolved' | 'rejected';
+  status: Status;
   mentors: User[];
 }
 
 export interface ProfileState {
-  status: 'idle' | 'pending' | 'resolved' | 'rejected';
+  status: Status;
   user: User;
 }
 
+export interface MentorshipState {
+  status: Status;
+}
 //==============================================================================
 // Redux Utilities data types
 //==============================================================================

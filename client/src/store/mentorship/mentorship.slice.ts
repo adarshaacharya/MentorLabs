@@ -1,20 +1,24 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { MentorshipRequestData } from 'types';
-import config from 'config';
-import http from 'utils/http';
+import { createSlice } from '@reduxjs/toolkit';
+import { MentorshipState } from 'types';
+import { sendMentorshipRequest } from './mentorship.action';
 
-export const sendMentorshipRequest = createAsyncThunk(
-  'mentorship/sendRequest',
-  async ({ values, mentorId }: { values: MentorshipRequestData; mentorId: string }, thunkAPI) => {
-    try {
-      const url = `${config.endpoints.mentorship.sendMentorshipRequest}/${mentorId}`;
-      const {
-        data: { ok },
-      } = await http.post<{ ok: boolean }>(url, values);
-      console.log(ok);
-      return ok;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data.message);
-    }
+const initialState: MentorshipState = Object.freeze({
+  status: 'idle',
+});
+
+const mentorshipSlice = createSlice({
+  name: 'mentorship',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(sendMentorshipRequest.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(sendMentorshipRequest.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+    });
   },
-);
+});
+
+export default mentorshipSlice.reducer;
