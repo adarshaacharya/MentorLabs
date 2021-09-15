@@ -1,12 +1,11 @@
 import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { countries, languages, socials } from 'data';
 import { tags } from 'data/tags';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
 import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
-import { motion } from 'framer-motion';
 
 const { Item, List } = Form;
 const { Title, Text } = Typography;
@@ -14,10 +13,19 @@ const { Option } = Select;
 
 export const ProfileCreate = () => {
   const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.profile);
 
   const onFormSubmit = (values: CreateProfileData) => {
     dispatch(createProfile(values));
-    displaySuccessNotification('Profile created successfully');
+
+    if (status === 'resolved') {
+      displaySuccessNotification('Profile created successfully');
+      return;
+    }
+
+    if (status === 'rejected') {
+      displayErrorMessage('An error occured in creating profile. Try again');
+    }
   };
 
   const onFinishFailed = (error) => {

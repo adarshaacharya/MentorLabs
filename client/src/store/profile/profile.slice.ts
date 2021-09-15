@@ -29,6 +29,10 @@ const profileSlice = createSlice({
       state.user.profile = payload;
       state.status = 'resolved';
     });
+
+    builder.addCase(createProfile.rejected, (state) => {
+      state.status = 'rejected';
+    });
   },
 });
 
