@@ -20,6 +20,7 @@ export interface LoginData {
 export interface CreateProfileData extends Omit<Profile, 'id' | 'userId'> {}
 
 export interface MentorshipRequestData {
+  title: string;
   background: string;
   expectaion: string;
   message: string;
@@ -68,12 +69,14 @@ export interface Profile {
 //==============================================================================
 // Profile
 //==============================================================================
-export interface Mentorship extends MentorshipRequestData {
+export interface MentorshipRequest extends MentorshipRequestData {
   id: number;
+  title: string;
   menteeId: number;
   mentorId: number;
   status: MentorshipRequestStatus;
   mentor: User;
+  createdAt: Date;
 }
 
 //==============================================================================
@@ -105,6 +108,7 @@ export interface ProfileState {
 
 export interface MentorshipState {
   status: Status;
+  requests: MentorshipRequest[];
 }
 //==============================================================================
 // Redux Utilities data types

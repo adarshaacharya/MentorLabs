@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   users: usersReducer,
   profile: profileReducer,
-  mentorShip: mentorshipSlice,
+  mentorship: mentorshipSlice,
 });
 
 export default rootReducer;

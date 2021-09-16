@@ -1,5 +1,6 @@
 /**
  * Application wide configuration.
+ * The object are nested on basis of redux store
  */
 const config = {
   baseURI: '/api', // http://localhost:5000/api since we config proxy = 5000
@@ -20,6 +21,7 @@ const config = {
     },
     mentorship: {
       sendMentorshipRequest: '/mentorships/apply',
+      fetchMentorshipRequestsByStudent: '/mentorships/mentee-requests',
     },
   },
 };

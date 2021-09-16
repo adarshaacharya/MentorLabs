@@ -7,6 +7,10 @@ export class CreateMentorshipInput {
   readonly menteeId: number;
 
   @IsString()
+  @Length(5, 50)
+  readonly title: string;
+
+  @IsString()
   @Length(10, 500)
   readonly background: string;
 

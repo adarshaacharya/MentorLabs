@@ -73,6 +73,9 @@ body {
   margin-top: 10vh;
   background-color: var(--light-color);
 }
+.mt-1 {
+  margin-top: 1em;
+}
 .mb-1 {
   margin-bottom: 1em;
 }
@@ -90,6 +93,9 @@ body {
 }
 .pr-2 {
   padding-right: 2em;
+}
+.h-90 {
+  height: 90vh;
 }
 
 /*==============================================================================
@@ -527,4 +533,15 @@ body {
 .mentorship-requests {
   background: var(--bg-color);
   margin-top: 10vh;
+}
+
+.mentorship-request-card {
+}
+
+.mentorship-request-card__date {
+  font-weight: bold;
+}
+.mentorship-request-card__message {
+  margin-top: 1em;
+  font-size: 1.2em;
 }

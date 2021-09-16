@@ -20,7 +20,7 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
   handleMentorshipRequest,
   closeModal,
 }) => {
-  const { status } = useAppSelector((state) => state.mentorShip);
+  const { status } = useAppSelector((state) => state.mentorship);
   const [form] = Form.useForm();
 
   const onFormSubmit = () => {
@@ -32,7 +32,7 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
 
   return (
     <Modal
-      title="Mentorship Request Application"
+      title={'Mentorship Request Application'}
       visible={visible}
       onOk={onFormSubmit}
       onCancel={closeModal}
@@ -47,6 +47,23 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
       ]}
     >
       <Form form={form} size="large" layout="vertical" name="mentorship-request-form">
+        <Item
+          name="title"
+          label="Title for Application"
+          rules={[
+            {
+              required: true,
+              message: "You can't leave title empty!",
+            },
+            {
+              max: 50,
+              message: 'Title length should me maximum 50 characters!',
+            },
+          ]}
+        >
+          <Input placeholder="Short and sweet application heading." />
+        </Item>
+
         <Item
           name="background"
           label="My background"
@@ -92,7 +109,7 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
 };
 
 export const ProfileMentorshipRequest = () => {
-  const { status } = useAppSelector((state) => state.mentorShip);
+  const { status } = useAppSelector((state) => state.mentorship);
 
   const { closeModal, showModal, visible } = useModal(false);
   const { id } = useParams();

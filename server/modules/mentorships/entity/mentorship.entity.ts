@@ -9,6 +9,9 @@ import { User } from '../../../modules/users/entities/user.entity';
 @Entity()
 export class Mentorship extends CoreEntity {
   @Column()
+  title: string;
+
+  @Column()
   background: string;
 
   @Column()
