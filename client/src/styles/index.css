@@ -79,6 +79,9 @@ body {
 .mb-1 {
   margin-bottom: 1em;
 }
+.mb-2 {
+  margin-bottom: 2em;
+}
 .mb-5 {
   margin-bottom: 5em;
 }
@@ -420,18 +423,18 @@ body {
 /*==============================================================================
  Section : Student Dashboard
 ==============================================================================*/
-.dashboard {
+.student-dashboard {
   background-color: var(--bg-color);
   margin-top: 10vh;
 }
 
-.dashboard__title {
+.student-dashboard__title {
   padding-bottom: 1em;
   color: var(--gray-color);
 }
 
 /*==============================================================================
- Component : Card
+ Component : User Card
 ==============================================================================*/
 .card-lists {
   padding: 4em 0;
@@ -486,6 +489,12 @@ body {
 
 .card__tags {
   margin-bottom: 1em;
+}
+
+/*==============================================================================
+ Component : Feature Card
+==============================================================================*/
+.feature__card {
 }
 
 /*==============================================================================
@@ -579,4 +588,16 @@ body {
   padding: 1.1em 1em;
   text-align: left;
   width: 70%;
+}
+
+/*==============================================================================
+ Section : Dashboard(teachers)
+==============================================================================*/
+.teacher-dashboard {
+  background-color: var(--bg-color);
+  margin-top: 10vh;
+}
+
+.teacher-dashboard__features {
+  padding: 2em 0;
 }

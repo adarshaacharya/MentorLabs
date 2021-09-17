@@ -32,7 +32,7 @@ export const StudentDashboard = () => {
   );
 
   return (
-    <section className="dashboard">
+    <section className="student-dashboard">
       <Helmet>
         <title>Student Dashboard | Mentor Labs</title>
       </Helmet>

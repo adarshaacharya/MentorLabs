@@ -28,7 +28,7 @@ export const Router = () => {
       <PublicRoute path={routes.LOGIN} element={<Login />} />
       <PrivateRoute path={routes.STUDENT_DASHBOARD} element={<StudentDashboard />} requiredRoles={[Role.STUDENT]} />
       <PrivateRoute path={routes.TEACHER_DASHBOARD} element={<TeacherDashboard />} requiredRoles={[Role.TEACHER]} />
-      <PrivateRoute path={routes.USER_PROFILE} element={<Profile />} requiredRoles={[Role.STUDENT]} />
+      <PrivateRoute path={routes.USER_PROFILE} element={<Profile />} requiredRoles={[Role.STUDENT, Role.TEACHER]} />
       <PrivateRoute
         path={routes.STUDENT_MENTORSHIP_REQUESTS}
         element={<StudentMentorships />}
