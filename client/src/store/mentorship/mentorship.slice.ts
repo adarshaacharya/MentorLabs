@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { MentorshipRequest, MentorshipState } from 'types';
-import { fetchMentorshipRequestsByStudent, sendMentorshipRequest } from './mentorship.action';
+import {
+  fetchMentorshipRequestByStudent,
+  fetchMentorshipRequestsByStudent,
+  sendMentorshipRequest,
+} from './mentorship.action';
 
 const initialState: MentorshipState = Object.freeze({
   status: 'idle',
@@ -35,6 +39,19 @@ const mentorshipSlice = createSlice({
     });
 
     builder.addCase(fetchMentorshipRequestsByStudent.rejected, (state) => {
+      state.status = 'rejected';
+    });
+
+    builder.addCase(fetchMentorshipRequestByStudent.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(fetchMentorshipRequestByStudent.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+      state.request = payload;
+    });
+
+    builder.addCase(fetchMentorshipRequestByStudent.rejected, (state) => {
       state.status = 'rejected';
     });
   },

@@ -36,6 +36,10 @@ export const fetchMentorshipRequestByStudent = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const url = config.endpoints.mentorship.fetchMentorshipRequestByStudent;
-    } catch (err) {}
+      const { data } = await http.get<MentorshipRequest>(url);
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
   },
 );
