@@ -57,14 +57,6 @@ export const StudentMentorships = () => {
     dispatch(fetchMentorshipRequestsByStudent());
   }, []);
 
-  // if (status === 'pending') {
-  //   return (
-  //     <div className="loading">
-  //       <div className="container">Loading mentorship requests...</div>
-  //     </div>
-  //   );
-  // }
-
   if (status === 'resolved' && requests.length < 1) {
     return (
       <div className="mentorship-requests h-90 text--center">
