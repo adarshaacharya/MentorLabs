@@ -33,11 +33,23 @@ router.get(
 /**
  * @method POST
  * @route /api/mentorships/mentee-requests
- * @description : Returns all the mentorship requests for a mentor
+ * @description : Returns all the mentorship requests send by a mentee
  * @acces private
  */
 router.get(
   '/mentee-requests',
   [checkJwt, checkRole([Role.STUDENT])],
   mentorshipsController.getMentorshipRequestsByMentee,
+);
+
+/**
+ * @method POST
+ * @route /api/mentorships/requests/:id
+ * @description : Returns deatisl for mentorship request by id
+ * @acces private
+ */
+router.get(
+  '/requests/:id',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])],
+  mentorshipsController.findMentorshipById,
 );

@@ -109,6 +109,7 @@ export interface ProfileState {
 export interface MentorshipState {
   status: Status;
   requests: MentorshipRequest[];
+  request: MentorshipRequest;
 }
 //==============================================================================
 // Redux Utilities data types

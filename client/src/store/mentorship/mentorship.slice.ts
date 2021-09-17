@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MentorshipState } from 'types';
+import { MentorshipRequest, MentorshipState } from 'types';
 import { fetchMentorshipRequestsByStudent, sendMentorshipRequest } from './mentorship.action';
 
 const initialState: MentorshipState = Object.freeze({
   status: 'idle',
   requests: [],
+  request: {} as MentorshipRequest,
 });
 
 const mentorshipSlice = createSlice({

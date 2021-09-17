@@ -46,6 +46,20 @@ class MentorshipsController {
       next(error);
     }
   }
+
+  public async findMentorshipById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const mentorshipsServiceInstance = Container.get(MentorshipsService);
+      const id = validateIdOrThrow(+req.params.id);
+      const currentId = req.user && req.user.id;
+
+      const request = currentId && (await mentorshipsServiceInstance.findMentorshipById(id, currentId));
+
+      res.status(201).json(request);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const mentorshipsController = new MentorshipsController();

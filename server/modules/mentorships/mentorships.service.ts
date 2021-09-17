@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { BadRequest } from '../../common/exceptions';
+import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
@@ -81,8 +81,15 @@ export class MentorshipsService {
    * Finds a mentorship by id
    * @param id
    */
-  public async findMentorshipById(id: number) {
-    const mentorship = this.mentorshipRepository.findOne({ where: { id } });
+  public async findMentorshipById(id: number, currentId: number) {
+    const mentorship = await this.mentorshipRepository.findOne({ where: { id } });
+
+    if (!mentorship) {
+      throw new NotFound('Mentorship  request with given id not found');
+    }
+    if (currentId !== mentorship.menteeId || currentId !== mentorship.mentorId) {
+      throw new Unauthorized('You are not allowed to view other requests');
+    }
     return mentorship;
   }
 

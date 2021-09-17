@@ -30,3 +30,12 @@ export const fetchMentorshipRequestsByStudent = createAsyncThunk(
     }
   },
 );
+
+export const fetchMentorshipRequestByStudent = createAsyncThunk(
+  'mentorship/fetchMentorshipRequestByStudent',
+  async (_, thunkAPI) => {
+    try {
+      const url = config.endpoints.mentorship.fetchMentorshipRequestByStudent;
+    } catch (err) {}
+  },
+);
