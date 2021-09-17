@@ -87,9 +87,11 @@ export class MentorshipsService {
     if (!mentorship) {
       throw new NotFound('Mentorship  request with given id not found');
     }
-    if (currentId !== mentorship.menteeId || currentId !== mentorship.mentorId) {
+
+    if (currentId !== mentorship.menteeId && currentId !== mentorship.mentorId) {
       throw new Unauthorized('You are not allowed to view other requests');
     }
+
     return mentorship;
   }
 
