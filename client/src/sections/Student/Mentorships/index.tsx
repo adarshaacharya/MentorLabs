@@ -1,8 +1,8 @@
-import { Avatar, Button, Card, Col, Row, Space, Tag, Typography } from 'antd';
+import { Avatar, Button, Card, Col, Divider, Row, Space, Tag, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchMentorshipRequestsByStudent } from 'store/mentorship/mentorship.action';
 import { MentorshipRequest } from 'types';
 
@@ -10,11 +10,13 @@ const { Title, Text, Paragraph } = Typography;
 
 type MentorshipRequestCardProps = {
   request: MentorshipRequest;
+  loading: boolean;
 };
 
-const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ request }) => {
+const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ request, loading }) => {
+  const navigate = useNavigate();
   return (
-    <Card className="mentorship-request-card">
+    <Card className="mentorship-request-card" loading={loading}>
       <Row justify="space-between">
         <Col>
           <Space size="middle" className="mentorship-request-card__user">
@@ -32,14 +34,17 @@ const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ request }
           <Tag color="processing">{request.status}</Tag>
         </Col>
       </Row>
-
-      <Title level={5} className="mt-1" type="secondary">
-        <Link to={`/student-requests/${request.id}`}>{request.title}</Link>
-      </Title>
-      <p className="mentorship-request-card__message">
+      <Link to={`/student-requests/${request.id}`}>
+        <Title level={5} className="mt-1">
+          {request.title}
+        </Title>
+      </Link>
+      <div className="mentorship-request-card__message">
         <Paragraph ellipsis={{ rows: 3 }}>{request.message}</Paragraph>
-      </p>
-      <Button type="primary">View full details</Button>
+      </div>
+      <Button type="primary" onClick={() => navigate(`/student-requests/${request.id}`)}>
+        View full details
+      </Button>
     </Card>
   );
 };
@@ -52,15 +57,15 @@ export const StudentMentorships = () => {
     dispatch(fetchMentorshipRequestsByStudent());
   }, []);
 
-  if (status === 'pending') {
-    return (
-      <div className="loading">
-        <div className="container">Loading mentorship requests...</div>
-      </div>
-    );
-  }
+  // if (status === 'pending') {
+  //   return (
+  //     <div className="loading">
+  //       <div className="container">Loading mentorship requests...</div>
+  //     </div>
+  //   );
+  // }
 
-  if (requests.length < 1) {
+  if (status === 'resolved' && requests.length < 1) {
     return (
       <div className="mentorship-requests h-90 text--center">
         <div className="container">
@@ -76,7 +81,9 @@ export const StudentMentorships = () => {
         <title>Student Mentorship Requests | Mentor Labs</title>
       </Helmet>
       <div className="container">
-        <Title level={3}>Mentorship Requests.</Title>
+        <Divider orientation="left">
+          <Title level={4}>Outgoing Requests.</Title>
+        </Divider>
         <Text type="secondary">
           👉 View all the mentorship requests send by you to the mentors. You can click on the below cards and view the
           details of requests status and the reply send by the mentor to you.
@@ -86,7 +93,7 @@ export const StudentMentorships = () => {
           {requests.map((request) => {
             return (
               <div className="py-2" key={request.id}>
-                <MentorshipRequestCard request={request} />
+                <MentorshipRequestCard request={request} loading={status === 'pending'} />
               </div>
             );
           })}

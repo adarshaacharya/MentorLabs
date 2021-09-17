@@ -85,6 +85,9 @@ body {
 .my-2 {
   margin: 2em 0;
 }
+.pb-1 {
+  padding-bottom: 1em;
+}
 .py-1 {
   padding: 1em 0;
 }
@@ -93,6 +96,9 @@ body {
 }
 .pr-2 {
   padding-right: 2em;
+}
+.p-1 {
+  padding: 1em;
 }
 .h-90 {
   height: 90vh;
@@ -543,5 +549,34 @@ body {
 }
 .mentorship-request-card__message {
   margin-top: 1em;
-  font-size: 1.2em;
+  font-size: 1.6rem;
+}
+
+/*==============================================================================
+ Section : MentorshipRequest(Student)
+==============================================================================*/
+.mentorship-request {
+  background: var(--bg-color);
+  margin-top: 10vh;
+}
+.mentorship-request__card {
+  background-color: var(--light-color);
+  font-size: 1.5rem;
+}
+
+.mentorship-request__card table {
+  width: 100%;
+}
+
+.mentorship-request__card th {
+  text-align: center;
+  text-align: left;
+  padding: 1.1em 1em;
+  width: 15%;
+}
+
+.mentorship-request__card td {
+  padding: 1.1em 1em;
+  text-align: left;
+  width: 70%;
 }

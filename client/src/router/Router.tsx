@@ -1,7 +1,16 @@
 import { Role } from 'enums';
 import * as routes from 'constants/routes';
 import { Route, Routes } from 'react-router-dom';
-import { CreateAccount, Home, Login, NotFound, StudentDashboard, TeacherDashboard, StudentMentorships } from 'sections';
+import {
+  CreateAccount,
+  Home,
+  Login,
+  NotFound,
+  StudentDashboard,
+  TeacherDashboard,
+  StudentMentorships,
+  StudentMentorshipRequest,
+} from 'sections';
 import { Profile } from 'sections/Profile';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
@@ -25,7 +34,11 @@ export const Router = () => {
         element={<StudentMentorships />}
         requiredRoles={[Role.STUDENT]}
       />
-
+      <PrivateRoute
+        path={routes.STUDENT_MENTORSHIP_REQUEST}
+        element={<StudentMentorshipRequest />}
+        requiredRoles={[Role.STUDENT]}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
