@@ -3,6 +3,7 @@ import { MentorshipRequest, MentorshipState } from 'types';
 import {
   fetchMentorshipRequestByStudent,
   fetchMentorshipRequestsByStudent,
+  fetchMentorshipRequestsOfMentor,
   sendMentorshipRequest,
 } from './mentorship.action';
 
@@ -52,6 +53,19 @@ const mentorshipSlice = createSlice({
     });
 
     builder.addCase(fetchMentorshipRequestByStudent.rejected, (state) => {
+      state.status = 'rejected';
+    });
+
+    builder.addCase(fetchMentorshipRequestsOfMentor.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(fetchMentorshipRequestsOfMentor.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+      state.requests = payload;
+    });
+
+    builder.addCase(fetchMentorshipRequestsOfMentor.rejected, (state) => {
       state.status = 'rejected';
     });
   },

@@ -22,6 +22,7 @@ const config = {
     mentorship: {
       sendMentorshipRequest: '/mentorships/apply',
       fetchMentorshipRequestsByStudent: '/mentorships/mentee-requests',
+      fetchMentorshipRequestsOfMentor: '/mentorships/mentor-requests',
       fetchMentorshipRequestByStudent: '/mentorships/requests',
     },
   },
