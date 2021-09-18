@@ -5,7 +5,7 @@ import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
-import { Mentorship } from './entity/mentorship.entity';
+import { Mentorship } from './entities/mentorship.entity';
 
 @Service()
 export class MentorshipsService {

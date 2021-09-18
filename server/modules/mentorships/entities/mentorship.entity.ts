@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities/core.entity';
 import { Status } from '../../../common/enums/status.enum';
-import { User } from '../../../modules/users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
+import { Response } from './response.entity';
 
 /**
  * mentorship application
@@ -19,6 +20,9 @@ export class Mentorship extends CoreEntity {
 
   @Column()
   message: string;
+
+  @Column({ type: 'enum', enum: Status, default: Status.PENDING })
+  status: Status;
 
   // each mentorship is owned by only one mentor
   @ManyToOne(() => User, (user) => user.books, {
@@ -42,6 +46,7 @@ export class Mentorship extends CoreEntity {
   @Column()
   mentorId: number;
 
-  @Column({ type: 'enum', enum: Status, default: Status.PENDING })
-  status: Status;
+  // each mentorship has one response
+  @OneToOne(() => Response, (response) => response.mentorship)
+  response: Response;
 }
