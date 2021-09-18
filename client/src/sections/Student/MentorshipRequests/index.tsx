@@ -49,7 +49,7 @@ const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ request, 
   );
 };
 
-export const StudentMentorships = () => {
+export const StudentMentorshipRequests = () => {
   const dispatch = useAppDispatch();
   const { requests, status } = useAppSelector((state) => state.mentorship);
 

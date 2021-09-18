@@ -1,5 +1,5 @@
 import { Card, Typography } from 'antd';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 
@@ -11,14 +11,13 @@ type FeatureCardProps = {
 };
 
 export const FeatureCard: React.FC<FeatureCardProps> = ({ title, icon, description, link }) => {
-  const navigate = useNavigate();
   return (
-    <div className="feature-card" onClick={() => navigate(link)}>
-      <Card className="text--center" hoverable>
+    <Link to={link}>
+      <Card className="feature-card text--center" hoverable>
         <div className="mb-1">{icon}</div>
         <Title level={5}>{title}</Title>
         <Paragraph type="secondary">{description}</Paragraph>
       </Card>
-    </div>
+    </Link>
   );
 };

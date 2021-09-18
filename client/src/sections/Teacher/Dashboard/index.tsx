@@ -2,8 +2,8 @@ import { Col, Divider, Row, Typography } from 'antd';
 import { FeatureCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
 import { Helmet } from 'react-helmet-async';
-import { FaMailchimp } from 'react-icons/fa';
-import { GiVideoConference } from 'react-icons/gi';
+import { FaMobileAlt } from 'react-icons/fa';
+import { ImLab } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 const { Title, Paragraph } = Typography;
 
@@ -11,13 +11,13 @@ export const teacherDashboardFeatues = [
   {
     title: 'Incoming Requests',
     description: 'View all the incoming requests send by students to you.',
-    icon: <FaMailchimp size={'5em'} />,
-    link: '/incoming-requests',
+    icon: <FaMobileAlt size={'5em'} />,
+    link: '/teacher-requests',
   },
   {
     title: 'Explore labs',
     description: 'Explore our interactive video and audio chat labs.',
-    icon: <GiVideoConference size={'5em'} />,
+    icon: <ImLab size={'5em'} />,
     link: '/labs',
   },
 ];

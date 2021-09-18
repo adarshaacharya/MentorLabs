@@ -1,3 +1,3 @@
 export * from './Dashboard';
-export * from './Mentorships';
+export * from './MentorshipRequests';
 export * from './MentorshipRequest';
