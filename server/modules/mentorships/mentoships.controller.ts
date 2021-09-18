@@ -60,6 +60,18 @@ class MentorshipsController {
       next(error);
     }
   }
+
+  public async createMentorshipResponse(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const mentorshipsServiceInstance = Container.get(MentorshipsService);
+      const id = validateIdOrThrow(+req.params.id);
+
+      const response = await mentorshipsServiceInstance.createMentorshipResponse(id);
+      res.status(201).json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const mentorshipsController = new MentorshipsController();

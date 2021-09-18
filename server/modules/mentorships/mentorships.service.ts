@@ -6,6 +6,7 @@ import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { Mentorship } from './entities/mentorship.entity';
+import { Response } from './entities/response.entity';
 
 @Service()
 export class MentorshipsService {
@@ -15,6 +16,9 @@ export class MentorshipsService {
 
     @InjectRepository(User)
     private readonly userRepository: UserRepository,
+
+    @InjectRepository(Response)
+    private readonly responseRepository: Repository<Response>,
   ) {}
 
   /**
@@ -93,6 +97,20 @@ export class MentorshipsService {
     }
 
     return mentorship;
+  }
+
+  /**
+   * creates response for mentorship req
+   * @param id
+   */
+  public async createMentorshipResponse(id: number) {
+    const mentorship = await this.mentorshipRepository.findOne({ where: { id } });
+
+    if (!mentorship) {
+      throw new NotFound('Mentorship  request with given id not found');
+    }
+
+    const response = await this.responseRepository.save(this.responseRepository.create({ mentorshipId: id }));
   }
 
   /**
