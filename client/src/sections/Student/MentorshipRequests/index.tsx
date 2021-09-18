@@ -1,53 +1,11 @@
-import { Avatar, Button, Card, Col, Divider, Row, Space, Tag, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
+import { MentorshipRequestCard } from 'core-ui';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
 import { fetchMentorshipRequestsByStudent } from 'store/mentorship/mentorship.action';
-import { MentorshipRequest } from 'types';
 
-const { Title, Text, Paragraph } = Typography;
-
-type MentorshipRequestCardProps = {
-  request: MentorshipRequest;
-  loading: boolean;
-};
-
-const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ request, loading }) => {
-  const navigate = useNavigate();
-  return (
-    <Card className="mentorship-request-card" loading={loading}>
-      <Row justify="space-between">
-        <Col>
-          <Space size="middle" className="mentorship-request-card__user">
-            <Avatar size={65} src={request.mentor.avatar} />
-            <div>
-              <Link to={`/users/${request.mentor.id}`}>
-                <b>{request.mentor.name}</b>
-              </Link>
-              <p>{new Date(request.createdAt).toDateString()} </p>
-            </div>
-          </Space>
-        </Col>
-
-        <Col>
-          <Tag color="processing">{request.status}</Tag>
-        </Col>
-      </Row>
-      <Link to={`/student-requests/${request.id}`}>
-        <Title level={5} className="mt-1">
-          {request.title}
-        </Title>
-      </Link>
-      <div className="mentorship-request-card__message">
-        <Paragraph ellipsis={{ rows: 3 }}>{request.message}</Paragraph>
-      </div>
-      <Button type="primary" onClick={() => navigate(`/student-requests/${request.id}`)}>
-        View full details
-      </Button>
-    </Card>
-  );
-};
+const { Title, Text } = Typography;
 
 export const StudentMentorshipRequests = () => {
   const dispatch = useAppDispatch();
