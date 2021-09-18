@@ -1,10 +1,7 @@
-import { IsDate, IsMilitaryTime, IsString, IsUrl, Length } from 'class-validator';
+import { IsDateString, IsMilitaryTime, IsString, IsUrl, Length } from 'class-validator';
 
-export class CreateReponseInput {
-  @IsUrl()
-  readonly link: string;
-
-  @IsDate()
+export class CreateResponseInput {
+  @IsDateString()
   readonly date: Date;
 
   @IsMilitaryTime()
@@ -13,7 +10,12 @@ export class CreateReponseInput {
   @IsMilitaryTime()
   readonly endTime: string;
 
+  @IsUrl()
+  readonly link: string;
+
   @IsString()
   @Length(10, 500)
   readonly message: string;
 }
+
+export class CreateResponseOutput {}

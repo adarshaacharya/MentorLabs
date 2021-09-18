@@ -5,9 +5,6 @@ import { Mentorship } from './mentorship.entity';
 @Entity()
 export class Response extends CoreEntity {
   @Column()
-  link: string;
-
-  @Column()
   date: Date;
 
   @Column()
@@ -15,6 +12,9 @@ export class Response extends CoreEntity {
 
   @Column()
   endTime: string;
+
+  @Column()
+  link: string;
 
   @Column()
   message: string;

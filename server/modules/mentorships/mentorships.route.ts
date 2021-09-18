@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Role } from '../../common/enums';
 import { checkRole, createValidator, checkJwt } from '../../common/middlewares';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
+import { CreateResponseInput } from './dtos/create-response.dto';
 import { mentorshipsController } from './mentoships.controller';
 
 export const router: Router = Router();
@@ -66,7 +67,7 @@ router.get(
  * @role Teacher
  */
 router.post(
-  '/response',
-  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])],
+  '/response/:id',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(CreateResponseInput)],
   mentorshipsController.createMentorshipResponse,
 );

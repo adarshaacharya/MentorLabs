@@ -64,9 +64,9 @@ class MentorshipsController {
   public async createMentorshipResponse(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
-      const id = validateIdOrThrow(+req.params.id);
+      const mentorshipId = validateIdOrThrow(+req.params.id);
 
-      const response = await mentorshipsServiceInstance.createMentorshipResponse(id);
+      const response = await mentorshipsServiceInstance.createMentorshipResponse(mentorshipId, req.body);
       res.status(201).json(response);
     } catch (error) {
       next(error);

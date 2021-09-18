@@ -5,6 +5,7 @@ import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
+import { CreateResponseInput } from './dtos/create-response.dto';
 import { Mentorship } from './entities/mentorship.entity';
 import { Response } from './entities/response.entity';
 
@@ -103,14 +104,24 @@ export class MentorshipsService {
    * creates response for mentorship req
    * @param id
    */
-  public async createMentorshipResponse(id: number) {
-    const mentorship = await this.mentorshipRepository.findOne({ where: { id } });
+  public async createMentorshipResponse(mentorshipId: number, createResponseInput: CreateResponseInput) {
+    const mentorship = await this.mentorshipRepository.findOne({ where: { id: mentorshipId } });
 
     if (!mentorship) {
       throw new NotFound('Mentorship  request with given id not found');
     }
 
-    const response = await this.responseRepository.save(this.responseRepository.create({ mentorshipId: id }));
+    const responseExists = await this.responseRepository.findOne({ where: { mentorshipId } });
+
+    if (responseExists) {
+      throw new BadRequest('Response for given mentorship is already done.');
+    }
+
+    const response = await this.responseRepository.save(
+      this.responseRepository.create({ mentorshipId, ...createResponseInput }),
+    );
+
+    return response;
   }
 
   /**
