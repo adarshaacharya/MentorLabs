@@ -56,3 +56,16 @@ export const fetchMentorshipRequestsOfMentor = createAsyncThunk(
     }
   },
 );
+
+export const fetchMentorshipRequestOfMentor = createAsyncThunk(
+  'mentorship/fetchMentorshipRequestOfMentor',
+  async (_, thunkAPI) => {
+    try {
+      const url = config.endpoints.mentorship.fetchMentorshipRequestOfMentor;
+      const { data } = await http.get<MentorshipRequest>(url);
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  },
+);
