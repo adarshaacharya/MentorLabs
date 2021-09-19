@@ -59,9 +59,9 @@ export const fetchMentorshipRequestsOfMentor = createAsyncThunk(
 
 export const fetchMentorshipRequestOfMentor = createAsyncThunk(
   'mentorship/fetchMentorshipRequestOfMentor',
-  async (_, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
-      const url = config.endpoints.mentorship.fetchMentorshipRequestOfMentor;
+      const url = `${config.endpoints.mentorship.fetchMentorshipRequestOfMentor}/${id}`;
       const { data } = await http.get<MentorshipRequest>(url);
       return data;
     } catch (err) {

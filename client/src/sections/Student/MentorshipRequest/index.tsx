@@ -25,7 +25,7 @@ export const StudentMentorshipRequest = () => {
           <title>Student Mentorship Request | Mentor Labs</title>
         </Helmet>
         <Divider orientation="left">
-          <Title level={4}>Mentorship Request Status.</Title>
+          <Title level={4}>Outgoing Mentorship Request Status.</Title>
         </Divider>
 
         <Card className="mentorship-request__card my-2 p-1" loading={loading}>

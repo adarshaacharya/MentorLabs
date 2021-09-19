@@ -602,3 +602,16 @@ body {
   padding: 2em 0;
   min-height: 55vh;
 }
+
+/*==============================================================================
+ Section : Dashboard(Student)
+==============================================================================*/
+.student-dashboard {
+  background-color: var(--bg-color);
+  margin-top: 10vh;
+}
+
+.student-dashboard__features {
+  padding: 2em 0;
+  min-height: 55vh;
+}

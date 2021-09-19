@@ -10,6 +10,7 @@ import {
   StudentMentorshipRequest,
   StudentMentorshipRequests,
   TeacherDashboard,
+  TeacherListings,
   TeacherMentorshipRequest,
   TeacherMentorshipRequests,
 } from 'sections';
@@ -29,6 +30,7 @@ export const Router = () => {
       <PublicRoute path={routes.CREATE_ACCOUNT} element={<CreateAccount />} />
       <PublicRoute path={routes.LOGIN} element={<Login />} />
       <PrivateRoute path={routes.STUDENT_DASHBOARD} element={<StudentDashboard />} requiredRoles={[Role.STUDENT]} />
+      <PrivateRoute path={routes.TEACHER_LISTINGS} element={<TeacherListings />} requiredRoles={[Role.STUDENT]} />
       <PrivateRoute path={routes.TEACHER_DASHBOARD} element={<TeacherDashboard />} requiredRoles={[Role.TEACHER]} />
       <PrivateRoute path={routes.USER_PROFILE} element={<Profile />} requiredRoles={[Role.STUDENT, Role.TEACHER]} />
       <PrivateRoute

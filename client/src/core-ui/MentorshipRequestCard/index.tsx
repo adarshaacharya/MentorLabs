@@ -14,6 +14,8 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
 
   const user = request.mentor ?? request.mentee;
 
+  const url = request.mentor ? `/student-requests/${request.id}` : `/teacher-requests/${request.id}`;
+
   return (
     <Card className="mentorship-request-card" loading={loading}>
       <Row justify="space-between">
@@ -33,7 +35,7 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
           <Tag color="processing">{request.status}</Tag>
         </Col>
       </Row>
-      <Link to={`/student-requests/${request.id}`}>
+      <Link to={url}>
         <Title level={5} className="mt-1">
           {request.title}
         </Title>
@@ -41,7 +43,7 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
       <div className="mentorship-request-card__message">
         <Paragraph ellipsis={{ rows: 3 }}>{request.message}</Paragraph>
       </div>
-      <Button type="primary" onClick={() => navigate(`/student-requests/${request.id}`)}>
+      <Button type="primary" onClick={() => navigate(url)}>
         View full details
       </Button>
     </Card>

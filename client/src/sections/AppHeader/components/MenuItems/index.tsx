@@ -1,12 +1,10 @@
-import { Avatar, Button, Menu } from 'antd';
-import { Role } from 'enums';
+import { Avatar, Menu } from 'antd';
+import * as routes from 'constants/routes';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
-import { ImBell } from 'react-icons/im';
 import { NavLink } from 'react-router-dom';
 import { logOut } from 'store/auth/auth.actions';
 import { displaySuccessNotification } from 'utils/notifications';
-import * as routes from 'constants/routes';
 
 const { Item, SubMenu } = Menu;
 
@@ -20,8 +18,6 @@ export const MenuItems = () => {
   };
 
   if (status === 'pending' || status === 'idle') return <p>Loading nav.</p>;
-
-  const userIsStudent = user.role === Role.STUDENT;
 
   const publicLinks = (
     <div className="app-header__menu--public">
@@ -40,15 +36,6 @@ export const MenuItems = () => {
 
   const privateLinks = (
     <Menu mode="horizontal" selectable={false} className="app-header__menu--private">
-      {userIsStudent ? (
-        <Item key="/mentorships">
-          <NavLink to={routes.STUDENT_MENTORSHIP_REQUESTS}>
-            <Button type="default">
-              <ImBell /> &nbsp; Mentorships
-            </Button>
-          </NavLink>
-        </Item>
-      ) : null}
       <SubMenu
         title={<Avatar size="large" src={user?.avatar} className="app-header__menu--avatar" />}
         className="app-header__sub-menu--private"
