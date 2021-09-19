@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router';
 import { fetchMentorshipRequestOfMentor } from 'store/mentorship/mentorship.action';
+import { MentorshipResponse } from './components';
 
 const { Title } = Typography;
 export const TeacherMentorshipRequest = () => {
@@ -18,6 +19,7 @@ export const TeacherMentorshipRequest = () => {
 
   const loading = status === 'pending';
 
+  const mentorshipResponseElement = <MentorshipResponse />;
   return (
     <div className="mentorship-request">
       <div className="container">
@@ -71,6 +73,7 @@ export const TeacherMentorshipRequest = () => {
             </tr>
           </table>
         </Card>
+        <div className="mentorship-response__wrapper">{mentorshipResponseElement}</div>
       </div>
     </div>
   );
