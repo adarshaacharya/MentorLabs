@@ -61,6 +61,18 @@ class MentorshipsController {
     }
   }
 
+  public async updateMentorshipRequestStatus(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const mentorshipsServiceInstance = Container.get(MentorshipsService);
+      const mentorshipId = validateIdOrThrow(+req.params.id);
+
+      const status = await mentorshipsServiceInstance.updateMentorshipRequestStatus(mentorshipId, req.body);
+      res.status(201).json(status);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   public async createMentorshipResponse(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);

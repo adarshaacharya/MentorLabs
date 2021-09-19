@@ -3,6 +3,7 @@ import { Role } from '../../common/enums';
 import { checkRole, createValidator, checkJwt } from '../../common/middlewares';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { CreateResponseInput } from './dtos/create-response.dto';
+import { UpdateRequestStatusInput } from './dtos/update-request-status';
 import { mentorshipsController } from './mentoships.controller';
 
 export const router: Router = Router();
@@ -57,6 +58,19 @@ router.get(
   '/requests/:id',
   [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])],
   mentorshipsController.findMentorshipById,
+);
+
+/**
+ * @method POST
+ * @route /api/mentorships/update-status/:id
+ * @description : update status of mentorship req status to Accepted or Rejected
+ * @acces private
+ * @role Teacher
+ */
+router.put(
+  '/update-status/:id',
+  [checkJwt, checkRole([Role.TEACHER]), createValidator(UpdateRequestStatusInput)],
+  mentorshipsController.updateMentorshipRequestStatus,
 );
 
 /**

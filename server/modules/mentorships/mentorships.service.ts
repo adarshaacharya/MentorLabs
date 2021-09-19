@@ -6,6 +6,7 @@ import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
 import { CreateResponseInput } from './dtos/create-response.dto';
+import { UpdateRequestStatusInput } from './dtos/update-request-status';
 import { Mentorship } from './entities/mentorship.entity';
 import { Response } from './entities/response.entity';
 
@@ -98,6 +99,24 @@ export class MentorshipsService {
     }
 
     return mentorship;
+  }
+
+  /**
+   * update status of req
+   * @param newstatus, id
+   */
+  public async updateMentorshipRequestStatus(mentorshipId: number, updateRequestStatusInput: UpdateRequestStatusInput) {
+    const mentorship = await this.mentorshipRepository.findOne({ where: { id: mentorshipId } });
+
+    if (!mentorship) {
+      throw new NotFound('Mentorship  request with given id not found');
+    }
+
+    const { status } = updateRequestStatusInput;
+
+    const response = await this.mentorshipRepository.save({ ...mentorship, status });
+
+    return response;
   }
 
   /**
