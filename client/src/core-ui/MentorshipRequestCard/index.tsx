@@ -1,5 +1,6 @@
 import { Avatar, Button, Card, Col, Row, Space, Tag, Typography } from 'antd';
 import { StatusTag } from 'core-ui';
+import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 import { MentorshipRequest } from 'types';
 
@@ -27,7 +28,7 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
               <Link to={`/users/${user.id}`}>
                 <b>{user.name}</b>
               </Link>
-              <p>{new Date(request.createdAt).toDateString()} </p>
+              <p>{moment(request.createdAt).startOf('hour').fromNow()}</p>
             </div>
           </Space>
         </Col>

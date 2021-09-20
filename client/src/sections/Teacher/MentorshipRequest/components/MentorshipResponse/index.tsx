@@ -1,4 +1,5 @@
 import { Button, Card, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
+import moment from 'moment';
 import { MentorshipResponseData } from 'types';
 
 const { Item } = Form;
@@ -7,7 +8,11 @@ const { Title, Paragraph } = Typography;
 
 export const MentorshipResponse = () => {
   const onFinish = (values: MentorshipResponseData) => {
-    console.log('Success:', values);
+    const date = moment(values.date).format('LL');
+    const startTime = moment(values.startTime).format('LT');
+    const endTime = moment(values.endTime).format('LT');
+
+    console.log({ ...values, date, startTime, endTime });
   };
 
   return (
