@@ -107,24 +107,13 @@ body {
   height: 90vh;
 }
 
+.border-0 {
+  border: none;
+}
+
 /*==============================================================================
  Section : Ant Design utility classes
 ==============================================================================*/
-.bg-primary {
-  background-color: #4190f7;
-}
-
-.bg-success {
-  background-color: #70c040;
-}
-
-.bg-warning {
-  background-color: #efaf41;
-}
-
-.bg-danger {
-  background-color: #e23c39;
-}
 
 /*==============================================================================
  Section : Loading
@@ -629,4 +618,25 @@ body {
 .student-dashboard__features {
   padding: 2em 0;
   min-height: 55vh;
+}
+
+/*==============================================================================
+ Section : MentorshipRequest(Teacher)
+==============================================================================*/
+.accept-request-btn {
+  background-color: #52c41a;
+  border: none;
+  color: var(--light-color);
+  border-radius: 1px;
+  cursor: pointer;
+  padding: 4px 15px;
+  line-height: 1.5715;
+}
+
+.accept-request-btn:hover {
+  opacity: 0.9;
+}
+
+.mentorship-response-form {
+  padding: 1em 0;
 }

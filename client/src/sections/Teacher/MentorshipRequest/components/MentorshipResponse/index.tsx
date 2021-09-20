@@ -1,43 +1,75 @@
-import { Form, Input, Button, Checkbox, Divider, Typography } from 'antd';
-
-interface MentorshipResponseData {
-  date: Date;
-  startTime: string;
-  endTime: string;
-  link: string;
-  message: string;
-}
+import { Button, Card, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
+import { MentorshipResponseData } from 'types';
 
 const { Item } = Form;
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
 export const MentorshipResponse = () => {
-  const onFinish = (values: any) => {
+  const onFinish = (values: MentorshipResponseData) => {
     console.log('Success:', values);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
-    <div className="mentorship-response-form">
+    <Card className="mentorship-response-form">
       <Divider orientation="left">
         <Title level={4}>Respond Mentorship Request.</Title>
       </Divider>
       <Paragraph type="secondary">
-        Respond the mentee with the details about the event. Please place the details clearly so it won't create
-        confusion in either end.
+        You've accepted request, so respond the mentee with the details about the event. Please place the details
+        clearly so it won't create confusion in either end.
       </Paragraph>
-      <Form
-        name="mentorship-response-form"
-        autoComplete="off"
-        layout="vertical"
-        size="large"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
+      <Form name="mentorship-response-form" autoComplete="off" layout="vertical" size="large" onFinish={onFinish}>
+        <Item
+          name="date"
+          label="Date"
+          rules={[
+            {
+              required: true,
+              message: "You can't leave date empty!",
+            },
+          ]}
+        >
+          <DatePicker picker="date" placeholder="Select date" />
+        </Item>
+        <Space size="large">
+          <Item
+            name="startTime"
+            label="Start Time"
+            rules={[
+              {
+                required: true,
+                message: "You can't leave start time empty!",
+              },
+            ]}
+          >
+            <DatePicker picker="time" placeholder="Select start time" />
+          </Item>
+          <Item
+            name="endTime"
+            label="End Time"
+            rules={[
+              {
+                required: true,
+                message: "You can't leave end time empty!",
+              },
+            ]}
+          >
+            <DatePicker picker="time" placeholder="Select end time" />
+          </Item>
+        </Space>
+        <Item
+          name="link"
+          label="Session Link"
+          rules={[
+            {
+              required: true,
+              message: "You can't leave link empty!",
+            },
+          ]}
+        >
+          <Input placeholder="https://mentorlabs.com/xyz" />
+        </Item>
         <Item
           name="message"
           label="Message"
@@ -54,6 +86,6 @@ export const MentorshipResponse = () => {
           Submit Response
         </Button>
       </Form>
-    </div>
+    </Card>
   );
 };

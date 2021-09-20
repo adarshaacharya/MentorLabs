@@ -1,5 +1,6 @@
 import { Card, Divider, Typography } from 'antd';
 import { StatusTag } from 'core-ui';
+import { MentorshipRequestStatus } from 'enums';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -8,7 +9,7 @@ import { fetchMentorshipRequestOfMentor } from 'store/mentorship/mentorship.acti
 import { MentorshipResponse } from './components';
 import { MentorshipStatusUpdate } from './components/MentorshipStatusUpdate';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 export const TeacherMentorshipRequest = () => {
   const { id } = useParams();
 
@@ -19,11 +20,18 @@ export const TeacherMentorshipRequest = () => {
     dispatch(fetchMentorshipRequestOfMentor(id));
   }, []);
 
-  const loading = status === 'pending';
+  const loading = status === 'pending' && !request;
 
-  const updateStatusElement = <MentorshipStatusUpdate />;
+  const updateStatusElement = request.status === MentorshipRequestStatus.PENDING ? <MentorshipStatusUpdate /> : null;
 
-  const mentorshipResponseElement = <MentorshipResponse />;
+  const mentorshipResponseElement =
+    request.status === MentorshipRequestStatus.APPROVED ? (
+      <MentorshipResponse />
+    ) : request.status === MentorshipRequestStatus.REJECTED ? (
+      <Paragraph type="secondary">
+        You've rejected this person mentorship request. If you think that's by mistake contact to mentee via email. 😊
+      </Paragraph>
+    ) : null;
 
   return (
     <div className="mentorship-request">
@@ -75,9 +83,9 @@ export const TeacherMentorshipRequest = () => {
             </tbody>
           </table>
 
-          <div className="py-2">{updateStatusElement}</div>
+          <div>{updateStatusElement}</div>
         </Card>
-        {/* <div className="mentorship-response__wrapper">{mentorshipResponseElement}</div> */}
+        <div>{mentorshipResponseElement}</div>
       </div>
     </div>
   );
