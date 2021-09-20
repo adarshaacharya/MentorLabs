@@ -66,6 +66,10 @@ export const MentorshipResponse = () => {
               required: true,
               message: "You can't leave link empty!",
             },
+            {
+              type: 'url',
+              message: 'Enter valid url!.',
+            },
           ]}
         >
           <Input placeholder="https://mentorlabs.com/xyz" />
