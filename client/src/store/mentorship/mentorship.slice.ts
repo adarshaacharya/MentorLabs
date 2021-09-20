@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { MentorshipRequest, MentorshipState } from 'types';
 import {
+  createMentorshipResponse,
   fetchMentorshipRequestByStudent,
   fetchMentorshipRequestOfMentor,
   fetchMentorshipRequestsByStudent,
@@ -94,6 +95,19 @@ const mentorshipSlice = createSlice({
     });
 
     builder.addCase(updateMentorshipRequestStatus.rejected, (state) => {
+      state.status = 'rejected';
+    });
+
+    builder.addCase(createMentorshipResponse.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(createMentorshipResponse.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+      state.request.response = payload;
+    });
+
+    builder.addCase(createMentorshipResponse.rejected, (state) => {
       state.status = 'rejected';
     });
   },

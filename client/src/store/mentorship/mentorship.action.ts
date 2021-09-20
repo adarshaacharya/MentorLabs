@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import config from 'config';
 import { MentorshipRequestStatus } from 'enums';
-import { MentorshipRequest, MentorshipRequestData } from 'types';
+import { MentorshipRequest, MentorshipRequestData, MentorshipResponseData } from 'types';
 import http from 'utils/http';
 
 export const sendMentorshipRequest = createAsyncThunk(
@@ -78,6 +78,19 @@ export const updateMentorshipRequestStatus = createAsyncThunk(
     try {
       const url = `${config.endpoints.mentorship.updateMentorshipRequestStatus}/${id}`;
       const { data } = await http.put<MentorshipRequest>(url, { status });
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  },
+);
+
+export const createMentorshipResponse = createAsyncThunk(
+  'mentorship/createMentorshipResponse',
+  async ({ id, response }: { id: string; response: MentorshipResponseData }, thunkAPI) => {
+    try {
+      const url = `${config.endpoints.mentorship.createMentorshipResponse}/${id}`;
+      const { data } = await http.post<MentorshipResponseData>(url, { response });
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.message);

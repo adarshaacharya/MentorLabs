@@ -86,6 +86,7 @@ export interface MentorshipRequest extends MentorshipRequestData {
   mentor?: User; // for student mentor data is available
   mentee?: User; // for teacher student data is available
   createdAt: Date;
+  response?: MentorshipResponseData;
 }
 
 //==============================================================================
