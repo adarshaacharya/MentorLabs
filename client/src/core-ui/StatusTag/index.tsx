@@ -8,12 +8,15 @@ type StatusTagProps = {
 export const StatusTag: React.FC<StatusTagProps> = ({ status }) => {
   switch (status) {
     case MentorshipRequestStatus.PENDING:
-      return <Tag color="blue">{status}</Tag>;
+      return <Tag color="processing">{status}</Tag>;
 
     case MentorshipRequestStatus.APPROVED:
       return <Tag color="success">{status}</Tag>;
 
     case MentorshipRequestStatus.REJECTED:
       return <Tag color="error">{status}</Tag>;
+
+    default:
+      return <p>Loading tag..</p>;
   }
 };

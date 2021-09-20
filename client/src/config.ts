@@ -25,6 +25,7 @@ const config = {
       fetchMentorshipRequestByStudent: '/mentorships/requests',
       fetchMentorshipRequestsOfMentor: '/mentorships/mentor-requests',
       fetchMentorshipRequestOfMentor: '/mentorships/requests',
+      updateMentorshipRequestStatus: '/mentorships/update-status',
     },
   },
 };

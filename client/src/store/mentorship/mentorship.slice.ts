@@ -6,6 +6,7 @@ import {
   fetchMentorshipRequestsByStudent,
   fetchMentorshipRequestsOfMentor,
   sendMentorshipRequest,
+  updateMentorshipRequestStatus,
 } from './mentorship.action';
 
 const initialState: MentorshipState = Object.freeze({
@@ -80,6 +81,19 @@ const mentorshipSlice = createSlice({
     });
 
     builder.addCase(fetchMentorshipRequestOfMentor.rejected, (state) => {
+      state.status = 'rejected';
+    });
+
+    builder.addCase(updateMentorshipRequestStatus.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(updateMentorshipRequestStatus.fulfilled, (state, { payload }) => {
+      state.status = 'resolved';
+      state.request = payload;
+    });
+
+    builder.addCase(updateMentorshipRequestStatus.rejected, (state) => {
       state.status = 'rejected';
     });
   },

@@ -1,4 +1,5 @@
 import { Card, Divider, Typography } from 'antd';
+import { StatusTag } from 'core-ui';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -52,7 +53,9 @@ export const StudentMentorshipRequest = () => {
 
             <tr>
               <th>Status</th>
-              <td>{request.status}</td>
+              <td>
+                <StatusTag status={request.status} />
+              </td>
             </tr>
 
             <tr>

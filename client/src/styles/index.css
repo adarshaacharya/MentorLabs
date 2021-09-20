@@ -110,6 +110,21 @@ body {
 /*==============================================================================
  Section : Ant Design utility classes
 ==============================================================================*/
+.bg-primary {
+  background-color: #4190f7;
+}
+
+.bg-success {
+  background-color: #70c040;
+}
+
+.bg-warning {
+  background-color: #efaf41;
+}
+
+.bg-danger {
+  background-color: #e23c39;
+}
 
 /*==============================================================================
  Section : Loading

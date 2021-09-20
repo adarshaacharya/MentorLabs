@@ -1,4 +1,5 @@
 import { Avatar, Button, Card, Col, Row, Space, Tag, Typography } from 'antd';
+import { StatusTag } from 'core-ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { MentorshipRequest } from 'types';
 
@@ -32,7 +33,7 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
         </Col>
 
         <Col>
-          <Tag color="processing">{request.status}</Tag>
+          <StatusTag status={request.status} />
         </Col>
       </Row>
       <Link to={url}>

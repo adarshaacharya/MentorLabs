@@ -26,6 +26,10 @@ export interface MentorshipRequestData {
   message: string;
 }
 
+export interface UpdateMentorshipStatusData {
+  status: MentorshipRequestStatus;
+}
+
 //==============================================================================
 // User
 //==============================================================================
