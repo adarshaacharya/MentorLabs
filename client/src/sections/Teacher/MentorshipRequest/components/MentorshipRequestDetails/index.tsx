@@ -6,7 +6,7 @@ type MentorshipRequestDetailsProps = {
   request: MentorshipRequest;
 };
 
-export const MentorshipRequestDetails: React.FC<MentorshipRequestDetailsProps> = ({ request }) => {
+export const TeacherMentorshipRequestDetails: React.FC<MentorshipRequestDetailsProps> = ({ request }) => {
   return (
     <table>
       <tbody>

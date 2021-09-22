@@ -1,2 +1,2 @@
-export * from './MentorshipResponse';
+export * from './MentorshipResponseForm';
 export * from './MentorshipRequestDetails';

@@ -637,6 +637,31 @@ body {
   opacity: 0.9;
 }
 
+/*==============================================================================
+ Section : Mentorship Response(Teacher)
+==============================================================================*/
+
 .mentorship-response-form {
   padding: 1em 0;
+}
+
+.mentorship-response__card {
+  font-size: 1.5rem;
+}
+
+.mentorship-response__card table {
+  width: 100%;
+}
+
+.mentorship-response__card th {
+  text-align: center;
+  text-align: left;
+  padding: 1.1em 1em;
+  width: 15%;
+}
+
+.mentorship-response__card td {
+  padding: 1.1em 1em;
+  text-align: left;
+  width: 70%;
 }

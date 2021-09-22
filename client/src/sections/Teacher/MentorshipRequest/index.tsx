@@ -5,7 +5,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router';
 import { fetchMentorshipRequestOfMentor } from 'store/mentorship/mentorship.action';
-import { MentorshipRequestDetails, MentorshipResponse } from './components';
+import { TeacherMentorshipRequestDetails, MentorshipResponseForm } from './components';
+import { TeacherMentorshipResponseDetails } from './components/MentorshipResponseDetails';
 import { MentorshipStatusUpdate } from './components/MentorshipStatusUpdate';
 
 const { Title, Paragraph } = Typography;
@@ -26,9 +27,9 @@ export const TeacherMentorshipRequest = () => {
   const mentorshipResponseElement =
     request.status === MentorshipRequestStatus.APPROVED ? (
       request.response ? (
-        <Paragraph>Response submitted succesfully. :) </Paragraph>
+        <TeacherMentorshipResponseDetails response={request.response} />
       ) : (
-        <MentorshipResponse />
+        <MentorshipResponseForm />
       )
     ) : request.status === MentorshipRequestStatus.REJECTED ? (
       <Paragraph type="secondary">
@@ -45,10 +46,14 @@ export const TeacherMentorshipRequest = () => {
         <Divider orientation="left">
           <Title level={4}>Incoming Mentorship Request Status.</Title>
         </Divider>
+        <Paragraph type="secondary">
+          Be sure to read all the details before accepting the mentorship. We highly recommend you to check the mentee
+          profile to make sure that there won't be any communication barrier.
+        </Paragraph>
 
         <Card className="mentorship-request__card my-2 p-1" loading={loading}>
           <div>
-            <MentorshipRequestDetails request={request} />
+            <TeacherMentorshipRequestDetails request={request} />
           </div>
 
           <div>{updateStatusElement}</div>

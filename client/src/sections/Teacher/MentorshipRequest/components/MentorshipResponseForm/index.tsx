@@ -10,7 +10,7 @@ const { Item } = Form;
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
-export const MentorshipResponse = () => {
+export const MentorshipResponseForm = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
