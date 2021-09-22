@@ -2,12 +2,18 @@ import { Col, Divider, Row, Typography } from 'antd';
 import { FeatureCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
 import { Helmet } from 'react-helmet-async';
-import { FaFacebookMessenger } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaFacebookMessenger } from 'react-icons/fa';
 import { ImLab } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 const { Title, Paragraph } = Typography;
 
 export const studentDashboardFeatures = [
+  {
+    title: 'Explore Mentors',
+    description: 'View all the mentors waiting for your requests.',
+    icon: <FaChalkboardTeacher size={'5em'} />,
+    link: '/teacher-listings',
+  },
   {
     title: 'Outgoing Requests',
     description: 'View all the incoming requests send by you to mentors.',

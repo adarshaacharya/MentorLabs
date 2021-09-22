@@ -1,5 +1,4 @@
 import { Card, Divider, Typography } from 'antd';
-import { StatusTag } from 'core-ui';
 import { MentorshipRequestStatus } from 'enums';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
