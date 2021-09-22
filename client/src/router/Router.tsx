@@ -13,6 +13,7 @@ import {
   TeacherListings,
   TeacherMentorshipRequest,
   TeacherMentorshipRequests,
+  StudentLabs,
 } from 'sections';
 import { Profile } from 'sections/Profile';
 import { PrivateRoute } from './PrivateRoute';
@@ -52,7 +53,8 @@ export const Router = () => {
         path={routes.TEACHER_MENTORSHIP_REQUEST}
         element={<TeacherMentorshipRequest />}
         requiredRoles={[Role.TEACHER]}
-      />
+      />{' '}
+      <PrivateRoute path={routes.STUDENT_LABS} element={<StudentLabs />} requiredRoles={[Role.STUDENT]} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

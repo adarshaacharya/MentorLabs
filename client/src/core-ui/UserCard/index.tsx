@@ -1,4 +1,5 @@
 import { Tag, Typography } from 'antd';
+import { SocialChannels } from 'core-ui';
 import * as React from 'react';
 import { AiOutlineFacebook, AiOutlineLinkedin, AiOutlineSlackSquare, AiOutlineTwitter } from 'react-icons/ai';
 import { FaGithubSquare, FaGlobe } from 'react-icons/fa';
@@ -13,55 +14,8 @@ type UserCardProps = {
 const { Paragraph } = Typography;
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
-  const renderSocialChannels = (channels: Channel[]) => {
-    // show at most 3 channels
-    const filteredChannels = channels.length > 3 ? channels.slice(0, 3) : channels;
-
-    return (
-      <>
-        {filteredChannels.map((channel) => {
-          const { link, site } = channel;
-          return (
-            <span key={site}>
-              {site === 'facebook' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <AiOutlineFacebook size={'1.8em'} title="Facebook" />
-                </a>
-              )}
-              {site === 'linkedin' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <AiOutlineLinkedin size={'1.8em'} title="Linkedin" />
-                </a>
-              )}
-              {site === 'twitter' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <AiOutlineTwitter size={'1.8em'} title="Twitter" />
-                </a>
-              )}
-              {site === 'github' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <FaGithubSquare size={'1.8em'} title="GitHub" />
-                </a>
-              )}
-              {site === 'slack' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <AiOutlineSlackSquare size={'1.8em'} title="Slack" />
-                </a>
-              )}
-              {site === 'portfolio' && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
-                  <FaGlobe size={'1.8em'} title="Website" />
-                </a>
-              )}
-            </span>
-          );
-        })}
-      </>
-    );
-  };
-
   const userTagsElement = user.profile.tags.map((tag) => (
-    <Tag color="geekblue" key={tag}>
+    <Tag color="processing" key={tag}>
       {tag}
     </Tag>
   ));
@@ -82,7 +36,9 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
         {user.profile.description}
       </Paragraph>
       <div className="card__tags">{userTagsElement}</div>
-      <div className="card__links">{renderSocialChannels(user.profile.channels)}</div>
+      <div className="card__links">
+        <SocialChannels channels={user.profile.channels} isUserCard={true} />
+      </div>
     </div>
   );
 };

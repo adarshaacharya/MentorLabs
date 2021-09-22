@@ -5,12 +5,14 @@ import { Channel } from 'types';
 
 type SocialChannelsProp = {
   channels: Channel[];
+  isUserCard?: boolean;
 };
 
-export const SocialChannels: React.FC<SocialChannelsProp> = ({ channels }) => {
+export const SocialChannels: React.FC<SocialChannelsProp> = ({ channels, isUserCard }) => {
+  const filteredChannels = isUserCard ? channels.slice(0, 3) : channels;
   return (
     <div className="social-channels">
-      {channels.map((channel) => {
+      {filteredChannels.map((channel) => {
         const { link, site } = channel;
         return (
           <span key={site}>

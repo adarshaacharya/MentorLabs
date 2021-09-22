@@ -9,7 +9,7 @@ const { Title, Paragraph } = Typography;
 
 export const studentDashboardFeatures = [
   {
-    title: 'Explore Mentors',
+    title: 'View Mentors',
     description: 'View all the mentors waiting for your requests.',
     icon: <FaChalkboardTeacher size={'5em'} />,
     link: '/teacher-listings',
@@ -24,7 +24,7 @@ export const studentDashboardFeatures = [
     title: 'Explore labs',
     description: 'Explore our interactive video and audio chat labs.',
     icon: <ImLab size={'5em'} />,
-    link: '/labs',
+    link: '/student-labs',
   },
 ];
 

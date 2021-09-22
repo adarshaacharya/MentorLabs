@@ -10,3 +10,4 @@ export const STUDENT_MENTORSHIP_REQUESTS = '/student-requests';
 export const STUDENT_MENTORSHIP_REQUEST = '/student-requests/:id';
 export const TEACHER_MENTORSHIP_REQUESTS = '/teacher-requests';
 export const TEACHER_MENTORSHIP_REQUEST = '/teacher-requests/:id';
+export const STUDENT_LABS = 'student-labs';
