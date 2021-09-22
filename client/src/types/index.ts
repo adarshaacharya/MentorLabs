@@ -27,7 +27,7 @@ export interface MentorshipRequestData {
 }
 
 export interface MentorshipResponseData {
-  date: Date;
+  date: string;
   startTime: string;
   endTime: string;
   link: string;

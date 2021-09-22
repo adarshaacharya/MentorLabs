@@ -5,7 +5,7 @@ import { Mentorship } from './mentorship.entity';
 @Entity()
 export class Response extends CoreEntity {
   @Column()
-  date: Date;
+  date: string;
 
   @Column()
   startTime: string;

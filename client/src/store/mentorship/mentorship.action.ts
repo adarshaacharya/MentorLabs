@@ -90,7 +90,7 @@ export const createMentorshipResponse = createAsyncThunk(
   async ({ id, response }: { id: string; response: MentorshipResponseData }, thunkAPI) => {
     try {
       const url = `${config.endpoints.mentorship.createMentorshipResponse}/${id}`;
-      const { data } = await http.post<MentorshipResponseData>(url, { response });
+      const { data } = await http.post<MentorshipResponseData>(url, response);
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data.message);

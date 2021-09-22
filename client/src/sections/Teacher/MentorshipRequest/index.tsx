@@ -25,7 +25,11 @@ export const TeacherMentorshipRequest = () => {
 
   const mentorshipResponseElement =
     request.status === MentorshipRequestStatus.APPROVED ? (
-      <MentorshipResponse />
+      request.response ? (
+        <Paragraph>Response submitted succesfully. :) </Paragraph>
+      ) : (
+        <MentorshipResponse />
+      )
     ) : request.status === MentorshipRequestStatus.REJECTED ? (
       <Paragraph type="secondary">
         You've rejected this person mentorship request. If you think that's by mistake contact to mentee via email. 😊

@@ -88,7 +88,7 @@ export class MentorshipsService {
    * @param id
    */
   public async findMentorshipById(id: number, currentId: number) {
-    const mentorship = await this.mentorshipRepository.findOne({ where: { id } });
+    const mentorship = await this.mentorshipRepository.findOne({ where: { id }, relations: ['response'] });
 
     if (!mentorship) {
       throw new NotFound('Mentorship  request with given id not found');

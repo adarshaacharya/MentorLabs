@@ -1,13 +1,13 @@
-import { IsDateString, IsMilitaryTime, IsString, IsUrl, Length } from 'class-validator';
+import { IsString, IsUrl, Length } from 'class-validator';
 
 export class CreateResponseInput {
-  @IsDateString()
-  readonly date: Date;
+  @IsString()
+  readonly date: string;
 
-  @IsMilitaryTime()
+  @IsString()
   readonly startTime: string;
 
-  @IsMilitaryTime()
+  @IsString()
   readonly endTime: string;
 
   @IsUrl()

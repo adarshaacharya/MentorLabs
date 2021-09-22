@@ -1,18 +1,28 @@
 import { Button, Card, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
+import { useAppDispatch } from 'hooks';
 import moment from 'moment';
+import { useParams } from 'react-router';
+import { createMentorshipResponse } from 'store/mentorship/mentorship.action';
 import { MentorshipResponseData } from 'types';
+import { displaySuccessNotification } from 'utils/notifications';
 
 const { Item } = Form;
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
 export const MentorshipResponse = () => {
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+
   const onFinish = (values: MentorshipResponseData) => {
     const date = moment(values.date).format('LL');
     const startTime = moment(values.startTime).format('LT');
     const endTime = moment(values.endTime).format('LT');
 
-    console.log({ ...values, date, startTime, endTime });
+    const response = { ...values, date, startTime, endTime };
+    dispatch(createMentorshipResponse({ id, response }));
+
+    displaySuccessNotification('Your response has been submitted successfully.');
   };
 
   return (
