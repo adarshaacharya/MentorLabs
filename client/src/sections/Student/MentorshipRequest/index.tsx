@@ -1,12 +1,15 @@
 import { Card, Divider, Typography } from 'antd';
 import { StatusTag } from 'core-ui';
+import { MentorshipRequestStatus } from 'enums';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router';
 import { fetchMentorshipRequestByStudent } from 'store/mentorship/mentorship.action';
+import { StudentMentorshipRequestDetails, StudentMentorshipResponseDetails } from './components';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
+
 export const StudentMentorshipRequest = () => {
   const { id } = useParams();
 
@@ -19,6 +22,15 @@ export const StudentMentorshipRequest = () => {
 
   const loading = status === 'pending';
 
+  const mentorshipResponseElement =
+    request.status === MentorshipRequestStatus.APPROVED && request.response ? (
+      <StudentMentorshipResponseDetails response={request.response} />
+    ) : request.status === MentorshipRequestStatus.REJECTED ? (
+      <Paragraph type="secondary">
+        Your mentorship request has been rejected. Don't worry other mentors are waiting for you !😊
+      </Paragraph>
+    ) : null;
+
   return (
     <div className="mentorship-request">
       <div className="container">
@@ -30,50 +42,10 @@ export const StudentMentorshipRequest = () => {
         </Divider>
 
         <Card className="mentorship-request__card my-2 p-1" loading={loading}>
-          <table>
-            <tr>
-              <th>Title</th>
-              <td>{request.title}</td>
-            </tr>
-
-            <tr>
-              <th>Background</th>
-              <td>{request.background}</td>
-            </tr>
-
-            <tr>
-              <th>Expectations</th>
-              <td>{request.expectation}</td>
-            </tr>
-
-            <tr>
-              <th>Message</th>
-              <td>{request.message}</td>
-            </tr>
-
-            <tr>
-              <th>Status</th>
-              <td>
-                <StatusTag status={request.status} />
-              </td>
-            </tr>
-
-            <tr>
-              <th>Submision Date</th>
-              <td>{request.createdAt}</td>
-            </tr>
-
-            <tr>
-              <th>Mentor</th>
-              <td>{request.mentorId}</td>
-            </tr>
-
-            <tr>
-              <th>Mentee</th>
-              <td>{request.menteeId}</td>
-            </tr>
-          </table>
+          <StudentMentorshipRequestDetails request={request} />
         </Card>
+
+        <div>{mentorshipResponseElement}</div>
       </div>
     </div>
   );
