@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Col, Row, Space, Tag, Typography } from 'antd';
+import { Avatar, Button, Card, Col, Row, Space, Typography } from 'antd';
 import { StatusTag } from 'core-ui';
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';

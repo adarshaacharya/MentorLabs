@@ -1,12 +1,11 @@
 import { Card, Divider, Typography } from 'antd';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { MentorshipResponseData } from 'types';
 
 type TeacherMentorshipResponseDetailsProps = {
   response: MentorshipResponseData;
 };
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
 export const TeacherMentorshipResponseDetails: React.FC<TeacherMentorshipResponseDetailsProps> = ({ response }) => {
   return (

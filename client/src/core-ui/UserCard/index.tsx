@@ -1,11 +1,9 @@
 import { Tag, Typography } from 'antd';
 import { SocialChannels } from 'core-ui';
 import * as React from 'react';
-import { AiOutlineFacebook, AiOutlineLinkedin, AiOutlineSlackSquare, AiOutlineTwitter } from 'react-icons/ai';
-import { FaGithubSquare, FaGlobe } from 'react-icons/fa';
 import { ImLocation } from 'react-icons/im';
 import { Link } from 'react-router-dom';
-import { Channel, User } from 'types';
+import { User } from 'types';
 
 type UserCardProps = {
   user: User;
