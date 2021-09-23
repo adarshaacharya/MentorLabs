@@ -58,7 +58,7 @@ export class MentorshipsService {
    * Finds all mentorship requests received by a teacher
    * @param userId
    */
-  public async getMentorshipRequestsOfMentor(userId: number): Promise<Mentorship[]> {
+  public async getMentorshipRequestsOfMentor(userId: string): Promise<Mentorship[]> {
     // Get the mentorship requests from and to to that user
     const mentorshipRequests: Mentorship[] = await this.mentorshipRepository.find({
       where: {
@@ -73,7 +73,7 @@ export class MentorshipsService {
    * Finds all mentorship requests send by user
    * @param userId
    */
-  public async getMentorshipRequestsByMentee(userId: number): Promise<Mentorship[]> {
+  public async getMentorshipRequestsByMentee(userId: string): Promise<Mentorship[]> {
     const mentorshipRequests: Mentorship[] = await this.mentorshipRepository.find({
       where: {
         menteeId: userId,
@@ -87,7 +87,7 @@ export class MentorshipsService {
    * Finds a mentorship by id
    * @param id
    */
-  public async findMentorshipById(id: number, currentId: number) {
+  public async findMentorshipById(id: string, currentId: string) {
     const mentorship = await this.mentorshipRepository.findOne({ where: { id }, relations: ['response'] });
 
     if (!mentorship) {
@@ -105,7 +105,7 @@ export class MentorshipsService {
    * update status of req
    * @param newstatus, id
    */
-  public async updateMentorshipRequestStatus(mentorshipId: number, updateRequestStatusInput: UpdateRequestStatusInput) {
+  public async updateMentorshipRequestStatus(mentorshipId: string, updateRequestStatusInput: UpdateRequestStatusInput) {
     const mentorship = await this.mentorshipRepository.findOne({ where: { id: mentorshipId } });
 
     if (!mentorship) {
@@ -123,7 +123,7 @@ export class MentorshipsService {
    * creates response for mentorship req
    * @param id
    */
-  public async createMentorshipResponse(mentorshipId: number, createResponseInput: CreateResponseInput) {
+  public async createMentorshipResponse(mentorshipId: string, createResponseInput: CreateResponseInput) {
     const mentorship = await this.mentorshipRepository.findOne({ where: { id: mentorshipId } });
 
     if (!mentorship) {
@@ -148,7 +148,7 @@ export class MentorshipsService {
    * @param mentorId
    * @param menteeId
    */
-  public async findMentorship(mentorId: number, menteeId: number): Promise<Mentorship | undefined> {
+  public async findMentorship(mentorId: string, menteeId: string): Promise<Mentorship | undefined> {
     const mentorship = this.mentorshipRepository.findOne({
       where: {
         menteeId,

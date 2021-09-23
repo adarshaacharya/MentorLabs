@@ -30,5 +30,5 @@ export class Profile extends CoreEntity {
 
   // created already but implicity defined so that we can pass userid from jwt
   @Column()
-  userId: number;
+  userId: string;
 }

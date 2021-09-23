@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsOptional, IsString } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Channel } from '../../../common/interfaces/channel.interface';
 
 export class CreateProfileInput {
@@ -28,7 +28,10 @@ export class CreateProfileInput {
   })
   languages: string[];
 
-  // @IsJSON()
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(5)
+  @ValidateNested({ each: true })
   channels: Channel[];
 }
 

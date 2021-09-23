@@ -11,7 +11,7 @@ export class UserRepository extends Repository<User> {
     return user;
   }
 
-  public async isMentor(id: number): Promise<boolean> {
+  public async isMentor(id: string): Promise<boolean> {
     const user = await this.findOne(id);
 
     return user?.role === Role.TEACHER;

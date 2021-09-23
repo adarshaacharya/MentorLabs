@@ -57,7 +57,7 @@ class UsersController {
 
   public async findOneById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const userId = validateIdOrThrow(+req.params.id);
+      const userId = validateIdOrThrow(req.params.id);
       const usersServiceInstance = Container.get(UsersService);
       const user = userId && (await usersServiceInstance.findOneById(userId));
       res.status(200).json(user);

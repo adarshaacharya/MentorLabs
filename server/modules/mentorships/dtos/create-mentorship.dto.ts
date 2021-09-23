@@ -2,9 +2,9 @@ import { IsEnum, IsOptional, IsString, Length } from 'class-validator';
 import { Status } from '../../../common/enums/status.enum';
 
 export class CreateMentorshipInput {
-  readonly mentorId: number;
+  readonly mentorId: string;
 
-  readonly menteeId: number;
+  readonly menteeId: string;
 
   @IsString()
   @Length(5, 50)

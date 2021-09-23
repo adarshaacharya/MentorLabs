@@ -23,7 +23,7 @@ export class UsersService {
     private readonly profileRepository: Repository<Profile>,
   ) {}
 
-  public async me(id: number | undefined) {
+  public async me(id: string | undefined) {
     const user = await this.userRepository.findOne({
       select: ['id', 'name', 'email', 'role', 'avatar'],
       where: { id },
@@ -63,7 +63,7 @@ export class UsersService {
     return { token, id, name, email, avatar, role };
   }
 
-  public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
+  public async creatProfile(userId: string, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
     const channels = [...createProfileInput.channels];
 
     // normalizing channels url
@@ -90,7 +90,7 @@ export class UsersService {
     };
   }
 
-  public async findOneById(userId: number) {
+  public async findOneById(userId: string) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['profile'],

@@ -64,24 +64,24 @@ export interface Channel {
 }
 
 export interface Profile {
-  id: number;
+  id: string;
   title: string;
   description: string;
   tags: string[];
   country: string;
   languages: string[];
   channels: Channel[];
-  userId: number;
+  userId: string;
 }
 
 //==============================================================================
 // Profile
 //==============================================================================
 export interface MentorshipRequest extends MentorshipRequestData {
-  id: number;
+  id: string;
   title: string;
-  menteeId: number;
-  mentorId: number;
+  menteeId: string;
+  mentorId: string;
   status: MentorshipRequestStatus;
   mentor?: User; // for student mentor data is available
   mentee?: User; // for teacher student data is available

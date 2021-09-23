@@ -26,5 +26,5 @@ export class Response extends CoreEntity {
 
   // explicit
   @Column()
-  mentorshipId: number;
+  mentorshipId: string;
 }

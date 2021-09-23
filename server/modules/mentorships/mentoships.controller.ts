@@ -9,7 +9,7 @@ class MentorshipsController {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
 
-      const mentorId = validateIdOrThrow(+req.params.mentorId);
+      const mentorId = validateIdOrThrow(req.params.mentorId);
       const currentId = req.user && req.user.id;
 
       await mentorshipsServiceInstance.createMentorship({ mentorId, menteeId: currentId, ...req.body });
@@ -50,7 +50,7 @@ class MentorshipsController {
   public async findMentorshipById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
-      const id = validateIdOrThrow(+req.params.id);
+      const id = validateIdOrThrow(req.params.id);
       const currentId = req.user && req.user.id;
 
       const request = currentId && (await mentorshipsServiceInstance.findMentorshipById(id, currentId));
@@ -64,7 +64,7 @@ class MentorshipsController {
   public async updateMentorshipRequestStatus(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
-      const mentorshipId = validateIdOrThrow(+req.params.id);
+      const mentorshipId = validateIdOrThrow(req.params.id);
 
       const status = await mentorshipsServiceInstance.updateMentorshipRequestStatus(mentorshipId, req.body);
       res.status(201).json(status);
@@ -76,7 +76,7 @@ class MentorshipsController {
   public async createMentorshipResponse(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
-      const mentorshipId = validateIdOrThrow(+req.params.id);
+      const mentorshipId = validateIdOrThrow(req.params.id);
 
       const response = await mentorshipsServiceInstance.createMentorshipResponse(mentorshipId, req.body);
       res.status(201).json(response);

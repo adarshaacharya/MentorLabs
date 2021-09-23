@@ -33,7 +33,7 @@ export class Mentorship extends CoreEntity {
 
   //explicit mention
   @Column()
-  menteeId: number;
+  menteeId: string;
 
   // many mentorship have one mentor
   @ManyToOne(() => User, (user) => user.mentors, {
@@ -44,7 +44,7 @@ export class Mentorship extends CoreEntity {
 
   //explicit mention
   @Column()
-  mentorId: number;
+  mentorId: string;
 
   // each mentorship has one response
   @OneToOne(() => Response, (response) => response.mentorship)
