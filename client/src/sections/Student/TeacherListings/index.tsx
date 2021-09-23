@@ -16,7 +16,9 @@ export const TeacherListings = () => {
   if (status === 'pending') {
     return (
       <section className="loading">
-        <div className="container">Loading mentors...</div>
+        <div className="container">
+          <p>Loading mentors..</p>
+        </div>
       </section>
     );
   }

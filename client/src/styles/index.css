@@ -85,6 +85,9 @@ body {
 .mb-5 {
   margin-bottom: 5em;
 }
+.my-1 {
+  margin: 1em 0;
+}
 .my-2 {
   margin: 2em 0;
 }
