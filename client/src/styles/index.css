@@ -97,11 +97,17 @@ body {
 .py-2 {
   padding: 2em 0;
 }
+.py-3 {
+  padding: 3em 0;
+}
 .pr-2 {
   padding-right: 2em;
 }
 .p-1 {
   padding: 1em;
+}
+.p-2 {
+  padding: 2em;
 }
 .h-90 {
   height: 90vh;
@@ -672,4 +678,12 @@ body {
   padding: 1.1em 1em;
   text-align: left;
   width: 70%;
+}
+
+/*==============================================================================
+ Section : Labs(Student)
+==============================================================================*/
+.student-labs {
+  background-color: var(--bg-color);
+  margin-top: 10vh;
 }

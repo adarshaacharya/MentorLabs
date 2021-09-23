@@ -22,8 +22,15 @@ export const StudentMentorshipRequest = () => {
   const loading = status === 'pending';
 
   const mentorshipResponseElement =
-    request.status === MentorshipRequestStatus.APPROVED && request.response ? (
-      <StudentMentorshipResponseDetails response={request.response} />
+    request.status === MentorshipRequestStatus.APPROVED ? (
+      request.response ? (
+        <StudentMentorshipResponseDetails response={request.response} />
+      ) : (
+        <Paragraph type="secondary">
+          Your mentorship request was accept but you haven't got any reply from mentor about event details. Wait for
+          sometime or contact mentor via email about details.
+        </Paragraph>
+      )
     ) : request.status === MentorshipRequestStatus.REJECTED ? (
       <Paragraph type="secondary">
         Your mentorship request has been rejected. Don't worry other mentors are waiting for you !😊
