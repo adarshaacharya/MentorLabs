@@ -76,6 +76,9 @@ body {
 .mt-1 {
   margin-top: 1em;
 }
+.ml-2 {
+  margin-left: 2em;
+}
 .mb-1 {
   margin-bottom: 1em;
 }
@@ -120,6 +123,13 @@ body {
   border: none;
 }
 
+.bg--danger {
+  background: #eb5144;
+  color: var(--light-color);
+}
+.color--white {
+  color: var(--light-color);
+}
 /*==============================================================================
  Section : Ant Design utility classes
 ==============================================================================*/
@@ -689,4 +699,61 @@ body {
 .student-labs {
   background-color: var(--bg-color);
   margin-top: 10vh;
+}
+
+/*==============================================================================
+ Section : Room(Student)
+==============================================================================*/
+.room {
+  background-color: var(--bg-color);
+  margin-top: 10vh;
+  padding: 1em 1em;
+}
+.room__main {
+}
+
+.room__main img {
+  max-width: 100%;
+}
+
+.room__footer {
+  width: 100%;
+  padding: 0.5em 0;
+  background-color: var(--light-color);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.room__link {
+  align-self: flex-start;
+}
+
+.room__icons {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+}
+.meeting-icons {
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 0px 2px #ccc;
+  width: 43px;
+  height: 43px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.meeting-icons:hover {
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
 }

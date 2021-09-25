@@ -14,6 +14,7 @@ import {
   TeacherMentorshipRequest,
   TeacherMentorshipRequests,
   StudentLabs,
+  Room,
 } from 'sections';
 import { Profile } from 'sections/Profile';
 import { PrivateRoute } from './PrivateRoute';
@@ -55,6 +56,7 @@ export const Router = () => {
         requiredRoles={[Role.TEACHER]}
       />{' '}
       <PrivateRoute path={routes.STUDENT_LABS} element={<StudentLabs />} requiredRoles={[Role.STUDENT]} />
+      <PrivateRoute path={routes.ROOM} element={<Room />} requiredRoles={[Role.STUDENT]} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

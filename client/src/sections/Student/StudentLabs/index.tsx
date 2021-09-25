@@ -1,6 +1,7 @@
 import { Button, Card, Col, Divider, Form, Input, Radio, RadioChangeEvent, Row, Typography } from 'antd';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Navigate, useNavigate } from 'react-router';
 const { Title, Paragraph, Text } = Typography;
 
 const videoPlaceholder =
@@ -9,6 +10,7 @@ const videoPlaceholder =
 type Tab = 'create' | 'join';
 
 const CreateRoom = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Form layout="vertical" size="large" className="py-1">
@@ -24,7 +26,7 @@ const CreateRoom = () => {
         >
           <Input placeholder="meaningful room title.." />
         </Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button block type="primary" htmlType="submit" onClick={() => navigate('/room')}>
           create room
         </Button>
       </Form>
