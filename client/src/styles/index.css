@@ -79,6 +79,9 @@ body {
 .ml-2 {
   margin-left: 2em;
 }
+.mr-2 {
+  margin-right: 2em;
+}
 .mb-1 {
   margin-bottom: 1em;
 }
@@ -130,6 +133,7 @@ body {
 .color--white {
   color: var(--light-color);
 }
+
 /*==============================================================================
  Section : Ant Design utility classes
 ==============================================================================*/
@@ -707,13 +711,19 @@ body {
 .room {
   background-color: var(--bg-color);
   margin-top: 10vh;
-  padding: 1em 1em;
+  padding: 1em 1em 0 1em;
 }
+.room__wrapper {
+  height: 88vh;
+}
+
 .room__main {
+  height: 77.5vh;
 }
 
 .room__main img {
   max-width: 100%;
+  height: 77.5vh;
 }
 
 .room__footer {
@@ -724,19 +734,18 @@ body {
   box-shadow: 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .room__link {
-  align-self: flex-start;
 }
 
 .room__icons {
-  align-self: center;
   display: flex;
   justify-content: center;
   gap: 1.2em;
 }
+
 .meeting-icons {
   border-radius: 50%;
   border: 1px solid #f0f0f0;
@@ -751,9 +760,36 @@ body {
 }
 
 .meeting-icons:hover {
+  box-shadow: 0px 0px 5px #ccc;
 }
 
 .disabled {
   pointer-events: none;
   opacity: 0.3;
+}
+
+.chat-drawer {
+}
+
+.chat-drawer__input {
+  position: absolute;
+  top: 88%;
+  width: 90%;
+}
+
+.chat-drawer__messages {
+}
+
+.chat-drawer__message--incoming {
+  border: 1px solid #f0f0f0;
+  background: #fef2e8;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+.chat-drawer__message--outgoing {
+  border: 1px solid #f0f0f0;
+  background: var(--bg-color);
+  padding: 5px 8px;
+  border-radius: 4px;
 }
