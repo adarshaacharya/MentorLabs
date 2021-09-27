@@ -704,6 +704,13 @@ body {
   background-color: var(--bg-color);
   margin-top: 10vh;
 }
+.join-labs__video {
+}
+.join-labs__video video,
+img {
+  width: 100%;
+  border-radius: 5px;
+}
 
 /*==============================================================================
  Section : Room(Student)
@@ -718,12 +725,12 @@ body {
 }
 
 .room__main {
-  height: 77.5vh;
+  height: 77vh;
 }
 
 .room__main img {
   max-width: 100%;
-  height: 77.5vh;
+  height: 77vh;
 }
 
 .room__footer {

@@ -1,7 +1,7 @@
-import { Button, Card, Col, Divider, Form, Input, Radio, RadioChangeEvent, Row, Typography } from 'antd';
+import { Card, Col, Divider, Radio, RadioChangeEvent, Row, Typography } from 'antd';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Navigate, useNavigate } from 'react-router';
+import { CreateRoom, JoinRoom } from './components';
 const { Title, Paragraph, Text } = Typography;
 
 const videoPlaceholder =
@@ -9,61 +9,17 @@ const videoPlaceholder =
 
 type Tab = 'create' | 'join';
 
-const CreateRoom = () => {
-  const navigate = useNavigate();
-  return (
-    <div>
-      <Form layout="vertical" size="large" className="py-1">
-        <Form.Item
-          label="Room Title"
-          name="title"
-          rules={[
-            {
-              required: true,
-              message: 'Please input room title!',
-            },
-          ]}
-        >
-          <Input placeholder="meaningful room title.." />
-        </Form.Item>
-        <Button block type="primary" htmlType="submit" onClick={() => navigate('/room')}>
-          create room
-        </Button>
-      </Form>
-      <Text type="secondary">
-        The room title is used to show title of your session. Room id will be automatically generated for you.
-      </Text>
-    </div>
-  );
-};
-
-const JoinRoom = () => {
-  return (
-    <div>
-      <Form layout="vertical" size="large" className="py-1">
-        <Form.Item
-          label="Room ID"
-          name="id"
-          rules={[
-            {
-              required: true,
-              message: 'Please input room ID!',
-            },
-          ]}
-        >
-          <Input placeholder="unique room id.." />
-        </Form.Item>
-        <Button block type="primary" htmlType="submit">
-          join room
-        </Button>
-      </Form>
-      <Text type="secondary">Join using unique room id created for each session by our labs.</Text>
-    </div>
-  );
-};
-
 export const StudentLabs = () => {
   const [tab, setTab] = React.useState<Tab>('create');
+  const [stream, setStream] = React.useState<MediaStream>();
+  const videoRef = React.useRef<HTMLVideoElement>();
+
+  React.useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
+      setStream(currentStream);
+      if (videoRef.current) videoRef.current.srcObject = currentStream;
+    });
+  }, []);
 
   const handleTabChange = (e: RadioChangeEvent) => {
     setTab(e.target.value);
@@ -90,13 +46,17 @@ export const StudentLabs = () => {
           <Card className="join-labs__card">
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col span={14}>
-                <div className="join-labs__avatar">
-                  <img src={videoPlaceholder} alt="avatar" style={{ borderRadius: '5px', maxWidth: '100%' }} />
+                <div className="join-labs__video">
+                  {stream ? (
+                    <video playsInline muted ref={videoRef} autoPlay />
+                  ) : (
+                    <img src={videoPlaceholder} alt="avatar" />
+                  )}
                 </div>
               </Col>
 
               <Col span={10}>
-                <Card className="my-1 py-2">
+                <Card className="join-labs__form my-1 py-1">
                   <Radio.Group defaultValue="create" onChange={handleTabChange} value={tab}>
                     <Radio.Button value="create">Create a new room</Radio.Button>
                     <Radio.Button value="join">Join an existing room</Radio.Button>
