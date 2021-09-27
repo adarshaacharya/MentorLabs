@@ -704,12 +704,31 @@ body {
   background-color: var(--bg-color);
   margin-top: 10vh;
 }
-.join-labs__video {
+.labs__video {
 }
-.join-labs__video video,
+.labs__video video,
 img {
   width: 100%;
-  border-radius: 5px;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.labs__video--placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+}
+
+.labs__video-controls {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  gap: 2em;
+  padding: 0.5em 0;
+  background-color: var(--bg-color);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 }
 
 /*==============================================================================

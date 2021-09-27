@@ -1,7 +1,8 @@
 import { Card, Col, Divider, Radio, RadioChangeEvent, Row, Typography } from 'antd';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { CreateRoom, JoinRoom } from './components';
+import { CreateRoom, JoinRoom, LabsVideo } from './components';
+
 const { Title, Paragraph, Text } = Typography;
 
 const videoPlaceholder =
@@ -11,15 +12,6 @@ type Tab = 'create' | 'join';
 
 export const StudentLabs = () => {
   const [tab, setTab] = React.useState<Tab>('create');
-  const [stream, setStream] = React.useState<MediaStream>();
-  const videoRef = React.useRef<HTMLVideoElement>();
-
-  React.useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
-      setStream(currentStream);
-      if (videoRef.current) videoRef.current.srcObject = currentStream;
-    });
-  }, []);
 
   const handleTabChange = (e: RadioChangeEvent) => {
     setTab(e.target.value);
@@ -42,21 +34,15 @@ export const StudentLabs = () => {
           latest edition. Disable shield if you are using Brave browser.
         </Paragraph>
 
-        <div className="join-labs__container">
-          <Card className="join-labs__card">
+        <div className="labs__container">
+          <Card className="labs__card">
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col span={14}>
-                <div className="join-labs__video">
-                  {stream ? (
-                    <video playsInline muted ref={videoRef} autoPlay />
-                  ) : (
-                    <img src={videoPlaceholder} alt="avatar" />
-                  )}
-                </div>
+                <LabsVideo />
               </Col>
 
               <Col span={10}>
-                <Card className="join-labs__form my-1 py-1">
+                <Card className="labs__form my-1 py-1">
                   <Radio.Group defaultValue="create" onChange={handleTabChange} value={tab}>
                     <Radio.Button value="create">Create a new room</Radio.Button>
                     <Radio.Button value="join">Join an existing room</Radio.Button>
