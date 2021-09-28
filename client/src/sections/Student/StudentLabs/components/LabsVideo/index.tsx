@@ -8,8 +8,6 @@ import placeholder from '../../assets/placeholder.jpg';
 
 export const LabsVideo = () => {
   const { localCameraEnabled, localMicrophoneEnabled, localStream } = useAppSelector((state) => state.room);
-  console.log(localCameraEnabled);
-
   const dispatch = useAppDispatch();
 
   const videoRef = React.useRef<HTMLVideoElement>();
@@ -22,7 +20,7 @@ export const LabsVideo = () => {
         if (videoRef.current) videoRef.current.srcObject = currentStream;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
   }, [localCameraEnabled, localMicrophoneEnabled]);
 

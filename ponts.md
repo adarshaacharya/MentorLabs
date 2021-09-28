@@ -23,3 +23,22 @@
 if unidirectional create user field only on profile, so we can query user from profile...
 but there is no way to query from user to profile
 for that we need to create field named profile in User entity and map from both sides
+
+
+```js
+app.listen(port, () => console.log(`\x1b[40m`,`\x1b[32m`,
+`
+     _______  __   __  ___   _______  _______ 
+    |       ||  |_|  ||   | |       ||   _   |
+    |    ___||       ||   | |    ___||  |_|  |
+    |   |___ |       ||   | |   | __ |       |
+    |    ___||       ||   | |   ||  ||       |
+    |   |___ | ||_|| ||   | |   |_| ||   _   |
+    |_______||_|   |_||___| |_______||__| |__|
+ 
+    [+] Maintance      : https://github.com/eminmuhammadi/emiga-stream.git
+    [+] Server         : http://localhost:${port}
+    [+] Socket         : ws://localhost:${config.Server.settings.port}
+    [~] Running Server...
+`,`\x1b[0m`));
+```

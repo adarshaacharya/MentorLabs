@@ -21,7 +21,7 @@ export const CreateRoom = () => {
         >
           <Input placeholder="meaningful room title.." />
         </Form.Item>
-        <Button block type="primary" htmlType="submit" onClick={() => navigate('/room')}>
+        <Button block type="primary" htmlType="submit" onClick={() => navigate('/room/xyz100')}>
           create room
         </Button>
       </Form>
