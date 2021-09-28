@@ -121,6 +121,13 @@ export interface MentorshipState {
   requests: MentorshipRequest[];
   request: MentorshipRequest;
 }
+
+export interface RoomState {
+  localStream: MediaStream;
+  localCameraEnabled: boolean;
+  localMicrophoneEnabled: boolean;
+  screenSharingActive: boolean;
+}
 //==============================================================================
 // Redux Utilities data types
 //==============================================================================

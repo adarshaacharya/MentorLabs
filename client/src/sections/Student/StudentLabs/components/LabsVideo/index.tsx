@@ -1,12 +1,16 @@
+import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa';
+import { setLocalStream, setLocalCameraEnabled, setLocalMicrophoneEnabled } from 'store/room/room.slice';
+import { displayErrorMessage } from 'utils/notifications';
 
 import placeholder from '../../assets/placeholder.jpg';
 
 export const LabsVideo = () => {
-  const [localStream, setSLocalStream] = React.useState<MediaStream>();
-  const [localMicrophoneEnabled, setLocalMicrophoneEnabled] = React.useState(true);
-  const [localCameraEnabled, setLocalCameraEnabled] = React.useState(true);
+  const { localCameraEnabled, localMicrophoneEnabled, localStream } = useAppSelector((state) => state.room);
+  console.log(localCameraEnabled);
+
+  const dispatch = useAppDispatch();
 
   const videoRef = React.useRef<HTMLVideoElement>();
 
@@ -14,7 +18,7 @@ export const LabsVideo = () => {
     navigator.mediaDevices
       .getUserMedia({ video: localCameraEnabled, audio: localMicrophoneEnabled })
       .then((currentStream) => {
-        setSLocalStream(currentStream);
+        dispatch(setLocalStream(currentStream));
         if (videoRef.current) videoRef.current.srcObject = currentStream;
       })
       .catch((err) => {
@@ -23,20 +27,20 @@ export const LabsVideo = () => {
   }, [localCameraEnabled, localMicrophoneEnabled]);
 
   const onMicButtonPress = () => {
-    setLocalMicrophoneEnabled(!localMicrophoneEnabled);
+    dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
   };
 
   const onCameraButtonPress = () => {
-    setLocalCameraEnabled(!localCameraEnabled);
+    dispatch(setLocalCameraEnabled(!localCameraEnabled));
   };
 
   return (
     <div className="labs-video">
       <div className="labs__video">
-        {localCameraEnabled ? (
-          <video playsInline muted ref={videoRef} autoPlay />
-        ) : (
+        {!localStream || !localCameraEnabled ? (
           <img src={placeholder} alt="placeholder" className="labs__video--placeholder" />
+        ) : (
+          <video playsInline muted ref={videoRef} autoPlay />
         )}
       </div>
 

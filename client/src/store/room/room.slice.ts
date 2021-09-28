@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RoomState } from 'types';
 
-const initialState = Object.freeze({
+const initialState: RoomState = Object.freeze({
   localStream: null,
   localCameraEnabled: true,
   localMicrophoneEnabled: true,
