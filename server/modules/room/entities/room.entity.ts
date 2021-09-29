@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities';
 import { User } from '../../users/entities/user.entity';
 
@@ -7,7 +7,7 @@ export class Room extends CoreEntity {
   @Column({ nullable: true })
   title: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   creator: User;
 

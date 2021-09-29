@@ -7,6 +7,7 @@ const initialState: RoomState = Object.freeze({
   localMicrophoneEnabled: true,
   screenSharingActive: false,
   remoteStream: null,
+  roomTitle: '',
 });
 
 const roomSlice = createSlice({
@@ -22,9 +23,12 @@ const roomSlice = createSlice({
     setLocalCameraEnabled(state, action: PayloadAction<boolean>) {
       state.localCameraEnabled = action.payload;
     },
+    setRoomTitle(state, action: PayloadAction<string>) {
+      state.roomTitle = action.payload;
+    },
   },
 });
 
-export const { setLocalStream, setLocalCameraEnabled, setLocalMicrophoneEnabled } = roomSlice.actions;
+export const { setLocalStream, setLocalCameraEnabled, setLocalMicrophoneEnabled, setRoomTitle } = roomSlice.actions;
 
 export default roomSlice.reducer;

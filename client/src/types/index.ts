@@ -132,6 +132,7 @@ export interface RoomState {
   localMicrophoneEnabled: boolean;
   screenSharingActive: boolean;
   remoteStream?: MediaStream;
+  roomTitle: string;
 }
 //==============================================================================
 // Redux Utilities data types

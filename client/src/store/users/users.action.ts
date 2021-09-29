@@ -7,7 +7,6 @@ export const fetchMentors = createAsyncThunk('users/fetchMentors', async (_, thu
   try {
     const url = config.endpoints.users.fetchMentors;
     const { data } = await http.get<User[]>(url);
-    console.log(data.map((x) => x));
     return data;
   } catch (err) {
     thunkAPI.rejectWithValue(err.response.data.message);

@@ -18,10 +18,6 @@ export const connectWithWebSocket = () => {
 export const createRoom = (roomData: CreateRoomData) => {
   try {
     socket.emit(SOCKETS_EVENT.CREATE_ROOM, roomData);
-
-    socket.on(SOCKETS_EVENT.UPDATE_ROOM, (room: any) => {
-      console.log(room);
-    });
   } catch (error) {
     console.log(error);
   }
