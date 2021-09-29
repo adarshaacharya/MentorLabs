@@ -6,6 +6,7 @@ const initialState: RoomState = Object.freeze({
   localCameraEnabled: true,
   localMicrophoneEnabled: true,
   screenSharingActive: false,
+  remoteStream: null,
 });
 
 const roomSlice = createSlice({

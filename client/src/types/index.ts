@@ -34,11 +34,15 @@ export interface MentorshipResponseData {
   message: string;
 }
 
+export interface CreateRoomData {
+  title: string;
+  creatorId: string;
+}
 //==============================================================================
 // User
 //==============================================================================
 export interface User {
-  id?: number;
+  id?: string;
   name?: string;
   email?: string;
   avatar?: string;
@@ -127,6 +131,7 @@ export interface RoomState {
   localCameraEnabled: boolean;
   localMicrophoneEnabled: boolean;
   screenSharingActive: boolean;
+  remoteStream?: MediaStream;
 }
 //==============================================================================
 // Redux Utilities data types

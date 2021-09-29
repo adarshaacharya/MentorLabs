@@ -42,3 +42,21 @@ app.listen(port, () => console.log(`\x1b[40m`,`\x1b[32m`,
     [~] Running Server...
 `,`\x1b[0m`));
 ```
+
+
+**Note :**
+- io is a Socket.IO server instance attached to an instance of http.Server listening for incoming events.
+
+- The socket argument of the connection event listener callback function is an object that represents an incoming socket connection from a client.
+
+```js
+var connectionEvent = function(socket) {
+    console.log('user connected');
+    socket.on('message', function(msg) {
+        console.log('message: ' + msg);
+        io.emit('message', msg);
+    });
+};
+
+io.on('connection', connectionEvent);
+```

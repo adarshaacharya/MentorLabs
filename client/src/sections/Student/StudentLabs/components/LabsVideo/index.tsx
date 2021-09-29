@@ -1,9 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { setLocalStream, setLocalCameraEnabled, setLocalMicrophoneEnabled } from 'store/room/room.slice';
-import { displayErrorMessage } from 'utils/notifications';
-
+import { setLocalCameraEnabled, setLocalMicrophoneEnabled, setLocalStream } from 'store/room/room.slice';
 import placeholder from '../../assets/placeholder.jpg';
 
 export const LabsVideo = () => {

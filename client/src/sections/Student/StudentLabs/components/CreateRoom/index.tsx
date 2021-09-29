@@ -1,14 +1,22 @@
 import { Button, Form, Input, Typography } from 'antd';
-import * as React from 'react';
+import { useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router';
+import { createRoom } from 'services/webSockets';
 
 const { Text } = Typography;
 
 export const CreateRoom = () => {
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+
+  const onFormSubmit = ({ title }: { title: string }) => {
+    const roomData = { creatorId: user.id, title };
+    createRoom(roomData);
+  };
+
   return (
     <div className="create-room">
-      <Form layout="vertical" size="large" className="py-1">
+      <Form layout="vertical" size="large" className="py-1" onFinish={onFormSubmit}>
         <Form.Item
           label="Room Title"
           name="title"
@@ -21,7 +29,7 @@ export const CreateRoom = () => {
         >
           <Input placeholder="meaningful room title.." />
         </Form.Item>
-        <Button block type="primary" htmlType="submit" onClick={() => navigate('/room/xyz100')}>
+        <Button block type="primary" htmlType="submit">
           create room
         </Button>
       </Form>

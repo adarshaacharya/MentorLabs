@@ -4,7 +4,7 @@ dotenv.config();
 import * as express from 'express';
 import loaders from './loaders';
 import * as http from 'http';
-import { roomSocket } from './socket/room.socket';
+import { roomSocket } from './modules/room/room.socket';
 
 const PORT = process.env.PORT || 5000;
 
