@@ -2,10 +2,9 @@ import { Button, Form, Input, Typography } from 'antd';
 import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router';
-import { createRoom } from 'services/webSockets';
+import { emitCreateRoom } from 'services/webSockets';
 import { setRoomTitle } from 'store/room/room.slice';
 import { socket } from 'utils/socketConfig';
-import { history } from 'utils/history';
 
 const { Text } = Typography;
 
@@ -21,10 +20,9 @@ export const CreateRoom = () => {
 
   const onFormSubmit = (values: { title: string }) => {
     const roomData = { creatorId: user.id, title: values.title };
-    createRoom(roomData);
+    emitCreateRoom(roomData);
 
     socket.on(SOCKETS_EVENT.UPDATE_ROOM, (room: RoomResponse) => {
-      console.log(room);
       dispatch(setRoomTitle(room.title));
       navigate(`/room/${room.id}`);
     });

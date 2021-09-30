@@ -1,13 +1,18 @@
 import { Button, Form, Input, Typography } from 'antd';
+import { JoinRoomData } from 'types';
 const { Text } = Typography;
 
 export const JoinRoom = () => {
+  const onFormSubmit = (values: JoinRoomData) => {
+    console.log(values.roomId);
+  };
+
   return (
     <div className="join-room">
-      <Form layout="vertical" size="large" className="py-1">
+      <Form layout="vertical" size="large" className="py-1" onFinish={onFormSubmit}>
         <Form.Item
           label="Room ID"
-          name="id"
+          name="roomId"
           rules={[
             {
               required: true,

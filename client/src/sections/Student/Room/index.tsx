@@ -22,6 +22,7 @@ export const Room = () => {
   const localVideoRef = React.useRef<HTMLVideoElement>();
 
   const [showChat, setShowChat] = React.useState(false);
+  // console.log(localStream.getVideoTracks()[0]);
 
   React.useEffect(() => {
     navigator.mediaDevices
@@ -37,10 +38,12 @@ export const Room = () => {
 
   const onMicButtonPress = () => {
     dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
+    if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
   };
 
   const onCameraButtonPress = () => {
     dispatch(setLocalCameraEnabled(!localCameraEnabled));
+    if (localCameraEnabled) localStream.getVideoTracks()[0].stop();
   };
 
   const showChatBox = () => setShowChat(true);

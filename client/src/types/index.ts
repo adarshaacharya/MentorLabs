@@ -38,6 +38,10 @@ export interface CreateRoomData {
   title: string;
   creatorId: string;
 }
+
+export interface JoinRoomData {
+  roomId: string;
+}
 //==============================================================================
 // User
 //==============================================================================

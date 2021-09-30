@@ -28,14 +28,38 @@ export const roomSocket = (httpServer: http.Server) => {
      * create new room
      */
     socket.on(SOCKETS_EVENT.CREATE_ROOM, async (createRoomInput: CreateRoomInput) => {
-      const room = await roomServiceInstance.createRoom(createRoomInput);
-      const roomId = room.id;
+      try {
+        const room = await roomServiceInstance.createRoom(createRoomInput);
+        const roomId = room.id;
 
-      // join socket(user) to that roomId
-      socket.join(roomId);
+        // join socket(user) to that roomId
+        socket.join(roomId);
 
-      // tell io server to send this to every server within room
-      io.to(roomId).emit(SOCKETS_EVENT.UPDATE_ROOM, room);
+        // send info about room to
+        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_ROOM, room); // @todo : ser some other name
+      } catch (error) {
+        console.log('Error in creating room', error);
+      }
+    });
+
+    /**
+     * join existing room
+     */
+    socket.on(SOCKETS_EVENT.JOIN_ROOM, async (roomId: string, callback: ({ error }: { error: string }) => void) => {
+      try {
+        const room = await roomServiceInstance.findRoomById(roomId);
+
+        if (!room) {
+          return callback({ error: "Room with given id deson't exists" });
+        }
+
+        socket.join(roomId); // join socket(user) to that room
+
+        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_ROOM, room); // send room info to roomId after joining
+      } catch (error) {
+        console.log('Error in joining room', error);
+        return callback({ error: 'Error in joining room' });
+      }
     });
   });
 };

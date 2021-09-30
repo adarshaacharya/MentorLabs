@@ -10,7 +10,6 @@ const { TextArea } = Input;
 
 export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
   const [message, setMessage] = React.useState('');
-  console.log(visible);
 
   const sendMessage = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();

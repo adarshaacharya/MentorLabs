@@ -15,10 +15,14 @@ export const connectWithWebSocket = () => {
 /**
  * create new room
  */
-export const createRoom = (roomData: CreateRoomData) => {
+export const emitCreateRoom = (roomData: CreateRoomData) => {
   try {
     socket.emit(SOCKETS_EVENT.CREATE_ROOM, roomData);
   } catch (error) {
     console.log(error);
   }
 };
+
+/**
+ * join existing room
+ */

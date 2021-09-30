@@ -17,4 +17,8 @@ export class RoomService {
     const room = await this.roomRepository.save(this.roomRepository.create({ title, creatorId }));
     return room;
   }
+
+  public async findRoomById(id: string) {
+    return this.roomRepository.findOne(id);
+  }
 }
