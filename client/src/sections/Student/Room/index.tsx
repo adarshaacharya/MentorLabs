@@ -4,16 +4,18 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
 import { setLocalCameraEnabled, setLocalMicrophoneEnabled, setLocalStream } from 'store/room/room.slice';
+import { displaySuccessNotification } from 'utils/notifications';
 import manOne from './assets/man-one.jpeg';
 import { ChatDrawer } from './components';
 
 export const Room = () => {
-  const { localCameraEnabled, localMicrophoneEnabled, localStream } = useAppSelector((state) => state.room);
+  const { localCameraEnabled, localMicrophoneEnabled, localStream, info } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
   const localVideoRef = React.useRef<HTMLVideoElement>();
   const remoteVideoRef = React.useRef<HTMLVideoElement>();
 
   const [showChat, setShowChat] = React.useState(false);
+  const [copySuccess, setCopySuccess] = React.useState('');
 
   React.useEffect(() => {
     navigator.mediaDevices
@@ -27,16 +29,25 @@ export const Room = () => {
       });
   }, [localCameraEnabled, localMicrophoneEnabled]);
 
+  // clipboard
+  const copyToClipBoard = async () => {
+    await navigator.clipboard.writeText(info.roomId);
+    displaySuccessNotification('Room Id copied to clipboard', info.roomId);
+  };
+
+  // mic
   const onMicButtonPress = () => {
     dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
     if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
   };
 
+  // camera
   const onCameraButtonPress = () => {
     dispatch(setLocalCameraEnabled(!localCameraEnabled));
     if (localCameraEnabled) localStream.getVideoTracks()[0].stop();
   };
 
+  // chatbox
   const showChatBox = () => setShowChat(true);
   const closeChatBox = () => setShowChat(false);
 
@@ -71,7 +82,9 @@ export const Room = () => {
         </div>
         <div className="room__footer">
           <div className="room__link">
-            <Button className="ml-2">Copy Joining Info</Button>
+            <Button className="ml-2" onClick={copyToClipBoard}>
+              Copy Room Id
+            </Button>
           </div>
           <div className="room__icons">
             <div onClick={onMicButtonPress} className={`meeting-icons ${!localMicrophoneEnabled ? 'bg--danger' : ''}`}>
