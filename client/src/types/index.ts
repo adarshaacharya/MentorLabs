@@ -110,6 +110,10 @@ export interface RoomInfo {
   title: string;
 }
 
+export interface JoinRoomResponse {
+  roomId: string;
+  title: string;
+}
 //==============================================================================
 // State
 //==============================================================================

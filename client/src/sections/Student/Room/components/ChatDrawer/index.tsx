@@ -22,6 +22,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
 
   React.useEffect(() => {
     socket.on(SOCKETS_EVENT.UPDATE_MESSAGE, (message: Message) => {
+      console.log(message);
       dispatch(setRoomMessages(message));
     });
 
@@ -34,6 +35,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
     event.preventDefault();
 
     const messageData = { text, roomId: info.roomId };
+    // console.log(messageData)
     socket.emit(SOCKETS_EVENT.SEND_MESSAGE, messageData, () => setText(''));
   };
 

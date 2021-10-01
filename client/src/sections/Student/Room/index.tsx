@@ -1,21 +1,33 @@
 import { Button, Col, Row } from 'antd';
+import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { setLocalCameraEnabled, setLocalMicrophoneEnabled, setLocalStream } from 'store/room/room.slice';
+import { useParams } from 'react-router';
+import {
+  setLocalCameraEnabled,
+  setLocalMicrophoneEnabled,
+  setLocalStream,
+  setRoomInformation,
+} from 'store/room/room.slice';
+import { JoinRoomResponse } from 'types';
 import { displaySuccessNotification } from 'utils/notifications';
+import { socket } from 'utils/socketConfig';
 import manOne from './assets/man-one.jpeg';
 import { ChatDrawer } from './components';
 
 export const Room = () => {
   const { localCameraEnabled, localMicrophoneEnabled, localStream, info } = useAppSelector((state) => state.room);
+  const { user } = useAppSelector((state) => state.auth);
+
   const dispatch = useAppDispatch();
+  const id = useParams();
+
   const localVideoRef = React.useRef<HTMLVideoElement>();
   const remoteVideoRef = React.useRef<HTMLVideoElement>();
 
   const [showChat, setShowChat] = React.useState(false);
-  const [copySuccess, setCopySuccess] = React.useState('');
 
   React.useEffect(() => {
     navigator.mediaDevices
@@ -28,6 +40,16 @@ export const Room = () => {
         console.log(err);
       });
   }, [localCameraEnabled, localMicrophoneEnabled]);
+
+  React.useEffect(() => {
+    const roomData = { participantId: user.id, roomId: id };
+
+    socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData);
+
+    socket.on(SOCKETS_EVENT.JOINED_ROOM, (room: JoinRoomResponse) => {
+      dispatch(setRoomInformation(room));
+    });
+  }, []);
 
   // clipboard
   const copyToClipBoard = async () => {
