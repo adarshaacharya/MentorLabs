@@ -98,6 +98,19 @@ export interface MentorshipRequest extends MentorshipRequestData {
 }
 
 //==============================================================================
+// Room
+//==============================================================================
+export interface Message {
+  notification?: boolean;
+  text: string;
+}
+
+export interface RoomInfo {
+  roomId: string;
+  title: string;
+}
+
+//==============================================================================
 // State
 //==============================================================================
 
@@ -136,7 +149,8 @@ export interface RoomState {
   localMicrophoneEnabled: boolean;
   screenSharingActive: boolean;
   remoteStream?: MediaStream;
-  roomTitle: string;
+  info: RoomInfo;
+  messages: Message[];
 }
 //==============================================================================
 // Redux Utilities data types

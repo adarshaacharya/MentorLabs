@@ -2,29 +2,30 @@ import { Button, Form, Input, Typography } from 'antd';
 import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router';
-import { emitCreateRoom } from 'services/webSockets';
-import { setRoomTitle } from 'store/room/room.slice';
+import { setRoomInformation } from 'store/room/room.slice';
 import { socket } from 'utils/socketConfig';
 
 const { Text } = Typography;
 
 type RoomResponse = {
-  id: string;
+  roomId: string;
   title: string;
 };
 
 export const CreateRoom = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+
   const navigate = useNavigate();
 
   const onFormSubmit = (values: { title: string }) => {
     const roomData = { creatorId: user.id, title: values.title };
-    emitCreateRoom(roomData);
 
-    socket.on(SOCKETS_EVENT.UPDATE_ROOM, (room: RoomResponse) => {
-      dispatch(setRoomTitle(room.title));
-      navigate(`/room/${room.id}`);
+    socket.emit(SOCKETS_EVENT.CREATE_ROOM, roomData);
+
+    socket.on(SOCKETS_EVENT.CREATED_ROOM, (room: RoomResponse) => {
+      dispatch(setRoomInformation(room));
+      navigate(`/room/${room.roomId}`);
     });
   };
 

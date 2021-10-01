@@ -2,27 +2,18 @@ import { Button, Col, Row } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import {
-  FaDesktop,
-  FaFacebookMessenger,
-  FaMicrophone,
-  FaMicrophoneSlash,
-  FaPhone,
-  FaVideo,
-  FaVideoSlash,
-} from 'react-icons/fa';
+import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
 import { setLocalCameraEnabled, setLocalMicrophoneEnabled, setLocalStream } from 'store/room/room.slice';
 import manOne from './assets/man-one.jpeg';
-import manTwo from './assets/man-two.jpeg';
 import { ChatDrawer } from './components';
 
 export const Room = () => {
   const { localCameraEnabled, localMicrophoneEnabled, localStream } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
   const localVideoRef = React.useRef<HTMLVideoElement>();
+  const remoteVideoRef = React.useRef<HTMLVideoElement>();
 
   const [showChat, setShowChat] = React.useState(false);
-  // console.log(localStream.getVideoTracks()[0]);
 
   React.useEffect(() => {
     navigator.mediaDevices
@@ -57,6 +48,7 @@ export const Room = () => {
       <div className="room__wrapper">
         <div className="room__main">
           <Row>
+            {/* local stream */}
             <Col span={12}>
               <div className="room__local-stream">
                 {!localStream || !localCameraEnabled ? (
@@ -66,8 +58,14 @@ export const Room = () => {
                 )}
               </div>
             </Col>
+            {/* remote stream */}
             <Col span={12}>
-              <img src={manTwo} alt="man-two" />
+              {/* <img src={manTwo} alt="placeholder" /> */}
+              <video playsInline muted ref={remoteVideoRef} autoPlay />
+
+              {/* {!localStream || !localCameraEnabled ? (
+              ) : (
+              )} */}
             </Col>
           </Row>
         </div>

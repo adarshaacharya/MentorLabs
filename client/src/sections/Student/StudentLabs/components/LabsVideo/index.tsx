@@ -24,10 +24,12 @@ export const LabsVideo = () => {
 
   const onMicButtonPress = () => {
     dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
+    if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
   };
 
   const onCameraButtonPress = () => {
     dispatch(setLocalCameraEnabled(!localCameraEnabled));
+    if (localCameraEnabled) localStream.getVideoTracks()[0].stop();
   };
 
   return (

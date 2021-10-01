@@ -5,6 +5,13 @@ export const SOCKETS_EVENT = {
   DISCONNECT: `${SOCKET_EVENT}.disconnect`,
 
   CREATE_ROOM: `${SOCKET_EVENT}.create.room`,
+  CREATED_ROOM: `${SOCKET_EVENT}.user.created.room`,
+
   JOIN_ROOM: `${SOCKET_EVENT}.join.room`,
-  UPDATE_ROOM: `${SOCKET_EVENT}.update.room`, // @todo : update room title
+  JOINED_ROOM: `${SOCKET_EVENT}.user.joined.room`,
+
+  END_CALL: `${SOCKET_EVENT}.end.call`,
+
+  SEND_MESSAGE: `${SOCKET_EVENT}.send.message`,
+  UPDATE_MESSAGE: `${SOCKET_EVENT}.update.message`,
 };
