@@ -114,6 +114,10 @@ export interface JoinRoomResponse {
   roomId: string;
   title: string;
 }
+
+export interface SocketCallbackError {
+  error: string;
+}
 //==============================================================================
 // State
 //==============================================================================
@@ -152,7 +156,7 @@ export interface RoomState {
   localCameraEnabled: boolean;
   localMicrophoneEnabled: boolean;
   screenSharingActive: boolean;
-  remoteStream?: MediaStream;
+  remoteStream?: any;
   info: RoomInfo;
   messages: Message[];
 }

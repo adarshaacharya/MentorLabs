@@ -2,14 +2,10 @@ import { Button, Form, Input, Typography } from 'antd';
 import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router';
-import { JoinRoomData, JoinRoomResponse } from 'types';
+import { JoinRoomData, JoinRoomResponse, SocketCallbackError } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
 import { socket } from 'utils/socketConfig';
 const { Text } = Typography;
-
-type SocketError = {
-  error: string;
-};
 
 export const JoinRoom = () => {
   const navigate = useNavigate();
@@ -18,7 +14,7 @@ export const JoinRoom = () => {
   const onFormSubmit = (values: JoinRoomData) => {
     const roomData = { participantId: user.id, roomId: values.roomId };
 
-    socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData, ({ error }: SocketError) => {
+    socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData, ({ error }: SocketCallbackError) => {
       if (error) {
         return displayErrorMessage(error);
       }

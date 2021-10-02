@@ -4,25 +4,32 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import Peer, { SignalData } from 'simple-peer';
 import {
+  leaveCurrentRoom,
   setLocalCameraEnabled,
   setLocalMicrophoneEnabled,
   setLocalStream,
+  setRemoteStream,
   setRoomInformation,
 } from 'store/room/room.slice';
-import { JoinRoomResponse } from 'types';
+import { JoinRoomResponse, SocketCallbackError } from 'types';
 import { displaySuccessNotification } from 'utils/notifications';
 import { socket } from 'utils/socketConfig';
 import manOne from './assets/man-one.jpeg';
 import { ChatDrawer } from './components';
 
 export const Room = () => {
-  const { localCameraEnabled, localMicrophoneEnabled, localStream, info } = useAppSelector((state) => state.room);
+  const { localCameraEnabled, localMicrophoneEnabled, localStream, info, remoteStream } = useAppSelector(
+    (state) => state.room,
+  );
+
   const { user } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
   const id = useParams();
+  const navigate = useNavigate();
 
   const localVideoRef = React.useRef<HTMLVideoElement>();
   const remoteVideoRef = React.useRef<HTMLVideoElement>();
@@ -42,12 +49,38 @@ export const Room = () => {
   }, [localCameraEnabled, localMicrophoneEnabled]);
 
   React.useEffect(() => {
-    const roomData = { participantId: user.id, roomId: id };
+    const roomData = { participantId: id, roomId: id };
 
     socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData);
 
     socket.on(SOCKETS_EVENT.JOINED_ROOM, (room: JoinRoomResponse) => {
       dispatch(setRoomInformation(room));
+    });
+  }, [id]);
+
+  React.useEffect(() => {
+    const peer = new Peer({ initiator: true, trickle: false, stream: localStream });
+
+    // call other user
+    peer.on('signal', (data: SignalData) => {
+      const signalData = { roomId: info.roomId, signal: data };
+
+      socket.emit(SOCKETS_EVENT.SEND_SIGNAL, signalData, ({ error }: SocketCallbackError) => {
+        if (error) {
+          navigate('/student-labs');
+        }
+      });
+    });
+
+    peer.on('stream', (stream: MediaStream) => {
+      if (remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = stream;
+      }
+    });
+
+    socket.on(SOCKETS_EVENT.RECEIVE_SIGNAL, (signal: SignalData) => {
+      dispatch(setRemoteStream(signal));
+      signal && peer.signal(signal);
     });
   }, []);
 
@@ -73,6 +106,21 @@ export const Room = () => {
   const showChatBox = () => setShowChat(true);
   const closeChatBox = () => setShowChat(false);
 
+  // leave room
+  const leaveRoom = () => {
+    const roomData = {
+      userId: user.id,
+      roomId: id,
+    };
+    socket.emit(SOCKETS_EVENT.LEAVE_ROOM, roomData);
+
+    dispatch(leaveCurrentRoom());
+    displaySuccessNotification('Room left succesfully');
+    navigate('/student-labs');
+  };
+
+  const gridColumn = remoteStream ? 12 : 24;
+
   return (
     <section className="room">
       <Helmet>
@@ -82,7 +130,7 @@ export const Room = () => {
         <div className="room__main">
           <Row>
             {/* local stream */}
-            <Col span={12}>
+            <Col span={gridColumn}>
               <div className="room__local-stream">
                 {!localStream || !localCameraEnabled ? (
                   <img src={manOne} alt="placeholder" />
@@ -92,14 +140,11 @@ export const Room = () => {
               </div>
             </Col>
             {/* remote stream */}
-            <Col span={12}>
-              {/* <img src={manTwo} alt="placeholder" /> */}
-              <video playsInline muted ref={remoteVideoRef} autoPlay />
-
-              {/* {!localStream || !localCameraEnabled ? (
-              ) : (
-              )} */}
-            </Col>
+            {remoteStream && (
+              <Col span={12}>
+                <video playsInline muted ref={remoteVideoRef} autoPlay />
+              </Col>
+            )}
           </Row>
         </div>
         <div className="room__footer">
@@ -128,7 +173,7 @@ export const Room = () => {
               <FaDesktop size={'1.3em'} title="screen share" />
             </div> */}
             <div className="meeting-icons bg--danger">
-              <FaPhone size={'1.3em'} title="cancel call" />
+              <FaPhone size={'1.3em'} title="leave room" onClick={leaveRoom} />
             </div>
           </div>
 

@@ -33,10 +33,30 @@ const roomSlice = createSlice({
     setRoomMessages(state, action: PayloadAction<Message>) {
       state.messages.push(action.payload);
     },
+    setRemoteStream(state, action: PayloadAction<any>) {
+      state.remoteStream = action.payload;
+    },
+    leaveCurrentRoom(state) {
+      state.localStream = null;
+      state.localCameraEnabled = true;
+      state.localMicrophoneEnabled = true;
+      state.screenSharingActive = false;
+      state.remoteStream = null;
+      state.info.roomId = '';
+      state.info.title = '';
+      state.messages = [];
+    },
   },
 });
 
-export const { setLocalStream, setLocalCameraEnabled, setLocalMicrophoneEnabled, setRoomInformation, setRoomMessages } =
-  roomSlice.actions;
+export const {
+  setLocalStream,
+  setLocalCameraEnabled,
+  setLocalMicrophoneEnabled,
+  setRoomInformation,
+  setRoomMessages,
+  setRemoteStream,
+  leaveCurrentRoom,
+} = roomSlice.actions;
 
 export default roomSlice.reducer;
