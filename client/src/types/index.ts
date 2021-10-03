@@ -106,7 +106,7 @@ export interface Message {
 }
 
 export interface RoomInfo {
-  roomId: string;
+  id: string;
   title: string;
 }
 
@@ -152,13 +152,14 @@ export interface MentorshipState {
 }
 
 export interface RoomState {
-  localStream: MediaStream;
+  id: string;
+  title: string;
+  status: Status;
   localCameraEnabled: boolean;
   localMicrophoneEnabled: boolean;
   screenSharingActive: boolean;
-  remoteStream?: any;
-  info: RoomInfo;
   messages: Message[];
+  error: string;
 }
 //==============================================================================
 // Redux Utilities data types

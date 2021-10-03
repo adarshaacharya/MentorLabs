@@ -28,6 +28,10 @@ const config = {
       updateMentorshipRequestStatus: '/mentorships/update-status',
       createMentorshipResponse: '/mentorships/response',
     },
+    room: {
+      createRoom: '/room/create-room',
+      joinRoom: '/room/join-room',
+    },
   },
 };
 
