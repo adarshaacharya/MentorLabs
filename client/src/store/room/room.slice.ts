@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message, RoomInfo, RoomState } from 'types';
-import { createRoom } from './room.action';
+import { createRoom, joinRoom } from './room.action';
 
 const initialState: RoomState = Object.freeze({
   id: '',
@@ -48,6 +48,21 @@ const roomSlice = createSlice({
     });
 
     builder.addCase(createRoom.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+      state.error = payload as string;
+    });
+
+    builder.addCase(joinRoom.pending, (state) => {
+      state.status = 'pending';
+    });
+
+    builder.addCase(joinRoom.fulfilled, (state, { payload }) => {
+      state.status = 'pending';
+      state.id = payload.id;
+      state.title = payload.title;
+    });
+
+    builder.addCase(joinRoom.rejected, (state, { payload }) => {
       state.status = 'rejected';
       state.error = payload as string;
     });

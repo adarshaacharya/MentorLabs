@@ -20,7 +20,6 @@ class RoomController {
     try {
       const roomServiceInstance = Container.get(RoomService);
       const { id, title } = await roomServiceInstance.joinRoom(req.body);
-
       res.status(200).json({ id, title });
     } catch (error) {
       next(next);

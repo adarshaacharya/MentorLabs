@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { Role } from '../../common/enums';
-import { checkJwt, checkRole } from '../../common/middlewares';
+import { checkJwt, checkRole, createValidator } from '../../common/middlewares';
+import { CreateRoomInput } from './dtos/create-room.dto';
+import { JoinRoomInput } from './dtos/join-room.dto';
 import { roomController } from './room.controller';
 
 export const router: Router = Router();
@@ -11,7 +13,11 @@ export const router: Router = Router();
  * @description : create a new room
  * @acces private
  */
-router.post('/create-room', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])], roomController.createRoom);
+router.post(
+  '/create-room',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(CreateRoomInput)],
+  roomController.createRoom,
+);
 
 /**
  * @method POST
@@ -19,4 +25,8 @@ router.post('/create-room', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])],
  * @description : create a new room
  * @acces private
  */
-router.post('/join-room', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])], roomController.joinRoom);
+router.post(
+  '/join-room',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(JoinRoomInput)],
+  roomController.joinRoom,
+);

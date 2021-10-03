@@ -2,7 +2,9 @@ import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { NotFound } from '../../common/exceptions';
-import { CreateRoomInput } from './dtos/creat-room.dto';
+import { CreateRoomInput } from './dtos/create-room.dto';
+import { JoinRoomInput } from './dtos/join-room.dto';
+
 import { Room } from './entities/room.entity';
 
 @Service()
@@ -23,8 +25,9 @@ export class RoomService {
     };
   }
 
-  public async joinRoom(roomId: string) {
-    const room = await this.findRoomById(roomId);
+  public async joinRoom(joinRoomInput: JoinRoomInput) {
+    const { id } = joinRoomInput;
+    const room = await this.findRoomById(id);
 
     if (!room) {
       throw new NotFound("Room with given id doesn't exists.");
