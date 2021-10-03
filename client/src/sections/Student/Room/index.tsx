@@ -1,189 +1,148 @@
-import { Button, Col, Row } from 'antd';
-import { SOCKETS_EVENT } from 'constants/socketEvents';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppSelector } from 'hooks';
 import * as React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Peer, { SignalData } from 'simple-peer';
-import {
-  leaveCurrentRoom,
-  setLocalCameraEnabled,
-  setLocalMicrophoneEnabled,
-  setLocalStream,
-  setRemoteStream,
-  setRoomInformation,
-} from 'store/room/room.slice';
-import { JoinRoomResponse, SocketCallbackError } from 'types';
-import { displaySuccessNotification } from 'utils/notifications';
+import { Socket } from 'socket.io-client';
 import { socket } from 'utils/socketConfig';
-import manOne from './assets/man-one.jpeg';
-import { ChatDrawer } from './components';
+import { v4 as uuid } from 'uuid';
 
-export const Room = () => {
-  const { localCameraEnabled, localMicrophoneEnabled, localStream, info, remoteStream } = useAppSelector(
-    (state) => state.room,
-  );
+type VideoProps = {
+  peer: Peer.Instance;
+};
 
-  const { user } = useAppSelector((state) => state.auth);
-
-  const dispatch = useAppDispatch();
-  const id = useParams();
-  const navigate = useNavigate();
-
-  const localVideoRef = React.useRef<HTMLVideoElement>();
-  const remoteVideoRef = React.useRef<HTMLVideoElement>();
-
-  const [showChat, setShowChat] = React.useState(false);
+const Video: React.FC<VideoProps> = ({ peer }) => {
+  const ref = React.useRef<HTMLVideoElement>();
 
   React.useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: localCameraEnabled, audio: localMicrophoneEnabled })
-      .then((currentStream) => {
-        dispatch(setLocalStream(currentStream));
-        if (localVideoRef.current) localVideoRef.current.srcObject = currentStream;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [localCameraEnabled, localMicrophoneEnabled]);
-
-  React.useEffect(() => {
-    const roomData = { participantId: id, roomId: id };
-
-    socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData);
-
-    socket.on(SOCKETS_EVENT.JOINED_ROOM, (room: JoinRoomResponse) => {
-      dispatch(setRoomInformation(room));
-    });
-  }, [id]);
-
-  React.useEffect(() => {
-    const peer = new Peer({ initiator: true, trickle: false, stream: localStream });
-
-    // call other user
-    peer.on('signal', (data: SignalData) => {
-      const signalData = { roomId: info.roomId, signal: data };
-
-      socket.emit(SOCKETS_EVENT.SEND_SIGNAL, signalData, ({ error }: SocketCallbackError) => {
-        if (error) {
-          navigate('/student-labs');
-        }
-      });
-    });
-
     peer.on('stream', (stream: MediaStream) => {
-      if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = stream;
+      if (ref.current) {
+        ref.current.srcObject = stream;
       }
-    });
-
-    socket.on(SOCKETS_EVENT.RECEIVE_SIGNAL, (signal: SignalData) => {
-      dispatch(setRemoteStream(signal));
-      signal && peer.signal(signal);
     });
   }, []);
 
-  // clipboard
-  const copyToClipBoard = async () => {
-    await navigator.clipboard.writeText(info.roomId);
-    displaySuccessNotification('Room Id copied to clipboard', info.roomId);
+  console.log('vdeo');
+
+  return <video playsInline autoPlay ref={ref} height="50" width="50" />;
+};
+
+const videoConstraints = {
+  height: window.innerHeight / 2,
+  width: window.innerWidth / 2,
+};
+
+export const Room = () => {
+  const [peers, setPeers] = React.useState([]);
+  const socketRef = React.useRef<Socket>();
+  const userVideo = React.useRef<HTMLVideoElement>(); // my video
+  const peersRef = React.useRef([]);
+
+  console.log(userVideo);
+  // @todo
+  const { id } = useParams();
+  const roomId = id;
+
+  // 1..
+  React.useEffect(() => {
+    socketRef.current = socket; // current socket id
+    console.log(socketRef);
+    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then((stream: MediaStream) => {
+      if (userVideo.current) {
+        userVideo.current.srcObject = stream;
+      }
+
+      // 2. prespective of when some person joins room, emit its roomId to server
+      socketRef.current.emit('join room', roomId);
+
+      // 3. server emits back with give array of all other current users who are currently in the chat
+      socketRef.current.on('all users', (users: string[]) => {
+        const peers = [];
+
+        // 4. create peer for each user in  room
+        users.forEach((userId) => {
+          // 5. userId = id of each user in room, socketRef.current.id = current user socketId
+          const peer = createPeer(userId, socketRef.current.id, stream);
+
+          // push that users for the peerRef
+          peersRef.current.push({
+            peerId: userId,
+            peer,
+          });
+          peers.push(peer);
+        });
+        setPeers(peers); // adding  peers to state
+      });
+
+      /**FLIP SIDE - for people who are already in room */
+      // 8. when new user joined , from the prespective of all the other users in the room (get notified someone has joined)
+      socketRef.current.on('user joined', (payload) => {
+        const { signal, callerId } = payload;
+
+        const peer = addPeer(signal, callerId, stream); // create new peer (new user signal, new user callerID, and their own stream )
+
+        // push that users for the peerRef
+        peersRef.current.push({
+          peerId: callerId,
+          peer,
+        });
+
+        setPeers((users) => [...users, peer]); // state for peers in ui
+      });
+
+      // back to person who just joined the room
+      // 11. receiving returned back signal from other uses
+      socketRef.current.on('receiving returned signal', (payload) => {
+        const item = peersRef.current.find((p) => p.peerId === payload.id); // dig to that array of peers so that correct id is listening to that returned signal from other users
+
+        item.peer.signal(payload.signal);
+      });
+    });
+  }, []);
+
+  // 6. creates the new peer with initiator true
+  const createPeer = (userToSignal: string, callerId: string, stream: MediaStream) => {
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream,
+    });
+
+    // 7. immediately emits the signal  & send back to other people / each individual person in the room
+    peer.on('signal', (signal: SignalData) => {
+      socketRef.current.emit('sending signal', { userToSignal, callerId, signal });
+    });
+
+    return peer;
   };
 
-  // mic
-  const onMicButtonPress = () => {
-    dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
-    if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
+  // 9. incoming signal = send by person who just joins the room to all the people in the room
+  const addPeer = (incomingSignal: SignalData, callerId: string, stream: MediaStream) => {
+    // initiator = false, we dont want to send the signal right away once signal is created
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream,
+    });
+
+    // 10. accept incoming signal
+    // sending our own signal to that particular callerID, i.e send to that person person who just send us the signal i.e person who just join room
+    peer.on('signal', (signal: SignalData) => {
+      socketRef.current.emit('returning signal', { signal, callerId });
+    });
+
+    peer.signal(incomingSignal);
+
+    return peer;
   };
 
-  // camera
-  const onCameraButtonPress = () => {
-    dispatch(setLocalCameraEnabled(!localCameraEnabled));
-    if (localCameraEnabled) localStream.getVideoTracks()[0].stop();
-  };
-
-  // chatbox
-  const showChatBox = () => setShowChat(true);
-  const closeChatBox = () => setShowChat(false);
-
-  // leave room
-  const leaveRoom = () => {
-    const roomData = {
-      userId: user.id,
-      roomId: id,
-    };
-    socket.emit(SOCKETS_EVENT.LEAVE_ROOM, roomData);
-
-    dispatch(leaveCurrentRoom());
-    displaySuccessNotification('Room left succesfully');
-    navigate('/student-labs');
-  };
-
-  const gridColumn = remoteStream ? 12 : 24;
-
+  console.log(peers);
   return (
     <section className="room">
-      <Helmet>
-        <title>Room - Mentor Labs</title>
-      </Helmet>
-      <div className="room__wrapper">
-        <div className="room__main">
-          <Row>
-            {/* local stream */}
-            <Col span={gridColumn}>
-              <div className="room__local-stream">
-                {!localStream || !localCameraEnabled ? (
-                  <img src={manOne} alt="placeholder" />
-                ) : (
-                  <video playsInline muted ref={localVideoRef} autoPlay />
-                )}
-              </div>
-            </Col>
-            {/* remote stream */}
-            {remoteStream && (
-              <Col span={12}>
-                <video playsInline muted ref={remoteVideoRef} autoPlay />
-              </Col>
-            )}
-          </Row>
-        </div>
-        <div className="room__footer">
-          <div className="room__link">
-            <Button className="ml-2" onClick={copyToClipBoard}>
-              Copy Room Id
-            </Button>
-          </div>
-          <div className="room__icons">
-            <div onClick={onMicButtonPress} className={`meeting-icons ${!localMicrophoneEnabled ? 'bg--danger' : ''}`}>
-              {!localMicrophoneEnabled ? (
-                <FaMicrophoneSlash size={'1.3em'} title="audio muted" />
-              ) : (
-                <FaMicrophone size={'1.3em'} title="audio" />
-              )}
-            </div>
-            <div onClick={onCameraButtonPress} className={`meeting-icons ${!localCameraEnabled ? 'bg--danger' : ''}`}>
-              {!localCameraEnabled ? (
-                <FaVideoSlash size={'1.3em'} title="video disallowed" />
-              ) : (
-                <FaVideo size={'1.3em'} title="video" />
-              )}
-            </div>
-
-            {/* <div onClick={setScreenState} className={`meeting-icons ${streamState.screen ? 'disabled' : ''}`}>
-              <FaDesktop size={'1.3em'} title="screen share" />
-            </div> */}
-            <div className="meeting-icons bg--danger">
-              <FaPhone size={'1.3em'} title="leave room" onClick={leaveRoom} />
-            </div>
-          </div>
-
-          <div className="room__chat mr-2">
-            <div className="meeting-icons" onClick={showChatBox}>
-              <FaFacebookMessenger size={'1.5em'} className="text--primary" title="messages" />
-            </div>
-          </div>
-        </div>
-        <ChatDrawer visible={showChat} onClose={closeChatBox} />
+      <div className="container">
+        <video muted ref={userVideo} autoPlay playsInline />
+        {peers.map((peer) => (
+          <Video key={uuid()} peer={peer} />
+        ))}
       </div>
     </section>
   );

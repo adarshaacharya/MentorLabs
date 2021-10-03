@@ -30,6 +30,25 @@ type LeaveRoomData = {
   userId: string;
 };
 
+type Users = {
+  [key: string]: string[];
+};
+
+type SocketToRoom = {
+  [key: string]: string;
+};
+
+type SendSignalPayload = {
+  signal: unknown;
+  userToSignal: string;
+  callerId: string;
+};
+
+type ReturningSignalPayload = {
+  signal: unknown;
+  callerId: string;
+};
+
 const socketOptions = {
   cors: {
     origin: '*',
@@ -41,6 +60,9 @@ export const roomSocket = (httpServer: http.Server) => {
 
   const roomServiceInstance = Container.get(RoomService);
   const userServiceInstance = Container.get(UsersService);
+
+  const users: Users = {};
+  const socketToRoom: SocketToRoom = {};
 
   /**
    * connect socket event
@@ -111,22 +133,7 @@ export const roomSocket = (httpServer: http.Server) => {
       }
     });
 
-    socket.on(SOCKETS_EVENT.SEND_SIGNAL, async (signalData: SignalData, callback: SocketCallback) => {
-      const { roomId, signal } = signalData;
-
-      if (!roomId) {
-        return callback({ error: 'Empty room id.' });
-      }
-
-      const room = await roomServiceInstance.findRoomById(roomId);
-
-      if (!room) {
-        return callback({ error: "Room with given id doesn't exists." });
-      }
-
-      socket.to(roomId).emit(SOCKETS_EVENT.RECEIVE_SIGNAL, signal);
-    });
-
+    // leave room
     socket.on(SOCKETS_EVENT.LEAVE_ROOM, async (roomData: LeaveRoomData) => {
       const { roomId, userId } = roomData;
 
@@ -138,7 +145,53 @@ export const roomSocket = (httpServer: http.Server) => {
       };
       io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
 
+      socket.removeAllListeners();
       socket.leave(socket.id);
+    });
+
+    /**
+     * refactoring starts here
+     */
+    // when user join room
+    socket.on('join room', (roomId: string) => {
+      if (users[roomId]) {
+        const length = users[roomId].length;
+
+        if (length === 4) {
+          socket.emit('room full');
+          return;
+        }
+
+        users[roomId].push(socket.id);
+      } else {
+        users[roomId] = [socket.id];
+      }
+
+      socketToRoom[socket.id] = roomId;
+
+      const usersInThisRoom = users[roomId].filter((id) => id !== socket.id); // return all the users except who's emitting event
+
+      socket.emit('all users', usersInThisRoom);
+    });
+
+    // sending signal to every people in room
+    socket.on('sending signal', (payload: SendSignalPayload) => {
+      const { userToSignal, callerId, signal } = payload;
+
+      io.to(userToSignal).emit('user joined', { signal, callerId }); // callerId = person who joined
+    });
+
+    socket.on('returning signal', (payload: ReturningSignalPayload) => {
+      io.to(payload.callerId).emit('receiving returned signal', { signal: payload.signal, id: socket.id }); // id = id of ther user who is the person who recently joined or me
+    });
+
+    socket.on('disconnect', () => {
+      const roomId = socketToRoom[socket.id];
+      let room = users[roomId];
+      if (room) {
+        room = room.filter((id) => id !== socket.id);
+        users[roomId] = room;
+      }
     });
   });
 };

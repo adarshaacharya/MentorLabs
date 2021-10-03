@@ -12,7 +12,7 @@
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false, // change later
     "noUnusedParameters": false, // params should be used
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

@@ -78,11 +78,38 @@ io.to('roomId').emit('some event');
 
 ```js
 io.on('connection', (socket) => {
-  socket.to('roomId').emit('some event'); // 
+  socket.to('roomId').emit('some event'); //
 });
 ```
 
-
 **3 Each Socket in Socket.IO is identified by a random, unguessable, unique identifier Socket#id. For your convenience, each socket automatically joins a room identified by its own id.**
 
+https://www.youtube.com/watch?v=R1sfHPwEH7A
 
+```tsx
+React.useEffect(() => {
+  const peer = new Peer({ initiator: true, trickle: false, stream: localStream });
+
+  // call other user
+  peer.on('signal', (data: SignalData) => {
+    const signalData = { roomId: info.roomId, signal: data };
+
+    socket.emit(SOCKETS_EVENT.SEND_SIGNAL, signalData, ({ error }: SocketCallbackError) => {
+      if (error) {
+        navigate('/student-labs');
+      }
+    });
+  });
+
+  peer.on('stream', (stream: MediaStream) => {
+    if (remoteVideoRef.current) {
+      remoteVideoRef.current.srcObject = stream;
+    }
+  });
+
+  socket.on(SOCKETS_EVENT.RECEIVE_SIGNAL, (signal: SignalData) => {
+    dispatch(setRemoteStream(signal));
+    signal && peer.signal(signal);
+  });
+}, []);
+```
