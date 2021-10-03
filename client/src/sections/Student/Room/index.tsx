@@ -1,8 +1,10 @@
-import { useAppSelector } from 'hooks';
+import { SOCKETS_EVENT } from 'constants/socketEvents';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import Peer, { SignalData } from 'simple-peer';
 import { Socket } from 'socket.io-client';
+import { leaveCurrentRoom } from 'store/room/room.slice';
 import { socket } from 'utils/socketConfig';
 import { v4 as uuid } from 'uuid';
 
@@ -21,8 +23,6 @@ const Video: React.FC<VideoProps> = ({ peer }) => {
     });
   }, []);
 
-  console.log('vdeo');
-
   return <video playsInline autoPlay ref={ref} height="50" width="50" />;
 };
 
@@ -37,25 +37,24 @@ export const Room = () => {
   const userVideo = React.useRef<HTMLVideoElement>(); // my video
   const peersRef = React.useRef([]);
 
-  console.log(userVideo);
-  // @todo
-  const { id } = useParams();
-  const roomId = id;
+  const dispatch = useAppDispatch();
+
+  const { roomId } = useParams();
 
   // 1..
   React.useEffect(() => {
     socketRef.current = socket; // current socket id
-    console.log(socketRef);
+
     navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then((stream: MediaStream) => {
       if (userVideo.current) {
         userVideo.current.srcObject = stream;
       }
 
       // 2. prespective of when some person joins room, emit its roomId to server
-      socketRef.current.emit('join room', roomId);
+      socketRef.current.emit(SOCKETS_EVENT.JOIN_ROOM, roomId);
 
       // 3. server emits back with give array of all other current users who are currently in the chat
-      socketRef.current.on('all users', (users: string[]) => {
+      socketRef.current.on(SOCKETS_EVENT.ALL_USERS, (users: string[]) => {
         const peers = [];
 
         // 4. create peer for each user in  room
@@ -75,7 +74,7 @@ export const Room = () => {
 
       /**FLIP SIDE - for people who are already in room */
       // 8. when new user joined , from the prespective of all the other users in the room (get notified someone has joined)
-      socketRef.current.on('user joined', (payload) => {
+      socketRef.current.on(SOCKETS_EVENT.USER_JOINED_ROOM, (payload) => {
         const { signal, callerId } = payload;
 
         const peer = addPeer(signal, callerId, stream); // create new peer (new user signal, new user callerID, and their own stream )
@@ -91,12 +90,17 @@ export const Room = () => {
 
       // back to person who just joined the room
       // 11. receiving returned back signal from other uses
-      socketRef.current.on('receiving returned signal', (payload) => {
+      socketRef.current.on(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, (payload) => {
         const item = peersRef.current.find((p) => p.peerId === payload.id); // dig to that array of peers so that correct id is listening to that returned signal from other users
 
         item.peer.signal(payload.signal);
       });
     });
+
+    // cleanup sideffects
+    return () => {
+      dispatch(leaveCurrentRoom());
+    };
   }, []);
 
   // 6. creates the new peer with initiator true
@@ -109,7 +113,7 @@ export const Room = () => {
 
     // 7. immediately emits the signal  & send back to other people / each individual person in the room
     peer.on('signal', (signal: SignalData) => {
-      socketRef.current.emit('sending signal', { userToSignal, callerId, signal });
+      socketRef.current.emit(SOCKETS_EVENT.SENDING_SIGNAL, { userToSignal, callerId, signal });
     });
 
     return peer;
@@ -127,7 +131,7 @@ export const Room = () => {
     // 10. accept incoming signal
     // sending our own signal to that particular callerID, i.e send to that person person who just send us the signal i.e person who just join room
     peer.on('signal', (signal: SignalData) => {
-      socketRef.current.emit('returning signal', { signal, callerId });
+      socketRef.current.emit(SOCKETS_EVENT.RETURNING_SIGNAL, { signal, callerId });
     });
 
     peer.signal(incomingSignal);
@@ -135,7 +139,6 @@ export const Room = () => {
     return peer;
   };
 
-  console.log(peers);
   return (
     <section className="room">
       <div className="container">

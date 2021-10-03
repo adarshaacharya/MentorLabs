@@ -29,8 +29,10 @@ const roomSlice = createSlice({
     },
 
     leaveCurrentRoom(state) {
-      state.localCameraEnabled = true;
-      state.localMicrophoneEnabled = true;
+      state.id = '';
+      state.title = '';
+      state.localCameraEnabled = false;
+      state.localMicrophoneEnabled = false;
       state.screenSharingActive = false;
       state.messages = [];
     },

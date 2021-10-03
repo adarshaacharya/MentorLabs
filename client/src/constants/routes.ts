@@ -11,4 +11,4 @@ export const STUDENT_MENTORSHIP_REQUEST = '/student-requests/:id';
 export const TEACHER_MENTORSHIP_REQUESTS = '/teacher-requests';
 export const TEACHER_MENTORSHIP_REQUEST = '/teacher-requests/:id';
 export const STUDENT_LABS = 'student-labs';
-export const ROOM = 'room/:id';
+export const ROOM = 'room/:roomId';

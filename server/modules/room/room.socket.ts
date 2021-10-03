@@ -121,44 +121,44 @@ export const roomSocket = (httpServer: http.Server) => {
     // });
 
     // send message
-    socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
-      try {
-        const { roomId, text } = messageData;
-        const message = { text };
-        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
+    // socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
+    //   try {
+    //     const { roomId, text } = messageData;
+    //     const message = { text };
+    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
 
-        callback();
-      } catch (error) {
-        console.log(error);
-      }
-    });
+    //     callback();
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // });
 
-    // leave room
-    socket.on(SOCKETS_EVENT.LEAVE_ROOM, async (roomData: LeaveRoomData) => {
-      const { roomId, userId } = roomData;
+    // // leave room
+    // socket.on(SOCKETS_EVENT.LEAVE_ROOM, async (roomData: LeaveRoomData) => {
+    //   const { roomId, userId } = roomData;
 
-      const user = await userServiceInstance.findOneById(userId);
+    //   const user = await userServiceInstance.findOneById(userId);
 
-      const message = {
-        text: `${user.name} has left room.`,
-        notification: true,
-      };
-      io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
+    //   const message = {
+    //     text: `${user.name} has left room.`,
+    //     notification: true,
+    //   };
+    //   io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
 
-      socket.removeAllListeners();
-      socket.leave(socket.id);
-    });
+    //   socket.removeAllListeners();
+    //   socket.leave(socket.id);
+    // });
 
     /**
      * refactoring starts here
      */
     // when user join room
-    socket.on('join room', (roomId: string) => {
+    socket.on(SOCKETS_EVENT.JOIN_ROOM, (roomId: string) => {
       if (users[roomId]) {
         const length = users[roomId].length;
 
         if (length === 4) {
-          socket.emit('room full');
+          socket.emit(SOCKETS_EVENT.ROOM_FULL);
           return;
         }
 
@@ -171,18 +171,18 @@ export const roomSocket = (httpServer: http.Server) => {
 
       const usersInThisRoom = users[roomId].filter((id) => id !== socket.id); // return all the users except who's emitting event
 
-      socket.emit('all users', usersInThisRoom);
+      socket.emit(SOCKETS_EVENT.ALL_USERS, usersInThisRoom);
     });
 
     // sending signal to every people in room
-    socket.on('sending signal', (payload: SendSignalPayload) => {
+    socket.on(SOCKETS_EVENT.SENDING_SIGNAL, (payload: SendSignalPayload) => {
       const { userToSignal, callerId, signal } = payload;
 
-      io.to(userToSignal).emit('user joined', { signal, callerId }); // callerId = person who joined
+      io.to(userToSignal).emit(SOCKETS_EVENT.USER_JOINED_ROOM, { signal, callerId }); // callerId = person who joined
     });
 
-    socket.on('returning signal', (payload: ReturningSignalPayload) => {
-      io.to(payload.callerId).emit('receiving returned signal', { signal: payload.signal, id: socket.id }); // id = id of ther user who is the person who recently joined or me
+    socket.on(SOCKETS_EVENT.RETURNING_SIGNAL, (payload: ReturningSignalPayload) => {
+      io.to(payload.callerId).emit(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, { signal: payload.signal, id: socket.id }); // id = id of ther user who is the person who recently joined or me
     });
 
     socket.on('disconnect', () => {
