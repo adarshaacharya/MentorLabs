@@ -12,3 +12,13 @@ export const createRoom = createAsyncThunk('room/createRoom', async (_, thunkAPI
     thunkAPI.rejectWithValue(err.response.data.message);
   }
 });
+
+export const joinRoom = createAsyncThunk('room/joinRoom', async (_, thunkAPI) => {
+  try {
+    const url = config.endpoints.room.joinRoom;
+    const { data } = await http.get<RoomInfo>(url);
+    return data;
+  } catch (err) {
+    thunkAPI.rejectWithValue(err.response.data.message);
+  }
+});
