@@ -1,10 +1,11 @@
 import { Button, Form, Input, Typography } from 'antd';
+import * as React from 'react';
 import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router';
-import { setRoomInformation } from 'store/room/room.slice';
+import { createRoom } from 'store/room/room.action';
+import { displayErrorMessage } from 'utils/notifications';
 import { socket } from 'utils/socketConfig';
-
 const { Text } = Typography;
 
 type RoomResponse = {
@@ -14,20 +15,25 @@ type RoomResponse = {
 
 export const CreateRoom = () => {
   const dispatch = useAppDispatch();
+
   const { user } = useAppSelector((state) => state.auth);
+  const { id, status } = useAppSelector((state) => state.room);
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (status === 'resolved' && id) {
+      navigate(`/room/${id}`);
+    }
+  }, [id]);
 
   const onFormSubmit = (values: { title: string }) => {
     const roomData = { creatorId: user.id, title: values.title };
 
-    socket.emit(SOCKETS_EVENT.CREATE_ROOM, roomData);
-
-    socket.on(SOCKETS_EVENT.CREATED_ROOM, (room: RoomResponse) => {
-      dispatch(setRoomInformation(room));
-      navigate(`/room/${room.roomId}`);
-    });
+    dispatch(createRoom(roomData));
   };
+
+  const loading = status === 'pending';
 
   return (
     <div className="create-room">
@@ -44,7 +50,7 @@ export const CreateRoom = () => {
         >
           <Input placeholder="meaningful room title.." />
         </Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button block type="primary" htmlType="submit" loading={loading}>
           create room
         </Button>
       </Form>

@@ -34,6 +34,10 @@ const roomSlice = createSlice({
       state.screenSharingActive = false;
       state.messages = [];
     },
+
+    clearRoomError(state) {
+      state.error = '';
+    },
   },
 
   extraReducers: (builder) => {
@@ -42,7 +46,7 @@ const roomSlice = createSlice({
     });
 
     builder.addCase(createRoom.fulfilled, (state, { payload }) => {
-      state.status = 'pending';
+      state.status = 'resolved';
       state.id = payload.id;
       state.title = payload.title;
     });
@@ -57,7 +61,7 @@ const roomSlice = createSlice({
     });
 
     builder.addCase(joinRoom.fulfilled, (state, { payload }) => {
-      state.status = 'pending';
+      state.status = 'resolved';
       state.id = payload.id;
       state.title = payload.title;
     });
@@ -77,6 +81,7 @@ export const {
   setRoomMessages,
   // setRemoteStream,
   leaveCurrentRoom,
+  clearRoomError,
 } = roomSlice.actions;
 
 export default roomSlice.reducer;

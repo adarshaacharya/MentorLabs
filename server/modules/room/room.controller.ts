@@ -12,7 +12,7 @@ class RoomController {
 
       res.status(200).json(room);
     } catch (error) {
-      next(next);
+      next(error);
     }
   }
 
@@ -22,7 +22,7 @@ class RoomController {
       const { id, title } = await roomServiceInstance.joinRoom(req.body);
       res.status(200).json({ id, title });
     } catch (error) {
-      next(next);
+      next(error);
     }
   }
 }

@@ -1,20 +1,20 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { setLocalCameraEnabled, setLocalMicrophoneEnabled, setLocalStream } from 'store/room/room.slice';
+import { setLocalCameraEnabled, setLocalMicrophoneEnabled } from 'store/room/room.slice';
 import placeholder from '../../assets/placeholder.jpg';
 
 export const LabsVideo = () => {
-  const { localCameraEnabled, localMicrophoneEnabled, localStream } = useAppSelector((state) => state.room);
+  const { localCameraEnabled, localMicrophoneEnabled } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
 
+  const [localStream, setLocalStream] = React.useState<MediaStream>(null);
   const videoRef = React.useRef<HTMLVideoElement>();
 
   React.useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: localCameraEnabled, audio: localMicrophoneEnabled })
       .then((currentStream) => {
-        dispatch(setLocalStream(currentStream));
         if (videoRef.current) videoRef.current.srcObject = currentStream;
       })
       .catch((err) => {
@@ -24,6 +24,7 @@ export const LabsVideo = () => {
 
   const onMicButtonPress = () => {
     dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
+
     if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
   };
 

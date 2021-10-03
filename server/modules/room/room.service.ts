@@ -1,3 +1,4 @@
+import { isUUID } from 'class-validator';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
@@ -27,6 +28,11 @@ export class RoomService {
 
   public async joinRoom(joinRoomInput: JoinRoomInput) {
     const { id } = joinRoomInput;
+
+    if (!isUUID(id)) {
+      throw new NotFound("Room with given id doesn't exists.");
+    }
+
     const room = await this.findRoomById(id);
 
     if (!room) {

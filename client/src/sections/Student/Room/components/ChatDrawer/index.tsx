@@ -16,7 +16,7 @@ const { TextArea } = Input;
 
 export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
   const [text, setText] = React.useState('');
-  const { messages, info } = useAppSelector((state) => state.room);
+  const { messages, id, title } = useAppSelector((state) => state.room);
 
   const dispatch = useAppDispatch();
 
@@ -29,7 +29,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
   const sendMessage = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
 
-    const messageData = { text, roomId: info.roomId };
+    const messageData = { text, roomId: id };
     socket.emit(SOCKETS_EVENT.SEND_MESSAGE, messageData, () => setText(''));
   };
 

@@ -1,32 +1,36 @@
 import { Button, Form, Input, Typography } from 'antd';
-import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import * as React from 'react';
 import { useNavigate } from 'react-router';
-import { setRoomInformation } from 'store/room/room.slice';
-import { JoinRoomData, JoinRoomResponse, SocketCallbackError } from 'types';
+import { joinRoom } from 'store/room/room.action';
+import { clearRoomError } from 'store/room/room.slice';
+import { JoinRoomData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
-import { socket } from 'utils/socketConfig';
 const { Text } = Typography;
 
 export const JoinRoom = () => {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.auth);
+  const { error, status, id } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
 
+  React.useEffect(() => {
+    if (error) {
+      displayErrorMessage(error);
+      dispatch(clearRoomError());
+    }
+  }, [error]);
+
+  React.useEffect(() => {
+    if (status === 'resolved' && id) {
+      navigate(`/room/${id}`);
+    }
+  }, [id]);
+
   const onFormSubmit = (values: JoinRoomData) => {
-    const roomData = { participantId: user.id, roomId: values.roomId };
-
-    socket.emit(SOCKETS_EVENT.JOIN_ROOM, roomData, ({ error }: SocketCallbackError) => {
-      if (error) {
-        return displayErrorMessage(error);
-      }
-    });
-
-    socket.on(SOCKETS_EVENT.JOINED_ROOM, (room: JoinRoomResponse) => {
-      dispatch(setRoomInformation(room));
-      navigate(`/room/${room.roomId}`);
-    });
+    dispatch(joinRoom(values.roomId));
   };
+
+  const isLoading = status === 'pending';
 
   return (
     <div className="join-room">
@@ -43,7 +47,7 @@ export const JoinRoom = () => {
         >
           <Input placeholder="unique room id.." />
         </Form.Item>
-        <Button block type="primary" htmlType="submit">
+        <Button block type="primary" htmlType="submit" loading={isLoading}>
           join room
         </Button>
       </Form>
