@@ -4,7 +4,4 @@ export class CreateRoomInput {
   @IsString()
   @Length(2, 20)
   title: string;
-
-  @IsString()
-  creatorId: string;
 }

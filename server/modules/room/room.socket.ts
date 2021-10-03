@@ -71,54 +71,54 @@ export const roomSocket = (httpServer: http.Server) => {
     console.log('✅ Connected to room.', socket.id);
 
     // create new room
-    socket.on(SOCKETS_EVENT.CREATE_ROOM, async (roomData: CreateRoomData) => {
-      try {
-        const room = await roomServiceInstance.createRoom(roomData);
-        const user = await userServiceInstance.findOneById(roomData.creatorId);
-        const roomId = room.id;
+    // socket.on(SOCKETS_EVENT.CREATE_ROOM, async (roomData: CreateRoomData) => {
+    //   try {
+    //     const room = await roomServiceInstance.createRoom(roomData);
+    //     const user = await userServiceInstance.findOneById(roomData.creatorId);
+    //     const roomId = room.id;
 
-        socket.join(roomId); // ❤️ join this socket instance to roomId
+    //     socket.join(roomId); // ❤️ join this socket instance to roomId
 
-        const data = { roomId, title: room.title };
-        io.to(roomId).emit(SOCKETS_EVENT.CREATED_ROOM, data);
+    //     const data = { roomId, title: room.title };
+    //     io.to(roomId).emit(SOCKETS_EVENT.CREATED_ROOM, data);
 
-        const message = {
-          text: `${user.name} created room.`,
-          notification: true,
-        };
-        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-      } catch (error) {
-        console.log('Error in creating room', error);
-      }
-    });
+    //     const message = {
+    //       text: `${user.name} created room.`,
+    //       notification: true,
+    //     };
+    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
+    //   } catch (error) {
+    //     console.log('Error in creating room', error);
+    //   }
+    // });
 
     // join existing room
-    socket.on(SOCKETS_EVENT.JOIN_ROOM, async (roomData: JoinRoomData, callback: SocketCallback) => {
-      try {
-        const { roomId, participantId } = roomData;
-        const room = await roomServiceInstance.findRoomById(roomId);
+    // socket.on(SOCKETS_EVENT.JOIN_ROOM, async (roomData: JoinRoomData, callback: SocketCallback) => {
+    //   try {
+    //     const { roomId, participantId } = roomData;
+    //     const room = await roomServiceInstance.findRoomById(roomId);
 
-        if (!room) {
-          return callback({ error: "Room with given id doesn't exists." });
-        }
+    //     if (!room) {
+    //       return callback({ error: "Room with given id doesn't exists." });
+    //     }
 
-        const user = await userServiceInstance.findOneById(participantId);
+    //     const user = await userServiceInstance.findOneById(participantId);
 
-        socket.join(roomId); // ❤️
+    //     socket.join(roomId); // ❤️
 
-        const data = { roomId: room.id, title: room.title };
-        io.to(roomId).emit(SOCKETS_EVENT.JOINED_ROOM, data);
+    //     const data = { roomId: room.id, title: room.title };
+    //     io.to(roomId).emit(SOCKETS_EVENT.JOINED_ROOM, data);
 
-        const message = {
-          text: `${user.name} joined room.`,
-          notification: true,
-        };
-        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-      } catch (error) {
-        console.log(error);
-        return callback({ error: 'Error in joining room.' });
-      }
-    });
+    //     const message = {
+    //       text: `${user.name} joined room.`,
+    //       notification: true,
+    //     };
+    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
+    //   } catch (error) {
+    //     console.log(error);
+    //     return callback({ error: 'Error in joining room.' });
+    //   }
+    // });
 
     // send message
     socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {

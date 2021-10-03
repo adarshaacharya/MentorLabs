@@ -9,6 +9,14 @@ export const router: Router = Router();
  * @method POST
  * @route /api/room/create-room
  * @description : create a new room
- * @acces public
+ * @acces private
  */
-router.post('/create-account', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])], roomController.createRoom);
+router.post('/create-room', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])], roomController.createRoom);
+
+/**
+ * @method POST
+ * @route /api/room/join-room
+ * @description : create a new room
+ * @acces private
+ */
+router.post('/join-room', [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])], roomController.joinRoom);
