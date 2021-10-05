@@ -1,109 +1,123 @@
+import { Col, Row } from 'antd';
 import { SOCKETS_EVENT } from 'constants/socketEvents';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useVideoControls } from 'hooks';
 import * as React from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Peer, { SignalData } from 'simple-peer';
 import { Socket } from 'socket.io-client';
-import { leaveCurrentRoom } from 'store/room/room.slice';
+import { joinRoom } from 'store/room/room.action';
+import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
 import { socket } from 'utils/socketConfig';
-import { v4 as uuid } from 'uuid';
-
-type VideoProps = {
-  peer: Peer.Instance;
-};
-
-const Video: React.FC<VideoProps> = ({ peer }) => {
-  const ref = React.useRef<HTMLVideoElement>();
-
-  React.useEffect(() => {
-    peer.on('stream', (stream: MediaStream) => {
-      if (ref.current) {
-        ref.current.srcObject = stream;
-      }
-    });
-  }, []);
-
-  return <video playsInline autoPlay ref={ref} height="50" width="50" />;
-};
-
-const videoConstraints = {
-  height: window.innerHeight / 2,
-  width: window.innerWidth / 2,
-};
+import { LocalVideo, PeerVideo, VideoControls } from './components';
 
 export const Room = () => {
-  const [peers, setPeers] = React.useState([]);
-  const socketRef = React.useRef<Socket>();
-  const userVideo = React.useRef<HTMLVideoElement>(); // my video
-  const peersRef = React.useRef([]);
+  const [peers, setPeers] = React.useState([]); // peer for state, display video on screen
+  const [localStream, setLocalStream] = React.useState<MediaStream>(null);
 
+  const socketRef = React.useRef<Socket>();
+  const localVideoRef = React.useRef<HTMLVideoElement>(); // my video
+  const peersRef = React.useRef<any>([]); // peer for refs
+  const screenTrackRef = React.useRef();
+
+  const { localCameraEnabled, localMicrophoneEnabled, error, id, status } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
+  const { onCameraButtonPress, onMicButtonPress } = useVideoControls(localStream);
 
   const { roomId } = useParams();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    dispatch(joinRoom(roomId));
+  }, [roomId]);
+
+  React.useEffect(() => {
+    if (error && status === 'rejected') {
+      displayErrorMessage(error);
+      return navigate(`/student-labs`);
+    }
+  }, [error, status]);
 
   // 1..
   React.useEffect(() => {
     socketRef.current = socket; // current socket id
 
-    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then((stream: MediaStream) => {
-      if (userVideo.current) {
-        userVideo.current.srcObject = stream;
-      }
+    navigator.mediaDevices
+      .getUserMedia({ video: localCameraEnabled, audio: localMicrophoneEnabled })
+      .then((stream: MediaStream) => {
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = stream;
+        }
 
-      // 2. prespective of when some person joins room, emit its roomId to server
-      socketRef.current.emit(SOCKETS_EVENT.JOIN_ROOM, roomId);
+        socketRef.current.emit(SOCKETS_EVENT.JOIN_ROOM, roomId);
 
-      // 3. server emits back with give array of all other current users who are currently in the chat
-      socketRef.current.on(SOCKETS_EVENT.ALL_USERS, (users: string[]) => {
-        const peers = [];
+        socketRef.current.on(SOCKETS_EVENT.ALL_USERS, (users: string[]) => {
+          const peers = [];
 
-        // 4. create peer for each user in  room
-        users.forEach((userId) => {
-          // 5. userId = id of each user in room, socketRef.current.id = current user socketId
-          const peer = createPeer(userId, socketRef.current.id, stream);
+          users.forEach((userId) => {
+            const peer = createPeer(userId, socketRef.current.id, stream);
 
-          // push that users for the peerRef
+            peersRef.current.push({
+              peerId: userId,
+              peer,
+            });
+
+            peers.push({
+              peerId: userId,
+              peer,
+            });
+
+            peers.push(peer);
+          });
+          setPeers(peers); // adding  peers to state
+        });
+
+        socketRef.current.on(SOCKETS_EVENT.USER_JOINED_ROOM, (payload) => {
+          const { signal, callerId } = payload;
+
+          const peer = addPeer(signal, callerId, stream);
+
           peersRef.current.push({
-            peerId: userId,
+            peerId: callerId,
             peer,
           });
-          peers.push(peer);
-        });
-        setPeers(peers); // adding  peers to state
-      });
+          // setPeers([...peersRef.current]);
 
-      /**FLIP SIDE - for people who are already in room */
-      // 8. when new user joined , from the prespective of all the other users in the room (get notified someone has joined)
-      socketRef.current.on(SOCKETS_EVENT.USER_JOINED_ROOM, (payload) => {
-        const { signal, callerId } = payload;
-
-        const peer = addPeer(signal, callerId, stream); // create new peer (new user signal, new user callerID, and their own stream )
-
-        // push that users for the peerRef
-        peersRef.current.push({
-          peerId: callerId,
-          peer,
+          const peerObj = {
+            peer,
+            peerId: payload.callerId,
+          };
+          setPeers((users) => [...users, peerObj]); // state for peers in ui}
         });
 
-        setPeers((users) => [...users, peer]); // state for peers in ui
+        socketRef.current.on(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, (payload) => {
+          const item = peersRef.current.find((p) => p.peerId === payload.id);
+
+          item.peer.signal(payload.signal);
+        });
+
+        // user left
+        socketRef.current.on(SOCKETS_EVENT.USER_LEFT, (id: string) => {
+          const peerObj = peersRef.current.find((p) => p.peerId === id);
+
+          if (peerObj) {
+            peerObj.peer.destroy();
+          }
+
+          const peers = peersRef.current.filter((p) => p.peerId !== id);
+
+          peersRef.current = peers;
+          setPeers(peers); // set our new filtered peers
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
-      // back to person who just joined the room
-      // 11. receiving returned back signal from other uses
-      socketRef.current.on(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, (payload) => {
-        const item = peersRef.current.find((p) => p.peerId === payload.id); // dig to that array of peers so that correct id is listening to that returned signal from other users
-
-        item.peer.signal(payload.signal);
-      });
-    });
-
-    // cleanup sideffects
     return () => {
-      dispatch(leaveCurrentRoom());
+      socketRef.current.disconnect();
     };
-  }, []);
+  }, [localCameraEnabled, localCameraEnabled]);
 
-  // 6. creates the new peer with initiator true
   const createPeer = (userToSignal: string, callerId: string, stream: MediaStream) => {
     const peer = new Peer({
       initiator: true,
@@ -111,7 +125,6 @@ export const Room = () => {
       stream,
     });
 
-    // 7. immediately emits the signal  & send back to other people / each individual person in the room
     peer.on('signal', (signal: SignalData) => {
       socketRef.current.emit(SOCKETS_EVENT.SENDING_SIGNAL, { userToSignal, callerId, signal });
     });
@@ -119,17 +132,13 @@ export const Room = () => {
     return peer;
   };
 
-  // 9. incoming signal = send by person who just joins the room to all the people in the room
   const addPeer = (incomingSignal: SignalData, callerId: string, stream: MediaStream) => {
-    // initiator = false, we dont want to send the signal right away once signal is created
     const peer = new Peer({
       initiator: false,
       trickle: false,
       stream,
     });
 
-    // 10. accept incoming signal
-    // sending our own signal to that particular callerID, i.e send to that person person who just send us the signal i.e person who just join room
     peer.on('signal', (signal: SignalData) => {
       socketRef.current.emit(SOCKETS_EVENT.RETURNING_SIGNAL, { signal, callerId });
     });
@@ -139,14 +148,51 @@ export const Room = () => {
     return peer;
   };
 
+  const shareLocalScreen = () => {
+    navigator.mediaDevices.getDisplayMedia({ audio: true, video: true }).then((stream) => {
+      const screenTrack = stream.getTracks[0];
+
+      peersRef.current.replaceTrack(
+        peersRef.current.streams[0].getTracks().find((track: { kind: string }) => track.kind === 'video'),
+        screenTrack,
+        localStream,
+      );
+      // screenTrack.onended = () => {
+      //   peersRef.current.find(sender => sender.track.kind === "video").replaceTrack(localVideoRef.current.getTracks()[1]);
+      // }
+    });
+  };
+
+  const handleLeaveRoom = () => {
+    socketRef.current.disconnect();
+    displaySuccessNotification('Successfully left room');
+  };
+
+  const span = peers.length ? 12 : 24;
+
   return (
     <section className="room">
-      <div className="container">
-        <video muted ref={userVideo} autoPlay playsInline />
-        {peers.map((peer) => (
-          <Video key={uuid()} peer={peer} />
-        ))}
-      </div>
+      <Row>
+        <Col span={span}>
+          <LocalVideo localCameraEnabled={localCameraEnabled} localVideoRef={localVideoRef} />
+        </Col>
+        <Col span={12}>
+          {/* @todo : hack to only show one peer */}
+          {peers.slice(0, 1).map((peer) => (
+            <PeerVideo key={peer.peerId} peer={peer.peer} />
+          ))}
+        </Col>
+      </Row>
+      <Row>
+        <button onClick={shareLocalScreen}>Share screen</button>
+      </Row>
+      <Row>
+        <VideoControls
+          onMicButtonPress={onMicButtonPress}
+          onCameraButtonPress={onCameraButtonPress}
+          handleLeaveRoom={handleLeaveRoom}
+        />
+      </Row>
     </section>
   );
 };

@@ -1,7 +1,6 @@
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useVideoControls } from 'hooks';
 import * as React from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa';
-import { setLocalCameraEnabled, setLocalMicrophoneEnabled } from 'store/room/room.slice';
 import placeholder from '../../assets/placeholder.jpg';
 
 export const LabsVideo = () => {
@@ -10,33 +9,26 @@ export const LabsVideo = () => {
 
   const [localStream, setLocalStream] = React.useState<MediaStream>(null);
   const videoRef = React.useRef<HTMLVideoElement>();
+  const { onCameraButtonPress, onMicButtonPress } = useVideoControls(localStream);
 
   React.useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: localCameraEnabled, audio: localMicrophoneEnabled })
-      .then((currentStream) => {
-        if (videoRef.current) videoRef.current.srcObject = currentStream;
+      .then((stream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+        setLocalStream(stream);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, [localCameraEnabled, localMicrophoneEnabled]);
 
-  const onMicButtonPress = () => {
-    dispatch(setLocalMicrophoneEnabled(!localMicrophoneEnabled));
-
-    if (localMicrophoneEnabled) localStream.getAudioTracks()[0].stop();
-  };
-
-  const onCameraButtonPress = () => {
-    dispatch(setLocalCameraEnabled(!localCameraEnabled));
-    if (localCameraEnabled) localStream.getVideoTracks()[0].stop();
-  };
-
   return (
     <div className="labs-video">
       <div className="labs__video">
-        {!localStream || !localCameraEnabled ? (
+        {!localCameraEnabled ? (
           <img src={placeholder} alt="placeholder" className="labs__video--placeholder" />
         ) : (
           <video playsInline muted ref={videoRef} autoPlay />

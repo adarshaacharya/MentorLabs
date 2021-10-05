@@ -39,9 +39,8 @@ const Video: React.FC<VideoProps> = ({ peer }) => {
 
 const videoConstraints = {
   height: window.innerHeight / 2,
-  width: window.innerWidth / 2
+  width: window.innerWidth / 2,
 };
-
 
 export const Room = () => {
   const { localCameraEnabled, localMicrophoneEnabled, localStream, info, remoteStream } = useAppSelector(
@@ -147,6 +146,7 @@ export const Room = () => {
             )}
           </Row>
         </div>
+
         <div className="room__footer">
           <div className="room__link">
             <Button className="ml-2" onClick={copyToClipBoard}>

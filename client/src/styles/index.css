@@ -133,6 +133,9 @@ body {
 .color--white {
   color: var(--light-color);
 }
+.w-100 {
+  max-width: 100%;
+}
 
 /*==============================================================================
  Section : Ant Design utility classes

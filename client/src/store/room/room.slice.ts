@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Message, RoomInfo, RoomState } from 'types';
+import { Message, RoomState } from 'types';
 import { createRoom, joinRoom } from './room.action';
 
 const initialState: RoomState = Object.freeze({
@@ -75,15 +75,7 @@ const roomSlice = createSlice({
   },
 });
 
-export const {
-  // setLocalStream,
-  setLocalCameraEnabled,
-  setLocalMicrophoneEnabled,
-  // setRoomInformation,
-  setRoomMessages,
-  // setRemoteStream,
-  leaveCurrentRoom,
-  clearRoomError,
-} = roomSlice.actions;
+export const { setLocalCameraEnabled, setLocalMicrophoneEnabled, setRoomMessages, leaveCurrentRoom, clearRoomError } =
+  roomSlice.actions;
 
 export default roomSlice.reducer;

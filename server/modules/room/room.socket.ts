@@ -58,11 +58,8 @@ const socketOptions = {
 export const roomSocket = (httpServer: http.Server) => {
   const io = new Server(httpServer, socketOptions);
 
-  const roomServiceInstance = Container.get(RoomService);
-  const userServiceInstance = Container.get(UsersService);
-
-  const users: Users = {};
-  const socketToRoom: SocketToRoom = {};
+  const users: Users = {}; // @todo: rename to rooms
+  const socketToRoom: SocketToRoom = {}; // every single time someone joins room determine which room they go to, i.e which socket belongs to which room ; socket -> room -> find roomId -> go to users colelction to find room
 
   /**
    * connect socket event
@@ -70,88 +67,19 @@ export const roomSocket = (httpServer: http.Server) => {
   io.on(SOCKETS_EVENT.CONNECT, (socket: Socket) => {
     console.log('✅ Connected to room.', socket.id);
 
-    // create new room
-    // socket.on(SOCKETS_EVENT.CREATE_ROOM, async (roomData: CreateRoomData) => {
-    //   try {
-    //     const room = await roomServiceInstance.createRoom(roomData);
-    //     const user = await userServiceInstance.findOneById(roomData.creatorId);
-    //     const roomId = room.id;
-
-    //     socket.join(roomId); // ❤️ join this socket instance to roomId
-
-    //     const data = { roomId, title: room.title };
-    //     io.to(roomId).emit(SOCKETS_EVENT.CREATED_ROOM, data);
-
-    //     const message = {
-    //       text: `${user.name} created room.`,
-    //       notification: true,
-    //     };
-    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-    //   } catch (error) {
-    //     console.log('Error in creating room', error);
-    //   }
-    // });
-
-    // join existing room
-    // socket.on(SOCKETS_EVENT.JOIN_ROOM, async (roomData: JoinRoomData, callback: SocketCallback) => {
-    //   try {
-    //     const { roomId, participantId } = roomData;
-    //     const room = await roomServiceInstance.findRoomById(roomId);
-
-    //     if (!room) {
-    //       return callback({ error: "Room with given id doesn't exists." });
-    //     }
-
-    //     const user = await userServiceInstance.findOneById(participantId);
-
-    //     socket.join(roomId); // ❤️
-
-    //     const data = { roomId: room.id, title: room.title };
-    //     io.to(roomId).emit(SOCKETS_EVENT.JOINED_ROOM, data);
-
-    //     const message = {
-    //       text: `${user.name} joined room.`,
-    //       notification: true,
-    //     };
-    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-    //   } catch (error) {
-    //     console.log(error);
-    //     return callback({ error: 'Error in joining room.' });
-    //   }
-    // });
-
     // send message
-    // socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
-    //   try {
-    //     const { roomId, text } = messageData;
-    //     const message = { text };
-    //     io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
+    socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
+      try {
+        const { roomId, text } = messageData;
+        const message = { text };
+        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
 
-    //     callback();
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
+        callback();
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
-    // // leave room
-    // socket.on(SOCKETS_EVENT.LEAVE_ROOM, async (roomData: LeaveRoomData) => {
-    //   const { roomId, userId } = roomData;
-
-    //   const user = await userServiceInstance.findOneById(userId);
-
-    //   const message = {
-    //     text: `${user.name} has left room.`,
-    //     notification: true,
-    //   };
-    //   io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-
-    //   socket.removeAllListeners();
-    //   socket.leave(socket.id);
-    // });
-
-    /**
-     * refactoring starts here
-     */
     // when user join room
     socket.on(SOCKETS_EVENT.JOIN_ROOM, (roomId: string) => {
       if (users[roomId]) {
@@ -178,20 +106,22 @@ export const roomSocket = (httpServer: http.Server) => {
     socket.on(SOCKETS_EVENT.SENDING_SIGNAL, (payload: SendSignalPayload) => {
       const { userToSignal, callerId, signal } = payload;
 
-      io.to(userToSignal).emit(SOCKETS_EVENT.USER_JOINED_ROOM, { signal, callerId }); // callerId = person who joined
+      io.to(userToSignal).emit(SOCKETS_EVENT.USER_JOINED_ROOM, { signal, callerId });
     });
 
     socket.on(SOCKETS_EVENT.RETURNING_SIGNAL, (payload: ReturningSignalPayload) => {
-      io.to(payload.callerId).emit(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, { signal: payload.signal, id: socket.id }); // id = id of ther user who is the person who recently joined or me
+      io.to(payload.callerId).emit(SOCKETS_EVENT.RECEIVING_RETURNED_SIGNAL, { signal: payload.signal, id: socket.id });
     });
 
-    socket.on('disconnect', () => {
+    socket.on(SOCKETS_EVENT.DISCONNECT, () => {
       const roomId = socketToRoom[socket.id];
       let room = users[roomId];
       if (room) {
         room = room.filter((id) => id !== socket.id);
         users[roomId] = room;
       }
+
+      socket.broadcast.emit(SOCKETS_EVENT.USER_LEFT, socket.id);
     });
   });
 };
