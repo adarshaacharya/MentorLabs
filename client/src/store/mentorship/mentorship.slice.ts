@@ -25,7 +25,7 @@ const mentorshipSlice = createSlice({
       state.status = 'pending';
     });
 
-    builder.addCase(sendMentorshipRequest.fulfilled, (state, { payload }) => {
+    builder.addCase(sendMentorshipRequest.fulfilled, (state) => {
       state.status = 'resolved';
     });
 

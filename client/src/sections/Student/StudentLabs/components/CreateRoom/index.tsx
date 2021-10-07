@@ -1,11 +1,8 @@
 import { Button, Form, Input, Typography } from 'antd';
-import * as React from 'react';
-import { SOCKETS_EVENT } from 'constants/socketEvents';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import * as React from 'react';
 import { useNavigate } from 'react-router';
 import { createRoom } from 'store/room/room.action';
-import { displayErrorMessage } from 'utils/notifications';
-import { socket } from 'utils/socketConfig';
 const { Text } = Typography;
 
 type RoomResponse = {
@@ -29,7 +26,6 @@ export const CreateRoom = () => {
 
   const onFormSubmit = (values: { title: string }) => {
     const roomData = { creatorId: user.id, title: values.title };
-
     dispatch(createRoom(roomData));
   };
 

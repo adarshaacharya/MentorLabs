@@ -28,7 +28,7 @@ export const ProfileCreate = () => {
     }
   };
 
-  const onFinishFailed = (error) => {
+  const onFinishFailed = () => {
     displayErrorMessage('Please complete all required form fields!');
     return;
   };

@@ -18,6 +18,10 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
 
   const url = request.mentor ? `/student-requests/${request.id}` : `/teacher-requests/${request.id}`;
 
+  if (!user) {
+    return <p>Loading user...</p>;
+  }
+
   return (
     <Card className="mentorship-request-card" loading={loading}>
       <Row justify="space-between">

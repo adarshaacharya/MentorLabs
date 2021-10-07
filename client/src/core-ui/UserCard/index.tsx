@@ -12,6 +12,10 @@ type UserCardProps = {
 const { Paragraph } = Typography;
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
+  if (!user.profile) {
+    return <p>Loading user..</p>;
+  }
+
   const userTagsElement = user.profile.tags.map((tag) => (
     <Tag color="processing" key={tag}>
       {tag}
