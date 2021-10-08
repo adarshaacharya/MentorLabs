@@ -118,6 +118,14 @@ export interface JoinRoomResponse {
 export interface SocketCallbackError {
   error: string;
 }
+
+export interface Participant {
+  id: string;
+  identity: string;
+  roomId: string;
+  socketId: string;
+}
+
 //==============================================================================
 // State
 //==============================================================================
@@ -155,9 +163,9 @@ export interface RoomState {
   id: string;
   title: string;
   status: Status;
-  localCameraEnabled: boolean;
-  localMicrophoneEnabled: boolean;
-  screenSharingActive: boolean;
+  showOverlay: boolean;
+  isRoomHost: boolean;
+  participants: Participant[];
   messages: Message[];
   error: string;
 }

@@ -15,8 +15,10 @@ export const VideoControls: React.FC<VideoControlsProps> = ({
   onMicButtonPress,
   handleLeaveRoom,
 }) => {
-  const { id, localCameraEnabled, localMicrophoneEnabled } = useAppSelector((state) => state.room);
+  const { id } = useAppSelector((state) => state.room);
 
+  const localCameraEnabled = false,
+    localMicrophoneEnabled = false;
   const copyToClipBoard = async () => {
     await navigator.clipboard.writeText(id);
     displaySuccessNotification('Room Id copied to clipboard', id);

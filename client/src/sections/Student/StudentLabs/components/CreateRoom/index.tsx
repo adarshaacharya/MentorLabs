@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { useNavigate } from 'react-router';
 import { createRoom } from 'store/room/room.action';
+import { setIsRoomHost } from 'store/room/room.slice';
 const { Text } = Typography;
 
 type RoomResponse = {
@@ -23,6 +24,10 @@ export const CreateRoom = () => {
       navigate(`/room/${id}`);
     }
   }, [id]);
+
+  React.useEffect(() => {
+    dispatch(setIsRoomHost(true));
+  }, []);
 
   const onFormSubmit = (values: { title: string }) => {
     const roomData = { creatorId: user.id, title: values.title };

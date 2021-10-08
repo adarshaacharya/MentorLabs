@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import * as React from 'react';
 import { useNavigate } from 'react-router';
 import { joinRoom } from 'store/room/room.action';
-import { clearRoomError } from 'store/room/room.slice';
+import { clearRoomError, setIsRoomHost } from 'store/room/room.slice';
 import { JoinRoomData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
 const { Text } = Typography;
@@ -25,6 +25,10 @@ export const JoinRoom = () => {
       navigate(`/room/${id}`);
     }
   }, [id]);
+
+  React.useEffect(() => {
+    dispatch(setIsRoomHost(false));
+  }, []);
 
   const onFormSubmit = (values: JoinRoomData) => {
     dispatch(joinRoom(values.roomId));

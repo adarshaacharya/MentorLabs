@@ -7,14 +7,14 @@ import { Message } from 'types';
 import { socket } from 'utils/socketConfig';
 import { v4 as uuidv4 } from 'uuid';
 
-type ChatDrawerProps = {
+type ChatBoxProps = {
   visible: boolean;
   onClose: () => void;
 };
 
 const { TextArea } = Input;
 
-export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
+export const ChatBox: React.FC<ChatBoxProps> = ({ visible, onClose }) => {
   const [text, setText] = React.useState('');
   const { messages, id, title } = useAppSelector((state) => state.room);
 
@@ -29,7 +29,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({ visible, onClose }) => {
   const sendMessage = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
 
-    const messageData = { text, roomId: id };
+    const messageData = { text, id: id };
     socket.emit(SOCKETS_EVENT.SEND_MESSAGE, messageData, () => setText(''));
   };
 

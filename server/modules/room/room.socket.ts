@@ -1,7 +1,8 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
-import { SocketMessage } from './dtos/socket.dto';
+import { CreateNewRoom, JoinRoom, SocketMessage } from './dtos/socket.dto';
+import * as socketHandler from './room.handler';
 
 const socketOptions = {
   cors: {
@@ -12,23 +13,20 @@ const socketOptions = {
 export const roomSocket = (httpServer: http.Server) => {
   const io = new Server(httpServer, socketOptions);
 
-  /**
-   * connect socket event
-   */
   io.on(SOCKETS_EVENT.CONNECT, (socket: Socket) => {
-    console.log('✅ Connected to room.', socket.id);
+    console.log('✅ user connected to room.', socket.id);
+
+    socket.on('create-new-room', (data: CreateNewRoom) => {
+      socketHandler.createNewRoom(socket, data);
+    });
+
+    socket.on('join-room', (data: JoinRoom) => {
+      socketHandler.joinRoom(io, socket, data);
+    });
 
     // send message
     socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
-      try {
-        const { roomId, text } = messageData;
-        const message = { text };
-        io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-
-        callback();
-      } catch (error) {
-        console.log(error);
-      }
+      socketHandler.sendMessage(io, messageData, callback);
     });
   });
 };

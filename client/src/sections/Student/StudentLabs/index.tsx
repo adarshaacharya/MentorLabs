@@ -1,6 +1,8 @@
 import { Card, Col, Divider, Radio, RadioChangeEvent, Row, Typography } from 'antd';
+import { useAppDispatch } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { setIsRoomHost } from 'store/room/room.slice';
 import { CreateRoom, JoinRoom, LabsVideo } from './components';
 
 const { Title, Paragraph, Text } = Typography;
