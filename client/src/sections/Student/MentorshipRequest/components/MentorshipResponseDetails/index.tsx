@@ -1,6 +1,7 @@
 import { Card, Divider, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { MentorshipResponseData } from 'types';
+import { displaySuccessNotification } from 'utils/notifications';
 
 type TeacherMentorshipResponseDetailsProps = {
   response: MentorshipResponseData;
@@ -8,6 +9,11 @@ type TeacherMentorshipResponseDetailsProps = {
 const { Title, Paragraph } = Typography;
 
 export const StudentMentorshipResponseDetails: React.FC<TeacherMentorshipResponseDetailsProps> = ({ response }) => {
+  const copyRoomId = async (roomId: string) => {
+    await navigator.clipboard.writeText(roomId);
+    displaySuccessNotification('Room id copied successfully.');
+  };
+
   return (
     <div className="mentorship-response">
       <div className="container">
@@ -36,7 +42,9 @@ export const StudentMentorshipResponseDetails: React.FC<TeacherMentorshipRespons
           </tr>
           <tr>
             <th>RoomId </th>
-            <td>{response.roomId}</td>
+            <span className="text--link cursor-pointer" onClick={() => copyRoomId(response.roomId)}>
+              {response.roomId}
+            </span>
           </tr>
           <tr>
             <th>Extra Message </th>
