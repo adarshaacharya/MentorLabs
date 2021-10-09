@@ -1,31 +1,51 @@
-import { Drawer, Input } from 'antd';
-import { SOCKETS_EVENT } from 'constants/socketEvents';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { Input } from 'antd';
+import { useAppSelector } from 'hooks';
 import * as React from 'react';
-import { setRoomMessages } from 'store/room/room.slice';
+import * as wss from 'services/wss';
 import { Message } from 'types';
-import { socket } from 'utils/socketConfig';
 import { v4 as uuidv4 } from 'uuid';
 
 const { TextArea } = Input;
 
+const ChatMessage = ({ message }: { message: Message }) => {
+  const { user } = useAppSelector((state) => state.auth);
+  const { userId, name, text } = message;
+
+  const messageCreatedByMe = user.id === userId;
+  const contentAdditionalStyles = messageCreatedByMe ? 'message_right_styles' : 'message_left_styles';
+
+  const authorText = messageCreatedByMe ? 'You' : name;
+
+  return (
+    <div className="message__container">
+      <div className="message__author">{authorText}</div>
+      <div className={`message__text ${contentAdditionalStyles}`}>{text}</div>
+    </div>
+  );
+};
+
 export const ChatBox = () => {
   const [text, setText] = React.useState('');
-  const { messages, id, title } = useAppSelector((state) => state.room);
-
-  const dispatch = useAppDispatch();
+  const { messages, id: roomId } = useAppSelector((state) => state.room);
+  const { user } = useAppSelector((state) => state.auth);
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    socket.on(SOCKETS_EVENT.UPDATE_MESSAGE, (message: Message) => {
-      dispatch(setRoomMessages(message));
-    });
-  }, []);
+    scrollToBottom();
+  }, [messages]);
 
   const sendMessage = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
 
-    const messageData = { text, id: id };
-    socket.emit(SOCKETS_EVENT.SEND_MESSAGE, messageData, () => setText(''));
+    if (text.length > 0) {
+      const messageData = { userId: user.id, name: user.name, text, roomId };
+      wss.sendNewMessage(messageData);
+      setText('');
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -33,11 +53,8 @@ export const ChatBox = () => {
       <div className="chat-box__messages">
         {messages.map((message) => (
           <div key={uuidv4()}>
-            {message.notification ? (
-              <p className="chat-box__message--incoming">{message.text}</p>
-            ) : (
-              <p className="chat-box__message--outgoing">{message.text}</p>
-            )}
+            <ChatMessage message={message} />
+            <div ref={messagesEndRef} />
           </div>
         ))}
       </div>

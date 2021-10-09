@@ -1,6 +1,6 @@
 import { store } from 'store';
-import { setParticipants } from 'store/room/room.slice';
-import { Participant, SignalingData } from 'types';
+import { setParticipants, setRoomMessages } from 'store/room/room.slice';
+import { Message, Participant, SignalingData } from 'types';
 import { socket } from 'utils/socketConfig';
 import * as webRTCHandler from './webrtc';
 import Peer from 'simple-peer';
@@ -12,6 +12,13 @@ type SignalData = {
 
 type ConnUserData = {
   connUserSocketId: string;
+};
+
+type MessageData = {
+  userId: string;
+  name: string;
+  roomId: string;
+  text: string;
 };
 
 socket.on('connect', () => {
@@ -42,6 +49,10 @@ socket.on('conn-init', (data: ConnUserData) => {
   webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
 });
 
+socket.on('update-message', (data: Message) => {
+  store.dispatch(setRoomMessages(data));
+});
+
 socket.on('user-disconnected', (data: { socketId: string }) => {
   webRTCHandler.removePeerConnection(data);
 });
@@ -67,4 +78,8 @@ export const joinRoom = (userId: string, identity: string, roomId: string) => {
 // signal to other peer
 export const signalPeerData = (data: SignalData) => {
   socket.emit('conn-signal', data);
+};
+
+export const sendNewMessage = (data: MessageData) => {
+  socket.emit('update-message', data);
 };

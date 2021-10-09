@@ -16,7 +16,6 @@ export const createRoom = createAsyncThunk('room/createRoom', async (values: Cre
 export const joinRoom = createAsyncThunk('room/joinRoom', async (id: string, thunkAPI) => {
   try {
     const url = config.endpoints.room.joinRoom;
-    console.log({ id });
     const { data } = await http.post<RoomInfo>(url, { id });
     return data;
   } catch (err) {

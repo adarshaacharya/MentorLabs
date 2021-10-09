@@ -1,8 +1,3 @@
-export interface SocketMessage {
-  roomId: string;
-  text: string;
-}
-
 export interface CreateNewRoom {
   identity: string;
   roomId: string;
@@ -30,4 +25,11 @@ export interface ConnUserData {
 export interface SignalingData {
   connUserSocketId: string;
   signal: unknown;
+}
+
+export interface MessageData {
+  userId: string;
+  name: string;
+  text: string;
+  roomId: string;
 }

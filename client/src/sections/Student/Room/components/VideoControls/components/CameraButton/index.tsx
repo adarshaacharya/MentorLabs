@@ -11,8 +11,8 @@ export const CameraButton = () => {
   };
 
   return (
-    <div onClick={handleCameraButtonPressed} className={`meeting-icons ${!isLocalVideoDisabled ? 'bg--danger' : ''}`}>
-      {!isLocalVideoDisabled ? (
+    <div onClick={handleCameraButtonPressed} className={`meeting-icons ${isLocalVideoDisabled ? 'bg--danger' : ''}`}>
+      {isLocalVideoDisabled ? (
         <FaVideoSlash size={'1.3em'} title="video disallowed" />
       ) : (
         <FaVideo size={'1.3em'} title="video" />

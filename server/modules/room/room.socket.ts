@@ -1,7 +1,7 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
-import { ConnUserData, CreateNewRoom, JoinRoom, SignalingData, SocketMessage } from './dtos/socket.dto';
+import { ConnUserData, CreateNewRoom, JoinRoom, MessageData, SignalingData } from './dtos/socket.dto';
 import * as socketHandler from './room.handler';
 
 const socketOptions = {
@@ -38,8 +38,8 @@ export const roomSocket = (httpServer: http.Server) => {
     });
 
     // send message
-    socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
-      socketHandler.sendMessage(io, messageData, callback);
+    socket.on('update-message', (messageData: MessageData) => {
+      socketHandler.sendMessage(io, messageData);
     });
   });
 };

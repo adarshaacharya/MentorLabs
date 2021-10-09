@@ -883,18 +883,32 @@ body {
 }
 
 .chat-box__messages {
+  height: 300px;
+  overflow-y: auto;
 }
 
-.chat-box__message--incoming {
+.message__container {
+  padding: 1em 0;
+}
+
+.message__author {
+  font-size: 1rem;
+  text-align: left;
+  color: #808080;
+}
+
+.message__text {
   border: 1px solid #f0f0f0;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+.message_right_styles {
   background: #fef2e8;
-  padding: 5px 8px;
-  border-radius: 4px;
+  text-align: right;
 }
 
-.chat-box__message--outgoing {
-  border: 1px solid #f0f0f0;
-  background: var(--bg-color);
-  padding: 5px 8px;
-  border-radius: 4px;
+.message_left_styles {
+  background: #f3f3f3;
+  text-align: left;
 }

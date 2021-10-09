@@ -11,8 +11,8 @@ export const MicButton = () => {
   };
 
   return (
-    <div onClick={handleMicButtonPressed} className={`meeting-icons ${!isMicMuted ? 'bg--danger' : ''}`}>
-      {!isMicMuted ? (
+    <div onClick={handleMicButtonPressed} className={`meeting-icons ${isMicMuted ? 'bg--danger' : ''}`}>
+      {isMicMuted ? (
         <FaMicrophoneSlash size={'1.3em'} title="audio muted" />
       ) : (
         <FaMicrophone size={'1.3em'} title="audio" />

@@ -102,7 +102,8 @@ export interface MentorshipRequest extends MentorshipRequestData {
 // Room
 //==============================================================================
 export interface Message {
-  notification?: boolean;
+  userId: string;
+  name: string;
   text: string;
 }
 

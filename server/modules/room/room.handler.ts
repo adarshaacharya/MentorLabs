@@ -1,13 +1,12 @@
 import { Server, Socket } from 'socket.io';
-import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
 import {
   ConnectedUser,
   ConnUserData,
   CreateNewRoom,
   JoinRoom,
+  MessageData,
   Room,
   SignalingData,
-  SocketMessage,
 } from './dtos/socket.dto';
 
 let connectedUsers: Array<ConnectedUser> = [];
@@ -90,13 +89,11 @@ export const initializeConnectionHandler = (io: Server, socket: Socket, data: Co
   io.to(connUserSocketId).emit('conn-init', initData);
 };
 
-export const sendMessage = (io: Server, messageData: SocketMessage, callback: () => void) => {
+export const sendMessage = (io: Server, messageData: MessageData) => {
   try {
-    const { roomId, text } = messageData;
-    const message = { text };
-    io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, message);
-
-    callback();
+    const { userId, name, roomId, text } = messageData;
+    const data = { userId, name, text };
+    io.to(roomId).emit('update-message', data);
   } catch (error) {
     console.log(error);
   }

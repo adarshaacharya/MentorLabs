@@ -23,7 +23,6 @@ const roomSlice = createSlice({
     setRoomMessages(state, action: PayloadAction<Message>) {
       state.messages.push(action.payload);
     },
-
     setParticipants(state, action: PayloadAction<Participant[]>) {
       state.participants = action.payload;
     },
