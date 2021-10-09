@@ -736,6 +736,7 @@ body {
  Section : Room(Student)
 ==============================================================================*/
 
+/* overlay */
 .overlay {
   width: 100%;
   height: 100vh;
@@ -767,38 +768,84 @@ body {
 
 .room {
   background-color: var(--bg-color);
-  margin-top: 10vh;
-  padding: 1em 1em 0 1em;
+  height: 92vh;
 }
-.room__wrapper {
-  height: 88vh;
+
+.room__container {
+  margin-top: 15vh;
 }
 
 .room__main {
-  height: 77vh;
+  display: flex;
+  justify-content: space-between;
 }
 
-.room__main img,
-video {
+.room__sidebar {
+  width: 17%;
+  height: 80vh;
+  margin-right: 0.5em;
+  background-color: var(--light-color);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  padding: 0 0.2em;
+}
+
+.participants > div {
+  padding: 1em 0;
+}
+
+.participants > div:not(:last-child) {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.participants > div .active-dot {
+  height: 10px;
+  width: 10px;
+  background-color: #52c41a;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 0.5em;
+}
+
+.videos_portal__styles {
+  position: absolute;
+  left: 0;
+  top: 15vh;
+  height: calc(100vh - 10%);
+  padding-left: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+.video_track__container:first-child:nth-last-child(1) {
   width: 100%;
-  height: 75vh;
+  height: 100%;
+}
+
+.video_track__container:first-child:nth-last-child(2),
+.video_track__container:first-child:nth-last-child(2) ~ .video_track__container {
+  /* width: 50%;
+  height: 50%; */
 }
 
 .room__footer {
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  padding: 0.3em 0;
+  padding: 0.5em 0;
   background-color: var(--light-color);
   border: 1px solid #f0f0f0;
   box-shadow: 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.room__link {
+.video-controls__link {
 }
 
-.room__icons {
+.video-controls__icons {
   display: flex;
   justify-content: center;
   gap: 1.2em;
@@ -826,26 +873,25 @@ video {
   opacity: 0.3;
 }
 
-.chat-drawer {
+.chat-box {
 }
 
-.chat-drawer__input {
+.chat-box__input {
   position: absolute;
-  top: 88%;
-  width: 90%;
+  bottom: 12%;
 }
 
-.chat-drawer__messages {
+.chat-box__messages {
 }
 
-.chat-drawer__message--incoming {
+.chat-box__message--incoming {
   border: 1px solid #f0f0f0;
   background: #fef2e8;
   padding: 5px 8px;
   border-radius: 4px;
 }
 
-.chat-drawer__message--outgoing {
+.chat-box__message--outgoing {
   border: 1px solid #f0f0f0;
   background: var(--bg-color);
   padding: 5px 8px;

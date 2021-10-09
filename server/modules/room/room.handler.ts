@@ -1,10 +1,17 @@
 import { Server, Socket } from 'socket.io';
 import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
-import { NotFound } from '../../common/exceptions';
-import { ConnectedUser, CreateNewRoom, CreateRoom, JoinRoom, SocketMessage } from './dtos/socket.dto';
+import {
+  ConnectedUser,
+  ConnUserData,
+  CreateNewRoom,
+  JoinRoom,
+  Room,
+  SignalingData,
+  SocketMessage,
+} from './dtos/socket.dto';
 
 let connectedUsers: Array<ConnectedUser> = [];
-let rooms: Array<CreateRoom> = [];
+let rooms: Array<Room> = [];
 
 export const createNewRoom = (socket: Socket, data: CreateNewRoom) => {
   console.log('host is creating new room');
@@ -41,12 +48,12 @@ export const joinRoom = (io: Server, socket: Socket, data: JoinRoom) => {
     socketId: socket.id,
     roomId,
   };
-  console.log(newUser);
 
   const room = rooms.find((room) => room.id === roomId);
 
   if (!room) {
-    throw new NotFound('Room not found');
+    console.log('Room not found.');
+    return;
   }
   room.connectedUsers = [...room.connectedUsers, newUser];
 
@@ -54,7 +61,33 @@ export const joinRoom = (io: Server, socket: Socket, data: JoinRoom) => {
 
   connectedUsers = [...connectedUsers, newUser];
 
+  room.connectedUsers.forEach((user: ConnectedUser) => {
+    if (user.socketId !== socket.id) {
+      const data = { connUserSocketId: socket.id };
+
+      io.to(user.socketId).emit('conn-prepare', data);
+    }
+  });
+
   io.to(roomId).emit('room-update', { connectedUsers: room.connectedUsers });
+};
+
+export const signalingHandler = (io: Server, socket: Socket, data: SignalingData) => {
+  const { connUserSocketId, signal } = data;
+
+  const signalingData = { signal, connUserSocketId: socket.id }; // set to ther socket id of sender
+
+  io.to(connUserSocketId).emit('conn-signal', signalingData);
+};
+
+export const initializeConnectionHandler = (io: Server, socket: Socket, data: ConnUserData) => {
+  const { connUserSocketId } = data;
+
+  const initData = {
+    connUserSocketId: socket.id,
+  };
+
+  io.to(connUserSocketId).emit('conn-init', initData);
 };
 
 export const sendMessage = (io: Server, messageData: SocketMessage, callback: () => void) => {

@@ -11,6 +11,11 @@ export interface CreateNewRoom {
 
 export interface JoinRoom extends CreateNewRoom {}
 
+export interface Room {
+  id: string;
+  connectedUsers: ConnectedUser[];
+}
+
 export interface ConnectedUser {
   id: string;
   identity: string;
@@ -18,7 +23,11 @@ export interface ConnectedUser {
   socketId: string;
 }
 
-export interface CreateRoom {
-  id: string;
-  connectedUsers: ConnectedUser[];
+export interface ConnUserData {
+  connUserSocketId: string;
+}
+
+export interface SignalingData {
+  connUserSocketId: string;
+  signal: unknown;
 }

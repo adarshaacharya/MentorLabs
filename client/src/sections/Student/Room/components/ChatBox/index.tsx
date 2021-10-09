@@ -7,14 +7,9 @@ import { Message } from 'types';
 import { socket } from 'utils/socketConfig';
 import { v4 as uuidv4 } from 'uuid';
 
-type ChatBoxProps = {
-  visible: boolean;
-  onClose: () => void;
-};
-
 const { TextArea } = Input;
 
-export const ChatBox: React.FC<ChatBoxProps> = ({ visible, onClose }) => {
+export const ChatBox = () => {
   const [text, setText] = React.useState('');
   const { messages, id, title } = useAppSelector((state) => state.room);
 
@@ -34,29 +29,28 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ visible, onClose }) => {
   };
 
   return (
-    <div className="chat-drawer my-2">
-      <Drawer placement="right" title="Chat" onClose={onClose} visible={visible} width={300}>
-        <div className="chat-drawer__messages">
-          {messages.map((message) => (
-            <div key={uuidv4()}>
-              {message.notification ? (
-                <p className="chat-drawer__message--incoming">{message.text}</p>
-              ) : (
-                <p className="chat-drawer__message--outgoing">{message.text}</p>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="chat-drawer__input">
-          <TextArea
-            rows={2}
-            placeholder="Press enter to send message.."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onPressEnter={sendMessage}
-          />
-        </div>
-      </Drawer>
+    <div className="chat-box">
+      <div className="chat-box__messages">
+        {messages.map((message) => (
+          <div key={uuidv4()}>
+            {message.notification ? (
+              <p className="chat-box__message--incoming">{message.text}</p>
+            ) : (
+              <p className="chat-box__message--outgoing">{message.text}</p>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="chat-box__input">
+        <TextArea
+          rows={2}
+          placeholder="Press enter to send"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onPressEnter={sendMessage}
+          size="small"
+        />
+      </div>
     </div>
   );
 };

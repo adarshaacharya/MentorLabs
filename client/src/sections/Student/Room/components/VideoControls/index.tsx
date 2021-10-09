@@ -10,28 +10,29 @@ type VideoControlsProps = {
   handleLeaveRoom: () => void;
 };
 
-export const VideoControls: React.FC<VideoControlsProps> = ({
-  onCameraButtonPress,
-  onMicButtonPress,
-  handleLeaveRoom,
-}) => {
+export const VideoControls = () => {
   const { id } = useAppSelector((state) => state.room);
 
   const localCameraEnabled = false,
     localMicrophoneEnabled = false;
+
   const copyToClipBoard = async () => {
     await navigator.clipboard.writeText(id);
     displaySuccessNotification('Room Id copied to clipboard', id);
   };
 
+  const onMicButtonPress = () => {};
+  const onCameraButtonPress = () => {};
+  const handleLeaveRoom = () => {};
+
   return (
-    <div className="room__footer">
-      <div className="room__link">
+    <div className="video-controls">
+      {/* <div className="video-controls__link">
         <Button className="ml-2" onClick={copyToClipBoard}>
           Copy Room Id
         </Button>
-      </div>
-      <div className="room__icons">
+      </div> */}
+      <div className="video-controls__icons">
         <div onClick={onMicButtonPress} className={`meeting-icons ${!localMicrophoneEnabled ? 'bg--danger' : ''}`}>
           {!localMicrophoneEnabled ? (
             <FaMicrophoneSlash size={'1.3em'} title="audio muted" />
@@ -55,11 +56,11 @@ export const VideoControls: React.FC<VideoControlsProps> = ({
         </div>
       </div>
 
-      <div className="room__chat mr-2">
+      {/* <div className="video-controls__chat mr-2">
         <div className="meeting-icons">
           <FaFacebookMessenger size={'1.5em'} className="text--primary" title="messages" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

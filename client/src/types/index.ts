@@ -1,6 +1,7 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { MentorshipRequestStatus, Role } from 'enums';
 import { store } from 'store';
+import Peer from 'simple-peer';
 
 //==============================================================================
 // Form Data
@@ -124,6 +125,11 @@ export interface Participant {
   identity: string;
   roomId: string;
   socketId: string;
+}
+
+export interface SignalingData {
+  connUserSocketId: string;
+  signal: Peer.SignalData;
 }
 
 //==============================================================================

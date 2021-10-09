@@ -1,7 +1,7 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
-import { CreateNewRoom, JoinRoom, SocketMessage } from './dtos/socket.dto';
+import { ConnUserData, CreateNewRoom, JoinRoom, SignalingData, SocketMessage } from './dtos/socket.dto';
 import * as socketHandler from './room.handler';
 
 const socketOptions = {
@@ -22,6 +22,14 @@ export const roomSocket = (httpServer: http.Server) => {
 
     socket.on('join-room', (data: JoinRoom) => {
       socketHandler.joinRoom(io, socket, data);
+    });
+
+    socket.on('conn-signal', (data: SignalingData) => {
+      socketHandler.signalingHandler(io, socket, data);
+    });
+
+    socket.on('conn-init', (data: ConnUserData) => {
+      socketHandler.initializeConnectionHandler(io, socket, data);
     });
 
     // send message
