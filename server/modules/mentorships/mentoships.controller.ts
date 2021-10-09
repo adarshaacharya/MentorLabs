@@ -78,7 +78,10 @@ class MentorshipsController {
       const mentorshipsServiceInstance = Container.get(MentorshipsService);
       const mentorshipId = validateIdOrThrow(req.params.id);
 
-      const response = await mentorshipsServiceInstance.createMentorshipResponse(mentorshipId, req.body);
+      const userId = req.user?.id;
+
+      const response =
+        userId && (await mentorshipsServiceInstance.createMentorshipResponse(userId, mentorshipId, req.body));
       res.status(201).json(response);
     } catch (error) {
       next(error);

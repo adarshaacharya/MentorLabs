@@ -2,6 +2,7 @@ import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
+import { Room } from '../room/entities/room.entity';
 import { User } from '../users/entities/user.entity';
 import { UserRepository } from '../users/repositories/users.repository';
 import { CreateMentorshipInput } from './dtos/create-mentorship.dto';
@@ -21,6 +22,9 @@ export class MentorshipsService {
 
     @InjectRepository(Response)
     private readonly responseRepository: Repository<Response>,
+
+    @InjectRepository(Room)
+    private readonly roomRepository: Repository<Room>,
   ) {}
 
   /**
@@ -123,7 +127,11 @@ export class MentorshipsService {
    * creates response for mentorship req
    * @param id
    */
-  public async createMentorshipResponse(mentorshipId: string, createResponseInput: CreateResponseInput) {
+  public async createMentorshipResponse(
+    userId: string,
+    mentorshipId: string,
+    createResponseInput: CreateResponseInput,
+  ) {
     const mentorship = await this.mentorshipRepository.findOne({ where: { id: mentorshipId } });
 
     if (!mentorship) {
@@ -134,6 +142,16 @@ export class MentorshipsService {
 
     if (responseExists) {
       throw new BadRequest('Response for given mentorship is already done.');
+    }
+
+    const roomExists = await this.roomRepository.findOne(createResponseInput.roomId);
+
+    if (!roomExists) {
+      throw new NotFound("The room with given id hasn't been created");
+    }
+
+    if (roomExists.creatorId !== userId) {
+      throw new Unauthorized("You aren't authorized to use this room id, create new one.");
     }
 
     const response = await this.responseRepository.save(

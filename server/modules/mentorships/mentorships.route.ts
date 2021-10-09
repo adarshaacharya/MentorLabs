@@ -82,6 +82,6 @@ router.put(
  */
 router.post(
   '/response/:id',
-  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(CreateResponseInput)],
+  [checkJwt, checkRole([Role.TEACHER]), createValidator(CreateResponseInput)],
   mentorshipsController.createMentorshipResponse,
 );

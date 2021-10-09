@@ -35,10 +35,8 @@ export const StudentMentorshipResponseDetails: React.FC<TeacherMentorshipRespons
             <td>{response.endTime}</td>
           </tr>
           <tr>
-            <th>Session Link </th>
-            <td>
-              <Link to={response.link}>{response.link}</Link>
-            </td>
+            <th>RoomId </th>
+            <td>{response.roomId}</td>
           </tr>
           <tr>
             <th>Extra Message </th>

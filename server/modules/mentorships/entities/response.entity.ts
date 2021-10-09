@@ -14,7 +14,7 @@ export class Response extends CoreEntity {
   endTime: string;
 
   @Column()
-  link: string;
+  roomId: string;
 
   @Column()
   message: string;

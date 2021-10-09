@@ -31,7 +31,7 @@ export interface MentorshipResponseData {
   date: string;
   startTime: string;
   endTime: string;
-  link: string;
+  roomId: string;
   message: string;
 }
 

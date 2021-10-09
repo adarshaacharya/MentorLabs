@@ -46,9 +46,16 @@ body {
 .text--primary {
   color: var(--primary-color);
 }
+.text--link {
+  color: #42a8fb;
+}
 
 .text--center {
   text-align: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .btn--primary {
@@ -677,6 +684,14 @@ body {
 
 .mentorship-response-form {
   padding: 1em 0;
+}
+.mentorship-response-form__create-link {
+  cursor: pointer;
+}
+
+.mentorship-response-form__create-link:hover {
+  color: var(--primary-color);
+  opacity: 0.9;
 }
 
 .mentorship-response__card {

@@ -1,18 +1,34 @@
 import { Button, Card, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import moment from 'moment';
 import { useParams } from 'react-router';
 import { createMentorshipResponse } from 'store/mentorship/mentorship.action';
 import { MentorshipResponseData } from 'types';
 import { displaySuccessNotification } from 'utils/notifications';
+import * as React from 'react';
+import { createRoom } from 'store/room/room.action';
 
 const { Item } = Form;
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
+const UUID_PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/;
+
 export const MentorshipResponseForm = () => {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { id: roomId } = useAppSelector((state) => state.room);
+  const [form] = Form.useForm();
+
   const { id } = useParams();
+
+  const onCreateRoomLink = () => {
+    dispatch(createRoom({ creatorId: user.id, title: 'Random title' }));
+  };
+
+  React.useEffect(() => {
+    form.setFieldsValue({ roomId: roomId });
+  }, [roomId]);
 
   const onFinish = (values: MentorshipResponseData) => {
     const date = moment(values.date).format('LL');
@@ -25,6 +41,12 @@ export const MentorshipResponseForm = () => {
     displaySuccessNotification('Your response has been submitted successfully.');
   };
 
+  const suffixSelector = (
+    <div className="mentorship-response-form__create-link" onClick={onCreateRoomLink}>
+      Create Room
+    </div>
+  );
+
   return (
     <Card className="mentorship-response-form">
       <Divider orientation="left">
@@ -34,7 +56,14 @@ export const MentorshipResponseForm = () => {
         You've accepted request, so respond the mentee with the details about the event. Please place the details
         clearly so it won't create confusion in either end.
       </Paragraph>
-      <Form name="mentorship-response-form" autoComplete="off" layout="vertical" size="large" onFinish={onFinish}>
+      <Form
+        form={form}
+        name="mentorship-response-form"
+        autoComplete="off"
+        layout="vertical"
+        size="large"
+        onFinish={onFinish}
+      >
         <Item
           name="date"
           label="Date"
@@ -74,20 +103,20 @@ export const MentorshipResponseForm = () => {
           </Item>
         </Space>
         <Item
-          name="link"
-          label="Session Link"
+          name="roomId"
+          label="Room Identifier"
           rules={[
             {
               required: true,
-              message: "You can't leave link empty!",
+              message: "You can't leave room id empty!",
             },
             {
-              type: 'url',
-              message: 'Enter valid url!.',
+              pattern: UUID_PATTERN,
+              message: 'Enter valid room id!.',
             },
           ]}
         >
-          <Input placeholder="https://mentorlabs.com/xyz" />
+          <Input placeholder="Enter created room id" addonAfter={suffixSelector} />
         </Item>
         <Item
           name="message"

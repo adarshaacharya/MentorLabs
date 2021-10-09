@@ -1,4 +1,4 @@
-import { IsString, IsUrl, Length } from 'class-validator';
+import { IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateResponseInput {
   @IsString()
@@ -10,8 +10,8 @@ export class CreateResponseInput {
   @IsString()
   readonly endTime: string;
 
-  @IsUrl()
-  readonly link: string;
+  @IsUUID()
+  readonly roomId: string;
 
   @IsString()
   @Length(10, 500)
