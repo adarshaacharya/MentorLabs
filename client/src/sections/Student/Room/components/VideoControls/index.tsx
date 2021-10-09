@@ -1,22 +1,12 @@
-import { Button } from 'antd';
 import { useAppSelector } from 'hooks';
-import * as React from 'react';
-import {
-  FaDesktop,
-  FaFacebookMessenger,
-  FaMicrophone,
-  FaMicrophoneSlash,
-  FaPhone,
-  FaVideo,
-  FaVideoSlash,
-} from 'react-icons/fa';
+import { FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
 import { displaySuccessNotification } from 'utils/notifications';
-
+import { CameraButton, LocalScreenShare, SwitchToScreenSharingButton } from './components';
+import { MicButton } from './components/MicButton';
 export const VideoControls = () => {
   const { id } = useAppSelector((state) => state.room);
 
-  const localCameraEnabled = false,
-    localMicrophoneEnabled = false;
+  const localMicrophoneEnabled = false;
 
   const copyToClipBoard = async () => {
     await navigator.clipboard.writeText(id);
@@ -25,8 +15,6 @@ export const VideoControls = () => {
 
   const onMicButtonPress = () => {};
   const onCameraButtonPress = () => {};
-
-  const onScreenShare = () => {};
 
   const handleLeaveRoom = () => {
     const siteUrl = window.location.origin;
@@ -41,24 +29,9 @@ export const VideoControls = () => {
         </Button>
       </div> */}
       <div className="video-controls__icons">
-        <div onClick={onMicButtonPress} className={`meeting-icons ${!localMicrophoneEnabled ? 'bg--danger' : ''}`}>
-          {!localMicrophoneEnabled ? (
-            <FaMicrophoneSlash size={'1.3em'} title="audio muted" />
-          ) : (
-            <FaMicrophone size={'1.3em'} title="audio" />
-          )}
-        </div>
-        <div onClick={onCameraButtonPress} className={`meeting-icons ${!localCameraEnabled ? 'bg--danger' : ''}`}>
-          {!localCameraEnabled ? (
-            <FaVideoSlash size={'1.3em'} title="video disallowed" />
-          ) : (
-            <FaVideo size={'1.3em'} title="video" />
-          )}
-        </div>
-
-        <div onClick={onScreenShare} className={`meeting-icons`}>
-          <FaDesktop size={'1.3em'} title="screen share" />
-        </div>
+        <MicButton />
+        <CameraButton />
+        <SwitchToScreenSharingButton />
         <div className="meeting-icons bg--danger" onClick={handleLeaveRoom}>
           <FaPhone size={'1.3em'} title="leave room" />
         </div>

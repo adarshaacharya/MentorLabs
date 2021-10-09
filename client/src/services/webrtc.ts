@@ -1,3 +1,4 @@
+// @ts-nocheck - typsescript disabled for tis files
 import { store } from 'store';
 import { setShowOverlay } from 'store/room/room.slice';
 import * as wss from './wss';
@@ -164,4 +165,40 @@ export const addStream = (stream: SignalData, connUserSocketId: string) => {
 
   videoContainer.appendChild(videoElement);
   videosContainer.appendChild(videoContainer);
+};
+
+/*=================================================
+Buttons
+==================================================*/
+export const toggleMic = (isMuted: boolean) => {
+  localStream.getAudioTracks()[0].enabled = isMuted ? true : false;
+};
+
+export const toggleCamera = (isDisabled: boolean) => {
+  localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
+};
+
+export const toggleScreenShare = (isScreenSharingActive: boolean, screenSharingStream?: MediaStream) => {
+  if (isScreenSharingActive) {
+    switchVideoTracks(localStream);
+  } else {
+    switchVideoTracks(screenSharingStream);
+  }
+};
+
+const switchVideoTracks = (stream: MediaStream) => {
+  for (let socket_id in peers) {
+    for (let index in peers[socket_id].streams[0].getTracks()) {
+      for (let index2 in stream.getTracks()) {
+        if (peers[socket_id].streams[0].getTracks()[index].kind === stream.getTracks()[index2].kind) {
+          peers[socket_id].replaceTrack(
+            peers[socket_id].streams[0].getTracks()[index],
+            stream.getTracks()[index2],
+            peers[socket_id].streams[0],
+          );
+          break;
+        }
+      }
+    }
+  }
 };

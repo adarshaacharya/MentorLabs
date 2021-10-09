@@ -819,14 +819,14 @@ body {
 }
 
 .video_track__container:first-child:nth-last-child(1) {
-  /* width: 100%;
-  height: 100%; */
+  width: 100%;
+  height: 100%;
 }
 
 .video_track__container:first-child:nth-last-child(2),
 .video_track__container:first-child:nth-last-child(2) ~ .video_track__container {
-  /* width: 50%;
-  height: 50%; */
+  width: 100%;
+  height: 100%;
 }
 
 .room__footer {
