@@ -42,6 +42,10 @@ socket.on('conn-init', (data: ConnUserData) => {
   webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
 });
 
+socket.on('user-disconnected', (data: { socketId: string }) => {
+  webRTCHandler.removePeerConnection(data);
+});
+
 /*===============================================================
 Functions
 ===============================================================*/

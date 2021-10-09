@@ -32,6 +32,7 @@ export const roomSocket = (httpServer: http.Server) => {
       socketHandler.initializeConnectionHandler(io, socket, data);
     });
 
+    // disconnect is listened automatically once user left room
     socket.on('disconnect', () => {
       socketHandler.disconnect(io, socket);
     });

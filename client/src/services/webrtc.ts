@@ -87,6 +87,29 @@ export const handleSignalingData = (data: SignalingData) => {
   peers[data.connUserSocketId].signal(data.signal);
 };
 
+export const removePeerConnection = (data: { socketId: string }) => {
+  const { socketId } = data;
+  const videoContainer = document.getElementById(socketId);
+  const videoEl = document.getElementById(`${socketId}-video`) as any;
+
+  if (videoContainer && videoEl) {
+    const tracks = videoEl.srcObject.getTracks();
+
+    tracks.forEach((t) => t.stop());
+
+    videoEl.srcObject = null;
+    videoContainer.removeChild(videoEl);
+
+    videoContainer.parentNode.removeChild(videoContainer);
+
+    if (peers[socketId]) {
+      peers[socketId].destroy();
+    }
+
+    delete peers[socketId];
+  }
+};
+
 /*=================================================
 Vanilla js ui logic
 ==================================================*/
@@ -130,7 +153,7 @@ export const addStream = (stream: SignalData, connUserSocketId: string) => {
     videoElement.play();
   };
 
-  // add fullstream or not
+  // add fullscreen or not
   videoElement.addEventListener('click', () => {
     if (videoElement.classList.contains('full_screen')) {
       videoElement.classList.remove('full_screen');

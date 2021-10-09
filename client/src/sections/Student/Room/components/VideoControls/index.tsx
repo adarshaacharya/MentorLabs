@@ -1,14 +1,16 @@
 import { Button } from 'antd';
 import { useAppSelector } from 'hooks';
 import * as React from 'react';
-import { FaFacebookMessenger, FaMicrophone, FaMicrophoneSlash, FaPhone, FaVideo, FaVideoSlash } from 'react-icons/fa';
+import {
+  FaDesktop,
+  FaFacebookMessenger,
+  FaMicrophone,
+  FaMicrophoneSlash,
+  FaPhone,
+  FaVideo,
+  FaVideoSlash,
+} from 'react-icons/fa';
 import { displaySuccessNotification } from 'utils/notifications';
-
-type VideoControlsProps = {
-  onMicButtonPress: () => void;
-  onCameraButtonPress: () => void;
-  handleLeaveRoom: () => void;
-};
 
 export const VideoControls = () => {
   const { id } = useAppSelector((state) => state.room);
@@ -23,7 +25,13 @@ export const VideoControls = () => {
 
   const onMicButtonPress = () => {};
   const onCameraButtonPress = () => {};
-  const handleLeaveRoom = () => {};
+
+  const onScreenShare = () => {};
+
+  const handleLeaveRoom = () => {
+    const siteUrl = window.location.origin;
+    window.location.href = siteUrl;
+  };
 
   return (
     <div className="video-controls">
@@ -48,19 +56,13 @@ export const VideoControls = () => {
           )}
         </div>
 
-        {/* <div onClick={setScreenState} className={`meeting-icons ${streamState.screen ? 'disabled' : ''}`}>
-              <FaDesktop size={'1.3em'} title="screen share" />
-            </div> */}
+        <div onClick={onScreenShare} className={`meeting-icons`}>
+          <FaDesktop size={'1.3em'} title="screen share" />
+        </div>
         <div className="meeting-icons bg--danger" onClick={handleLeaveRoom}>
           <FaPhone size={'1.3em'} title="leave room" />
         </div>
       </div>
-
-      {/* <div className="video-controls__chat mr-2">
-        <div className="meeting-icons">
-          <FaFacebookMessenger size={'1.5em'} className="text--primary" title="messages" />
-        </div>
-      </div> */}
     </div>
   );
 };
