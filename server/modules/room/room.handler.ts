@@ -101,3 +101,27 @@ export const sendMessage = (io: Server, messageData: SocketMessage, callback: ()
     console.log(error);
   }
 };
+
+export const disconnect = (io: Server, socket: Socket) => {
+  const user = connectedUsers.find((user) => user.socketId === socket.id);
+
+  if (user) {
+    const room = rooms.find((room) => room.id === user.roomId);
+
+    if (room) {
+      room.connectedUsers = room.connectedUsers.filter((user) => user.socketId !== socket.id);
+
+      socket.leave(user.roomId);
+
+      if (room.connectedUsers.length > 0) {
+        io.to(room.id).emit('user-disconnected', { socketId: socket.id });
+
+        io.to(room.id).emit('room-update', {
+          connectedUsers: room.connectedUsers,
+        });
+      } else {
+        rooms = rooms.filter((r) => r.id !== room.id);
+      }
+    }
+  }
+};

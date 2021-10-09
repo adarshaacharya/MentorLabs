@@ -32,6 +32,10 @@ export const roomSocket = (httpServer: http.Server) => {
       socketHandler.initializeConnectionHandler(io, socket, data);
     });
 
+    socket.on('disconnect', () => {
+      socketHandler.disconnect(io, socket);
+    });
+
     // send message
     socket.on(SOCKETS_EVENT.SEND_MESSAGE, (messageData: SocketMessage, callback) => {
       socketHandler.sendMessage(io, messageData, callback);
