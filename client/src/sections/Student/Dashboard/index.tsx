@@ -24,7 +24,7 @@ export const studentDashboardFeatures = [
     title: 'Explore labs',
     description: 'Explore our interactive video and audio chat labs.',
     icon: <ImLab size={'5em'} />,
-    link: '/student-labs',
+    link: '/labs',
   },
 ];
 

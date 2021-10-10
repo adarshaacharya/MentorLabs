@@ -164,6 +164,7 @@ export interface MentorshipState {
   status: Status;
   requests: MentorshipRequest[];
   request: MentorshipRequest;
+  error: string;
 }
 
 export interface RoomState {

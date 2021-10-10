@@ -1,4 +1,5 @@
 import { Server, Socket } from 'socket.io';
+import Container from 'typedi';
 import {
   ConnectedUser,
   ConnUserData,
@@ -8,6 +9,7 @@ import {
   Room,
   SignalingData,
 } from './dtos/socket.dto';
+import { RoomService } from './room.service';
 
 let connectedUsers: Array<ConnectedUser> = [];
 let rooms: Array<Room> = [];
@@ -38,7 +40,9 @@ export const createNewRoom = (socket: Socket, data: CreateNewRoom) => {
   socket.emit('room-update', { connectedUsers: newRoom.connectedUsers });
 };
 
-export const joinRoom = (io: Server, socket: Socket, data: JoinRoom) => {
+export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
+  const roomServiceInstance = Container.get(RoomService);
+
   const { identity, roomId, userId } = data;
 
   const newUser = {
@@ -48,12 +52,24 @@ export const joinRoom = (io: Server, socket: Socket, data: JoinRoom) => {
     roomId,
   };
 
-  const room = rooms.find((room) => room.id === roomId);
-
-  if (!room) {
-    console.log('Room not found.');
+  const roomExists = await roomServiceInstance.findRoomById(roomId);
+  if (!roomExists) {
+    console.log('Room doesnot exists.');
     return;
   }
+
+  const room = rooms.find((room) => room.id === roomId) as Room;
+
+  // create new room if there isn't room in memory (socket)
+  if (!room) {
+    const newRoom = {
+      id: roomId,
+      connectedUsers: [newUser],
+    };
+
+    rooms = [...rooms, newRoom];
+  }
+
   room.connectedUsers = [...room.connectedUsers, newUser];
 
   socket.join(roomId);

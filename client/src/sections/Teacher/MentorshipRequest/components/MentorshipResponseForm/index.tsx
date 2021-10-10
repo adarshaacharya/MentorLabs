@@ -1,12 +1,13 @@
 import { Button, Card, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
+import config from 'config';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import moment from 'moment';
+import * as React from 'react';
 import { useParams } from 'react-router';
 import { createMentorshipResponse } from 'store/mentorship/mentorship.action';
-import { MentorshipResponseData } from 'types';
-import { displaySuccessNotification } from 'utils/notifications';
-import * as React from 'react';
-import { createRoom } from 'store/room/room.action';
+import { MentorshipResponseData, RoomInfo } from 'types';
+import http from 'utils/http';
+import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -17,13 +18,16 @@ const UUID_PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{1
 export const MentorshipResponseForm = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  const { id: roomId } = useAppSelector((state) => state.room);
   const [form] = Form.useForm();
 
+  const [roomId, setRoomId] = React.useState('');
   const { id } = useParams();
 
-  const onCreateRoomLink = () => {
-    dispatch(createRoom({ creatorId: user.id, title: 'Random title' }));
+  const onCreateRoomLink = async () => {
+    const values = { creatorId: user.id, title: 'Random title' };
+    const url = config.endpoints.room.createRoom;
+    const { data } = await http.post<RoomInfo>(url, values);
+    setRoomId(data.id);
   };
 
   React.useEffect(() => {
@@ -37,8 +41,6 @@ export const MentorshipResponseForm = () => {
 
     const response = { ...values, date, startTime, endTime };
     dispatch(createMentorshipResponse({ id, response }));
-
-    displaySuccessNotification('Your response has been submitted successfully.');
   };
 
   const suffixSelector = (

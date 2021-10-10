@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router';
 import { fetchMentorshipRequestOfMentor } from 'store/mentorship/mentorship.action';
+import { displayErrorMessage } from 'utils/notifications';
 import { TeacherMentorshipRequestDetails, MentorshipResponseForm } from './components';
 import { TeacherMentorshipResponseDetails } from './components/MentorshipResponseDetails';
 import { MentorshipStatusUpdate } from './components/MentorshipStatusUpdate';
@@ -14,7 +15,13 @@ export const TeacherMentorshipRequest = () => {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
-  const { request, status } = useAppSelector((state) => state.mentorship);
+  const { request, status, error } = useAppSelector((state) => state.mentorship);
+
+  React.useEffect(() => {
+    if (error && status === 'rejected') {
+      displayErrorMessage(error);
+    }
+  }, [error, status]);
 
   React.useEffect(() => {
     dispatch(fetchMentorshipRequestOfMentor(id));

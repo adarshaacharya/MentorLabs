@@ -14,6 +14,7 @@ const initialState: MentorshipState = Object.freeze({
   status: 'idle',
   requests: [],
   request: {} as MentorshipRequest,
+  error: '',
 });
 
 const mentorshipSlice = createSlice({
@@ -107,8 +108,9 @@ const mentorshipSlice = createSlice({
       state.request.response = payload;
     });
 
-    builder.addCase(createMentorshipResponse.rejected, (state) => {
+    builder.addCase(createMentorshipResponse.rejected, (state, { payload }) => {
       state.status = 'rejected';
+      state.error = payload as string;
     });
   },
 });
