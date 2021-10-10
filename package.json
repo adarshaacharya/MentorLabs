@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:cov": "NODE_ENV=test jest --coverage",
-    "dotenv-types:gen": "npx gen-env-types .env -o server/types/env.d.ts -e .",
+    "dotenv-types:gen": "npx gen-env-types .env -o server/common/types/env.d.ts -e .",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
@@ -60,6 +60,7 @@
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.2.0",
+    "twilio": "^3.69.0",
     "typedi": "^0.10.0",
     "typeorm": "^0.2.34",
     "typeorm-naming-strategies": "^2.0.0",

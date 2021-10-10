@@ -31,6 +31,7 @@ const config = {
     room: {
       createRoom: '/room/create-room',
       joinRoom: '/room/join-room',
+      getTURNCredentials: '/room/get-turn-credentials',
     },
   },
 };

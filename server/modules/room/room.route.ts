@@ -30,3 +30,15 @@ router.post(
   [checkJwt, checkRole([Role.STUDENT, Role.TEACHER]), createValidator(JoinRoomInput)],
   roomController.joinRoom,
 );
+
+/**
+ * @method POST
+ * @route /api/room/get-turn-credentials
+ * @description : get turn server credentials
+ * @acces GET
+ */
+router.get(
+  '/get-turn-credentials',
+  [checkJwt, checkRole([Role.STUDENT, Role.TEACHER])],
+  roomController.getTurnCredentials,
+);

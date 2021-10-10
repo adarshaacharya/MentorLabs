@@ -8,10 +8,10 @@ export const Room = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   React.useEffect(() => {
-    // if (!roomId && !isRoomHost) {
-    //   const siteUrl = window.location.origin;
-    //   window.location.href = siteUrl;
-    // }
+    if (!roomId && !isRoomHost) {
+      const siteUrl = window.location.origin;
+      window.location.href = siteUrl;
+    }
 
     webRTCHandler.getLocalPreviewAndInitRoomConnection({ isRoomHost, identity: user.name, userId: user.id, roomId });
   }, []);
@@ -21,6 +21,8 @@ export const Room = () => {
       <Helmet>
         <title>Room - Mentor Labs</title>
       </Helmet>
+      {showOverlay && <Overlay />}
+
       <div className="room__container">
         <div className="room__main">
           <div className="room__video">
@@ -35,8 +37,6 @@ export const Room = () => {
           <VideoControls />
         </div>
       </div>
-
-      {showOverlay && <Overlay />}
     </section>
   );
 };

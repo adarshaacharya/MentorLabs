@@ -1,6 +1,7 @@
 import { NextFunction, Response } from 'express';
 import Container from 'typedi';
 import { AuthRequest } from '../../common/interfaces';
+import { Twilio } from '../../services/Twilio';
 import { RoomService } from './room.service';
 
 class RoomController {
@@ -23,6 +24,16 @@ class RoomController {
       res.status(200).json({ id, title });
     } catch (error) {
       next(error);
+    }
+  }
+
+  public async getTurnCredentials(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const token = await Twilio.getToken();
+      res.status(200).json({ token });
+    } catch (err) {
+      console.log('error occured when fetching server credentials');
+      next(err);
     }
   }
 }

@@ -4,6 +4,7 @@ import { setShowOverlay } from 'store/room/room.slice';
 import * as wss from './wss';
 import Peer, { SignalData } from 'simple-peer';
 import { SignalingData } from 'types';
+import { fetchTURNCredentials, getTURNIceServers } from './turn';
 
 /*==========================================
   webRTC Types
@@ -29,7 +30,9 @@ let localStream: MediaStream = null;
 let peers: SimplePeer = {};
 let streams = [];
 
-export const getLocalPreviewAndInitRoomConnection = ({ isRoomHost, identity, userId, roomId }: LocalPreview) => {
+export const getLocalPreviewAndInitRoomConnection = async ({ isRoomHost, identity, userId, roomId }: LocalPreview) => {
+  await fetchTURNCredentials();
+
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then((stream) => {
@@ -48,13 +51,28 @@ export const getLocalPreviewAndInitRoomConnection = ({ isRoomHost, identity, use
 
 // stun server config
 const getConfiguration = () => {
-  return {
-    iceServers: [
-      {
-        urls: 'stun:stun.l.google.com:19302',
-      },
-    ],
-  };
+  const turnIceServers = getTURNIceServers();
+
+  if (turnIceServers) {
+    console.log('TURN server credentials fetched');
+    return {
+      iceServers: [
+        {
+          urls: 'stun:stun.l.google.com:19302',
+        },
+        ...turnIceServers,
+      ],
+    };
+  } else {
+    console.warn('Using only STUN server');
+    return {
+      iceServers: [
+        {
+          urls: 'stun:stun.l.google.com:19302',
+        },
+      ],
+    };
+  }
 };
 
 // first step - prepare for webrtc conn
