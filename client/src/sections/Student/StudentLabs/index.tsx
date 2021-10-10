@@ -1,14 +1,9 @@
 import { Card, Col, Divider, Radio, RadioChangeEvent, Row, Typography } from 'antd';
-import { useAppDispatch } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { setIsRoomHost } from 'store/room/room.slice';
 import { CreateRoom, JoinRoom, LabsVideo } from './components';
 
 const { Title, Paragraph, Text } = Typography;
-
-const videoPlaceholder =
-  'https://images.unsplash.com/photo-1603216852884-4160b4e7d229?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80';
 
 type Tab = 'create' | 'join';
 
