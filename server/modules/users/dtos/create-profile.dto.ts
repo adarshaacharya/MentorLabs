@@ -10,8 +10,8 @@ export class CreateProfileInput {
   description: string;
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(3)
+  @ArrayMinSize(3)
+  @ArrayMaxSize(5)
   @IsString({
     each: true,
   })
@@ -21,15 +21,15 @@ export class CreateProfileInput {
   country: string;
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(3)
+  @ArrayMinSize(2)
+  @ArrayMaxSize(5)
   @IsString({
     each: true,
   })
   languages: string[];
 
   @IsArray()
-  @ArrayMinSize(1)
+  @ArrayMinSize(3)
   @ArrayMaxSize(5)
   @ValidateNested({ each: true })
   channels: Channel[];

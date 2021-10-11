@@ -5,6 +5,7 @@ import { createProfile, fetchProfile } from './profile.action';
 export const initialState: ProfileState = Object.freeze({
   status: 'idle',
   user: {},
+  error: '',
 });
 
 const profileSlice = createSlice({
@@ -30,8 +31,9 @@ const profileSlice = createSlice({
       state.status = 'resolved';
     });
 
-    builder.addCase(createProfile.rejected, (state) => {
+    builder.addCase(createProfile.rejected, (state, { payload }) => {
       state.status = 'rejected';
+      state.error = payload as string;
     });
   },
 });

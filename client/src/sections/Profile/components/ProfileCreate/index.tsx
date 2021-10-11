@@ -6,6 +6,7 @@ import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
 import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
+import * as React from 'react';
 
 const { Item, List } = Form;
 const { Title, Text } = Typography;
@@ -13,19 +14,17 @@ const { Option } = Select;
 
 export const ProfileCreate = () => {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.profile);
+  const { status, error } = useAppSelector((state) => state.profile);
+
+  React.useEffect(() => {
+    if (status === 'rejected' && error) {
+      displayErrorMessage(error);
+      return;
+    }
+  }, [status, error]);
 
   const onFormSubmit = (values: CreateProfileData) => {
     dispatch(createProfile(values));
-
-    if (status === 'resolved') {
-      displaySuccessNotification('Profile created successfully');
-      return;
-    }
-
-    if (status === 'rejected') {
-      displayErrorMessage('An error occured in creating profile. Try again');
-    }
   };
 
   const onFinishFailed = () => {
@@ -105,7 +104,7 @@ export const ProfileCreate = () => {
             rules={[
               {
                 required: true,
-                message: 'Enter at least 4 tags that describes you!',
+                message: 'Enter at least 3 tags that describes you!',
               },
             ]}
           >

@@ -158,6 +158,7 @@ export interface UsersState {
 export interface ProfileState {
   status: Status;
   user: User;
+  error: string;
 }
 
 export interface MentorshipState {
