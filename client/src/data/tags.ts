@@ -1,1 +1,1 @@
-export const tags = ['databse', 'networking', 'compiler'];
+export const tags = ['database', 'networking', 'compiler'];
