@@ -11,6 +11,16 @@ export class Room extends CoreEntity {
   @JoinColumn()
   creator: User;
 
+  // explicit mention
   @Column()
   creatorId: string;
+
+  // since particpant is
+  @ManyToOne(() => User)
+  @JoinColumn()
+  participant: User;
+
+  // explicit mention
+  @Column({ nullable: true })
+  participantId: string;
 }

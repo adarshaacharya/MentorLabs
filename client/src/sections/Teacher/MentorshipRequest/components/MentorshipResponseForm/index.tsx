@@ -18,13 +18,14 @@ const UUID_PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{1
 export const MentorshipResponseForm = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const { request } = useAppSelector((state) => state.mentorship);
   const [form] = Form.useForm();
 
   const [roomId, setRoomId] = React.useState('');
   const { id } = useParams();
 
   const onCreateRoomLink = async () => {
-    const values = { creatorId: user.id, title: 'Random title' };
+    const values = { creatorId: user.id, participantId: request.menteeId, title: 'Random title' };
     const url = config.endpoints.room.createRoom;
     const { data } = await http.post<RoomInfo>(url, values);
     setRoomId(data.id);

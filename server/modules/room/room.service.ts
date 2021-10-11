@@ -2,7 +2,9 @@ import { isUUID } from 'class-validator';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { NotFound } from '../../common/exceptions';
+import { BadRequest, NotFound } from '../../common/exceptions';
+import { User } from '../users/entities/user.entity';
+import { UserRepository } from '../users/repositories/users.repository';
 import { CreateRoomInput } from './dtos/create-room.dto';
 import { JoinRoomInput } from './dtos/join-room.dto';
 
@@ -13,12 +15,21 @@ export class RoomService {
   constructor(
     @InjectRepository(Room)
     private readonly roomRepository: Repository<Room>,
+
+    @InjectRepository(User)
+    private readonly userRepository: UserRepository,
   ) {}
 
   public async createRoom(creatorId: string, createRoomInput: CreateRoomInput) {
-    const { title } = createRoomInput;
+    const { title, participantId } = createRoomInput;
 
-    const room = await this.roomRepository.save(this.roomRepository.create({ title, creatorId }));
+    const participant = await this.userRepository.findOne({ id: participantId });
+
+    if (!participant) {
+      throw new NotFound("Participant with given id doesn't exists.");
+    }
+
+    const room = await this.roomRepository.save(this.roomRepository.create({ title, creatorId, participantId }));
 
     return {
       id: room.id,
@@ -26,7 +37,7 @@ export class RoomService {
     };
   }
 
-  public async joinRoom(joinRoomInput: JoinRoomInput) {
+  public async joinRoom(userId: string, joinRoomInput: JoinRoomInput) {
     const { id } = joinRoomInput;
 
     if (!isUUID(id)) {
@@ -39,7 +50,18 @@ export class RoomService {
       throw new NotFound("Room with given id doesn't exists.");
     }
 
-    return room;
+    if (room.participantId) {
+      const checkPermission = room.creatorId === userId || room.participantId === userId;
+
+      if (!checkPermission) {
+        throw new BadRequest("You aren't permitted to enter into this room.");
+      }
+    }
+
+    return {
+      id: room.id,
+      title: room.title,
+    };
   }
 
   public async findRoomById(id: string) {

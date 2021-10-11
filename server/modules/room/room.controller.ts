@@ -19,9 +19,10 @@ class RoomController {
 
   public async joinRoom(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
+      const userId = req.user?.id;
       const roomServiceInstance = Container.get(RoomService);
-      const { id, title } = await roomServiceInstance.joinRoom(req.body);
-      res.status(200).json({ id, title });
+      const room = userId && (await roomServiceInstance.joinRoom(userId, req.body));
+      res.status(200).json(room);
     } catch (error) {
       next(error);
     }
