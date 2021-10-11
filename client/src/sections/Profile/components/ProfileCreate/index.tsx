@@ -71,7 +71,7 @@ export const ProfileCreate = () => {
             <Input.TextArea
               rows={3}
               maxLength={400}
-              placeholder="Software engineer with 10+ years of experience in Machie Learning, Cloud Computing and BlockChain."
+              placeholder="Software engineer with 10+ years of experience in Machine Learning, Cloud Computing and BlockChain."
             />
           </Item>
           {/* description end */}
