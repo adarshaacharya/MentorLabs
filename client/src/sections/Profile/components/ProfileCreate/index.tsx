@@ -104,9 +104,10 @@ export const ProfileCreate = () => {
             rules={[
               {
                 required: true,
-                message: 'Enter at least 3 tags that describes you!',
+                message: 'Enter 3 to 5 tags!',
                 type: 'array',
                 min: 3,
+                max: 5,
               },
             ]}
           >
@@ -132,7 +133,10 @@ export const ProfileCreate = () => {
             rules={[
               {
                 required: true,
-                message: 'Enter your languages which you are fluent with!',
+                message: 'Enter 2 to 5 languages!',
+                type: 'array',
+                min: 2,
+                max: 5,
               },
             ]}
           >
