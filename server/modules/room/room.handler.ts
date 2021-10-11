@@ -52,13 +52,14 @@ export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
     roomId,
   };
 
-  const roomExists = await roomServiceInstance.findRoomById(roomId);
-  if (!roomExists) {
-    console.log('Room doesnot exists.');
+  const databaseRoomExists = await roomServiceInstance.findRoomById(roomId);
+
+  if (!databaseRoomExists) {
+    console.log('Room doesnot exists in database.');
     return;
   }
 
-  const room = rooms.find((room) => room.id === roomId) as Room;
+  const room = rooms.find((room) => room.id === roomId);
 
   // create new room if there isn't room in memory (socket)
   if (!room) {
@@ -66,25 +67,29 @@ export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
       id: roomId,
       connectedUsers: [newUser],
     };
+    rooms = [...rooms, newRoom];
+    socket.join(roomId);
 
     rooms = [...rooms, newRoom];
+
+    socket.emit('room-update', { connectedUsers: newRoom.connectedUsers });
+  } else {
+    room.connectedUsers = [...room.connectedUsers, newUser];
+
+    socket.join(roomId);
+
+    connectedUsers = [...connectedUsers, newUser];
+
+    room.connectedUsers.forEach((user: ConnectedUser) => {
+      if (user.socketId !== socket.id) {
+        const data = { connUserSocketId: socket.id };
+
+        io.to(user.socketId).emit('conn-prepare', data);
+      }
+    });
+
+    io.to(roomId).emit('room-update', { connectedUsers: room.connectedUsers });
   }
-
-  room.connectedUsers = [...room.connectedUsers, newUser];
-
-  socket.join(roomId);
-
-  connectedUsers = [...connectedUsers, newUser];
-
-  room.connectedUsers.forEach((user: ConnectedUser) => {
-    if (user.socketId !== socket.id) {
-      const data = { connUserSocketId: socket.id };
-
-      io.to(user.socketId).emit('conn-prepare', data);
-    }
-  });
-
-  io.to(roomId).emit('room-update', { connectedUsers: room.connectedUsers });
 };
 
 export const signalingHandler = (io: Server, socket: Socket, data: SignalingData) => {
