@@ -105,8 +105,6 @@ export const ProfileCreate = () => {
               {
                 required: true,
                 message: 'Enter at least 3 tags that describes you!',
-                type: 'array',
-                min: 3,
               },
             ]}
           >
