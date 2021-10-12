@@ -23,10 +23,12 @@ export class RoomService {
   public async createRoom(creatorId: string, createRoomInput: CreateRoomInput) {
     const { title, participantId } = createRoomInput;
 
-    const participant = await this.userRepository.findOne({ id: participantId });
+    if (participantId) {
+      const participant = await this.userRepository.findOne({ id: participantId });
 
-    if (!participant) {
-      throw new NotFound("Participant with given id doesn't exists.");
+      if (!participant) {
+        throw new NotFound("Participant with given id doesn't exists.");
+      }
     }
 
     const room = await this.roomRepository.save(this.roomRepository.create({ title, creatorId, participantId }));

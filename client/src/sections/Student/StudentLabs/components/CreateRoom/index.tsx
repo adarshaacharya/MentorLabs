@@ -6,11 +6,6 @@ import { createRoom } from 'store/room/room.action';
 import { setIsRoomHost } from 'store/room/room.slice';
 const { Text } = Typography;
 
-type RoomResponse = {
-  roomId: string;
-  title: string;
-};
-
 export const CreateRoom = () => {
   const dispatch = useAppDispatch();
 
@@ -46,6 +41,14 @@ export const CreateRoom = () => {
             {
               required: true,
               message: 'Please input room title!',
+            },
+            {
+              min: 2,
+              message: 'Title length should be minimum 2 characters!',
+            },
+            {
+              max: 20,
+              message: 'Title length should be maximum 20 characters!',
             },
           ]}
         >
