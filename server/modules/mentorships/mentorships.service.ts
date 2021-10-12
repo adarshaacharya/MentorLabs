@@ -49,11 +49,11 @@ export class MentorshipsService {
       throw new BadRequest(`Are you planning to mentor yourself?`);
     }
 
-    const mentorshipExists = await this.findMentorship(mentorId, menteeId);
+    // const mentorshipExists = await this.findMentorship(mentorId, menteeId);
 
-    if (mentorshipExists) {
-      throw new BadRequest('A mentorship request already exists');
-    }
+    // if (mentorshipExists) {
+    //   throw new BadRequest('A mentorship request already exists');
+    // }
 
     await this.mentorshipRepository.save(this.mentorshipRepository.create(createMentorshipInput));
   }

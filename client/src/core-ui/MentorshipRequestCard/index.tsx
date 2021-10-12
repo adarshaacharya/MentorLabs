@@ -32,7 +32,7 @@ export const MentorshipRequestCard: React.FC<MentorshipRequestCardProps> = ({ re
               <Link to={`/users/${user.id}`}>
                 <b>{user.name}</b>
               </Link>
-              <p>{moment(request.createdAt).startOf('hour').fromNow()}</p>
+              <p>{moment(request.createdAt).startOf('millisecond').fromNow()}</p>
             </div>
           </Space>
         </Col>
