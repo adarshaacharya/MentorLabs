@@ -56,6 +56,10 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
               message: "You can't leave title empty!",
             },
             {
+              min: 5,
+              message: 'Title length should me minimum 5 characters!',
+            },
+            {
               max: 50,
               message: 'Title length should me maximum 50 characters!',
             },
@@ -72,6 +76,14 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
               required: true,
               message: "You can't leave background empty!",
             },
+            {
+              min: 10,
+              message: 'Background length should me minimum 10 characters!',
+            },
+            {
+              max: 1000,
+              message: 'Background length should me maximum 1000 characters!',
+            },
           ]}
         >
           <TextArea rows={4} placeholder="Tell mentor about yourself." />
@@ -84,6 +96,14 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
               required: true,
               message: "You can't leave expectations empty!",
             },
+            {
+              min: 10,
+              message: 'Expectation length should me minimum 10 characters!',
+            },
+            {
+              max: 1000,
+              message: 'Expectation length should me maximum 1000 characters!',
+            },
           ]}
         >
           <TextArea rows={4} placeholder="Waht do you expect from this mentorship?" />
@@ -95,6 +115,14 @@ const MentorshipRequestForm: React.FC<MentorshipRequestFormProps> = ({
             {
               required: true,
               message: "You can't leave message empty!",
+            },
+            {
+              min: 10,
+              message: 'Message length should me minimum 10 characters!',
+            },
+            {
+              max: 1000,
+              message: 'Message length should me maximum 1000 characters!',
             },
           ]}
         >

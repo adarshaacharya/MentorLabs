@@ -11,15 +11,15 @@ export class CreateMentorshipInput {
   readonly title: string;
 
   @IsString()
-  @Length(10, 500)
+  @Length(10, 1000)
   readonly background: string;
 
   @IsString()
-  @Length(10, 500)
+  @Length(10, 1000)
   readonly expectation: string;
 
   @IsString()
-  @Length(10, 500)
+  @Length(10, 1000)
   readonly message: string;
 
   @IsOptional()
