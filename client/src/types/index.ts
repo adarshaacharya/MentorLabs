@@ -84,7 +84,7 @@ export interface Profile {
 }
 
 //==============================================================================
-// Profile
+// Mentorship request
 //==============================================================================
 export interface MentorshipRequest extends MentorshipRequestData {
   id: string;
@@ -92,8 +92,8 @@ export interface MentorshipRequest extends MentorshipRequestData {
   menteeId: string;
   mentorId: string;
   status: MentorshipRequestStatus;
-  mentor?: User; // for student mentor data is available
-  mentee?: User; // for teacher student data is available
+  mentor: User;
+  mentee: User;
   createdAt: Date;
   response?: MentorshipResponseData;
 }

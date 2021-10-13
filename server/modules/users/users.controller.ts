@@ -5,7 +5,7 @@ import { validateIdOrThrow } from '../../common/validator';
 import { UsersService } from './users.service';
 import { AUTH_COOKIE, THIRTY_DAY_COOKIE } from '../../common/constants/cookies';
 
-class UsersController {
+export class UsersController {
   public async me(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       validateIdOrThrow(req.user?.id);

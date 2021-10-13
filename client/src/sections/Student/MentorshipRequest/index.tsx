@@ -17,7 +17,7 @@ export const StudentMentorshipRequest = () => {
 
   React.useEffect(() => {
     dispatch(fetchMentorshipRequestByStudent(id));
-  }, []);
+  }, [id]);
 
   const loading = status === 'pending';
 

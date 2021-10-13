@@ -1,5 +1,6 @@
 import { StatusTag } from 'core-ui';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import { MentorshipRequest } from 'types';
 
 type MentorshipRequestDetailsProps = {
@@ -7,6 +8,9 @@ type MentorshipRequestDetailsProps = {
 };
 
 export const StudentMentorshipRequestDetails: React.FC<MentorshipRequestDetailsProps> = ({ request }) => {
+  if (!request.mentor || !request.mentee) {
+    return <p>Loading mentor and mentee...</p>;
+  }
   return (
     <table>
       <tbody>
@@ -38,11 +42,15 @@ export const StudentMentorshipRequestDetails: React.FC<MentorshipRequestDetailsP
         </tr>
         <tr>
           <th>Mentor</th>
-          <td>{request.mentorId}</td>
+          <td>
+            <Link to={`/users/${request.mentorId}`}>{request.mentor.name}</Link>
+          </td>
         </tr>
         <tr>
           <th>Mentee</th>
-          <td>{request.menteeId}</td>
+          <td>
+            <Link to={`/users/${request.menteeId}`}>{request.mentee.name} (Me) </Link>
+          </td>
         </tr>
       </tbody>
     </table>
