@@ -202,7 +202,7 @@ body {
   border: none;
   background-color: var(--primary-color);
   padding: 0.4em 0.7em;
-  border-radius: 5px;
+  border-radius: 4px;
   color: var(--light-color);
 }
 
