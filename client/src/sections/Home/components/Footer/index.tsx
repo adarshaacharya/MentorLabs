@@ -1,3 +1,4 @@
+const RICK_ROLL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 export const Footer = () => {
   return (
     <div className="footer">
@@ -5,13 +6,13 @@ export const Footer = () => {
         <div className="flex">
           <div className="footer__copyright"> © {new Date().getFullYear()} All rights reserved. MentorLabs</div>
           <div className="footer__links">
-            <a href="https://github.com/adarshaacharya/MentorLabs" target="_blank" rel="noreferrer">
+            <a href={RICK_ROLL} target="_blank" rel="noreferrer">
               Privacy
             </a>
-            <a href="https://github.com/adarshaacharya/MentorLabs" target="_blank" rel="noreferrer">
+            <a href={RICK_ROLL} target="_blank" rel="noreferrer">
               Terms
             </a>
-            <a href="https://github.com/adarshaacharya/MentorLabs" target="_blank" rel="noreferrer">
+            <a href={RICK_ROLL} target="_blank" rel="noreferrer">
               Code Of Conduct
             </a>
           </div>

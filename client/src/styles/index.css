@@ -5,7 +5,7 @@
  Global Styles
 ==============================================================================*/
 :root {
-  --primary-color: #374ebe;
+  --primary-color: #1890ff;
   --light-color: #fff;
   --bg-color: #f7fafc;
   --gray-color: #808080;
@@ -62,8 +62,7 @@ body {
   border: none;
   background-color: var(--primary-color);
   color: var(--light-color);
-  border-radius: 5px;
-  box-shadow: 0 4px 10px 0 rgba(55, 78, 190, 0.27);
+  border-radius: 3px;
   cursor: pointer;
 }
 
@@ -350,15 +349,15 @@ body {
 
 .signup__banner {
   flex-basis: 100%;
-  padding: 2em;
+  padding: 6em 2em;
 }
 
 .signup__card {
   flex-basis: 100%;
   padding: 2em;
   margin: 2em 0;
-  border: none;
-  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+  border: 1px solid #f0f0f0;
+  /* box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%); */
 }
 
 .signup__title {
@@ -396,8 +395,8 @@ body {
   flex-basis: 70%;
   padding: 2em;
   margin: 2em 0;
-  border: none;
-  box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+  border: 1px solid #f0f0f0;
+  /* box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%); */
 }
 
 .login__img {
