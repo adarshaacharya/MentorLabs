@@ -50,6 +50,14 @@ router.get('/mentors', [checkJwt, checkRole([Role.STUDENT])], usersController.ge
 
 /**
  * @method GET
+ * @route /api/users/recommended-mentors
+ * @description get all mentors with the recommendation algorithm
+ * @access private
+ */
+router.get('/recommended-mentors', [checkJwt, checkRole([Role.STUDENT])], usersController.getTeachersRecommendations);
+
+/**
+ * @method GET
  * @route /api/users/mentees
  * @description get all mentees with their profile
  * @access private

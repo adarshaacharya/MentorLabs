@@ -85,6 +85,18 @@ export class UsersController {
       next(e);
     }
   }
+
+  public async getTeachersRecommendations(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      validateIdOrThrow(req.user?.id);
+      const userId = req.user?.id;
+      const usersServiceInstance = Container.get(UsersService);
+      const mentors = userId && (await usersServiceInstance.getTeachersRecommendations(userId));
+      res.status(200).json(mentors);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const usersController = new UsersController();

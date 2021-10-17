@@ -6,6 +6,7 @@ import { Role } from '../../common/enums';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
+import { getRecommendation } from './algorithm';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
 import { CreateProfileInput, CreateProfileOutput } from './dtos/create-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
@@ -122,5 +123,12 @@ export class UsersService {
     });
 
     return students;
+  }
+
+  public async getTeachersRecommendations(id: string) {
+    const me = await this.me(id);
+    const mentors = await this.getTeachers();
+    const teachers = me && getRecommendation(me, mentors);
+    return teachers;
   }
 }

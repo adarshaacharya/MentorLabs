@@ -6,7 +6,7 @@ import { User } from './user.entity';
 @Entity()
 export class Profile extends CoreEntity {
   @Column({ nullable: true })
-  title?: string;
+  title?: string; // user profession
 
   @Column()
   description: string;
