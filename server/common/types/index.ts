@@ -14,11 +14,12 @@ export interface User {
 export interface CleanUserData {
   id: string;
   name: string;
-  title: string;
-  tags: string[];
+  title: string; // 'software developer
+  skills?: string[]; // for mentor
+  interests?: string[]; // for mentee
   languages: string[];
   country: string;
-  type: 'user';
+  type: 'user'; // common column for mentor and mentee
 }
 
 export interface JaccardUser {
