@@ -104,13 +104,20 @@ export class UsersService {
     return user;
   }
 
-  public async getTeachers() {
+  public async getTeachers(id: string) {
+    const me = await this.findOneById(id);
+
+    if (!me.profile) {
+      throw new BadRequest("You can't view teachers list without creating profile.");
+    }
+
     const teachers = await this.userRepository.find({
       where: { role: Role.TEACHER },
       relations: ['profile'],
       select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
     });
 
+    // only teachers with profile gets recommended
     const teachersWithProfile = teachers.filter((teacher) => teacher.profile !== null);
     return teachersWithProfile;
   }
@@ -126,8 +133,14 @@ export class UsersService {
   }
 
   public async getTeachersRecommendations(id: string) {
-    const me = await this.me(id);
-    const mentors = await this.getTeachers();
+    const me = await this.findOneById(id);
+
+    if (!me.profile) {
+      throw new BadRequest("You can't get use recommendation feature without creating profile.");
+    }
+
+    const mentors = await this.getTeachers(id);
+
     const teachers = me && getRecommendation(me, mentors);
     return teachers;
   }

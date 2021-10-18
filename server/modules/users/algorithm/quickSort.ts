@@ -1,15 +1,12 @@
-interface FilteredUsers {
-  id: string;
-  jaccardIndex: number;
-}
+import { JaccardUser } from '../../../common/types';
 
-const swap = (array: FilteredUsers[], i: number, j: number) => {
+const swap = (array: JaccardUser[], i: number, j: number) => {
   const temp = array[i];
   array[i] = array[j];
   array[j] = temp;
 };
 
-const partitionLomuto = (array: FilteredUsers[], left: number, right: number) => {
+const partitionLomuto = (array: JaccardUser[], left: number, right: number) => {
   const pivot = right;
   let i = left;
   let j = left;
@@ -23,7 +20,7 @@ const partitionLomuto = (array: FilteredUsers[], left: number, right: number) =>
   return i;
 };
 
-export const quicksortLomuto = (array: FilteredUsers[], left: number, right: number) => {
+export const quicksortLomuto = (array: JaccardUser[], left: number, right: number) => {
   left = left || 0;
   right = right || array.length - 1;
 

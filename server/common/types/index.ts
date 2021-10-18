@@ -9,3 +9,19 @@ export interface User {
   avatar: string;
   profile: Profile;
 }
+
+// cleaned user data
+export interface CleanUserData {
+  id: string;
+  name: string;
+  title: string;
+  tags: string[];
+  languages: string[];
+  country: string;
+  type: 'user';
+}
+
+export interface JaccardUser {
+  id: string;
+  jaccardIndex: number;
+}
