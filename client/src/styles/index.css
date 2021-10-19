@@ -472,6 +472,11 @@ body {
 /*==============================================================================
  Component : User Card
 ==============================================================================*/
+.recommendation__switch {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .card-lists {
   padding: 4em 0;
 }

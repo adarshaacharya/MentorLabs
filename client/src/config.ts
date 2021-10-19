@@ -14,6 +14,7 @@ const config = {
     users: {
       fetchMentors: '/users/mentors',
       fetchMentees: '/users/mentees',
+      fetchRecommendedMentors: 'users/recommended-mentors',
     },
     profile: {
       fetchProfile: '/users',
