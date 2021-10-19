@@ -8,7 +8,7 @@ import { MentorCards } from './components';
 const { Paragraph } = Typography;
 export const TeacherListings = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.profile);
+  const { user } = useAppSelector((state) => state.auth);
 
   React.useEffect(() => {
     dispatch(fetchMentors());
@@ -22,20 +22,20 @@ export const TeacherListings = () => {
     return dispatch(fetchMentors());
   };
 
-  // if (!user.profile) {
-  //   return (
-  //     <section className="teacher-listings">
-  //       <Helmet>
-  //         <title>Teacher Listings | Mentor Labs</title>
-  //       </Helmet>
-  //       <div className="container">
-  //         <Paragraph type="secondary">
-  //           Please create your profile to view the list of mentors and use recommendation feature.
-  //         </Paragraph>
-  //       </div>
-  //     </section>
-  //   );
-  // }
+  if (!user.profile) {
+    return (
+      <section className="teacher-listings">
+        <Helmet>
+          <title>Teacher Listings | Mentor Labs</title>
+        </Helmet>
+        <div className="container">
+          <Paragraph type="secondary">
+            Please create your profile to view the list of mentors and use recommendation feature.
+          </Paragraph>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="teacher-listings">

@@ -28,6 +28,7 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       select: ['id', 'name', 'email', 'role', 'avatar'],
       where: { id },
+      relations: ['profile'],
     });
 
     return user;
