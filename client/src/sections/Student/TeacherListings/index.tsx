@@ -9,28 +9,32 @@ import { MentorCards } from './components';
 const { Paragraph } = Typography;
 export const TeacherListings = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.profile);
+  const { mentors, status } = useAppSelector((state) => state.users);
+  const [recommendMentors, setRecommendMentors] = React.useState(false);
 
   React.useEffect(() => {
     dispatch(fetchMentors());
-  }, [dispatch]);
+  }, []);
 
   const onSwitchChange = (checked: boolean) => {
     if (checked) {
+      setRecommendMentors(true);
       return dispatch(fetchRecommendedMentors());
     }
 
+    setRecommendMentors(false);
     return dispatch(fetchMentors());
   };
 
-  if (!user.profile) {
+  if (!user) {
     return (
       <section className="teacher-listings">
         <Helmet>
           <title>Teacher Listings | Mentor Labs</title>
         </Helmet>
         <div className="container">
-          <EmptyPageMessage message="Please create your profile to view the list of mentors and use recommendation feature." />
+          <EmptyPageMessage message="Please create your profile to view the list of mentors." />
         </div>
       </section>
     );
@@ -51,7 +55,7 @@ export const TeacherListings = () => {
           <Switch onChange={onSwitchChange} />
         </div>
 
-        <MentorCards />
+        <MentorCards mentors={mentors} recommendMentors={recommendMentors} />
       </div>
     </section>
   );

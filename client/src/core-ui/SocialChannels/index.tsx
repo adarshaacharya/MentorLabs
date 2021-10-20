@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AiOutlineFacebook, AiOutlineLinkedin, AiOutlineSlackSquare, AiOutlineTwitter } from 'react-icons/ai';
 import { FaGithubSquare, FaGlobe } from 'react-icons/fa';
 import { Channel } from 'types';
+import { v4 as uuidv4 } from 'uuid';
 
 type SocialChannelsProp = {
   channels: Channel[];
@@ -15,7 +16,7 @@ export const SocialChannels: React.FC<SocialChannelsProp> = ({ channels, isUserC
       {filteredChannels.map((channel) => {
         const { link, site } = channel;
         return (
-          <span key={site}>
+          <span key={uuidv4()}>
             {site === 'facebook' && (
               <a href={link} target="_blank" rel="noopener noreferrer" className="card__link">
                 <AiOutlineFacebook size={'2em'} title="Facebook" />

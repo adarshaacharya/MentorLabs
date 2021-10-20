@@ -2,7 +2,6 @@ import { Button, Card, Divider, Tag, Typography } from 'antd';
 import { SocialChannels } from 'core-ui';
 import * as React from 'react';
 import { User } from 'types';
-import { countryEmoji } from 'utils/form';
 import { ProfileCreate } from '../ProfileCreate';
 
 type UserProfileProps = {
@@ -59,7 +58,7 @@ export const ProfileDetails: React.FC<UserProfileProps> = ({ user, viewerIsUser 
       <Divider />
       <div className="profile-details__location ">
         <Title level={5}>Location</Title>
-        {user.profile.country} {countryEmoji(user.profile.country)}
+        {user.profile.country}
       </div>
       <Divider />
       <div className="profile-details__skills ">

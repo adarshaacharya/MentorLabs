@@ -3,7 +3,7 @@ import { CleanUserData, JaccardUser, User } from '../../../common/types';
 import { quicksortLomuto } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
-const BASE_JACCARD_INDEX = 30;
+const BASE_JACCARD_INDEX = 0;
 
 /**
  * clean the data to be feed to the algorithm
@@ -32,7 +32,7 @@ export const getRecommendation = (me: User, mentors: User[]) => {
   mentors.forEach((mentor) => {
     sortedmentorswithJaccardIndex.forEach((mj) => {
       if (mentor.id === mj.id && mj.jaccardIndex > BASE_JACCARD_INDEX) {
-        const result = { ...mentor, jaccardIndex: mj.jaccardIndex };
+        const result = { ...mentor, jaccardIndex: Number(mj.jaccardIndex).toFixed(1) };
         results.push(result);
       }
     });

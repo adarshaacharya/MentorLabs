@@ -1,11 +1,18 @@
 import { Col, Row, Typography } from 'antd';
 import { EmptyPageMessage, UserCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
+import { User } from 'types';
 
 const { Paragraph } = Typography;
 
-export const MentorCards = () => {
-  const { mentors, status } = useAppSelector((state) => state.users);
+type MentorCardsProps = {
+  mentors: User[];
+  recommendMentors: boolean;
+};
+
+export const MentorCards: React.FC<MentorCardsProps> = ({ mentors, recommendMentors }) => {
+  const { user } = useAppSelector((state) => state.profile);
+  const { status } = useAppSelector((state) => state.users);
 
   if (status === 'pending') {
     return (
@@ -16,11 +23,22 @@ export const MentorCards = () => {
       </section>
     );
   }
-  if (status === 'resolved' && mentors.length < 1) {
+
+  if (!user.profile && !mentors) {
     return (
       <section className="teacher-listings">
         <div className="container">
-          <EmptyPageMessage message="Sorry, we can't find you mentors of your choice for now." />
+          <EmptyPageMessage message="Create profile first to view the list of mentors." />
+        </div>
+      </section>
+    );
+  }
+
+  if (mentors.length < 1 && recommendMentors) {
+    return (
+      <section className="teacher-listings">
+        <div className="container">
+          <EmptyPageMessage message="Can't recocommend mentors. Make sure you have enter correct information in your profile field." />
         </div>
       </section>
     );

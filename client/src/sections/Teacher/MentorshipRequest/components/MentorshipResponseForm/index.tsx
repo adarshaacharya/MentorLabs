@@ -7,7 +7,6 @@ import { useParams } from 'react-router';
 import { createMentorshipResponse } from 'store/mentorship/mentorship.action';
 import { MentorshipResponseData, RoomInfo } from 'types';
 import http from 'utils/http';
-import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
 
 const { Item } = Form;
 const { TextArea } = Input;
