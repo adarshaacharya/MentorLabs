@@ -5,3 +5,5 @@ export * from './Login';
 export * from './NotFound';
 export * from './Student';
 export * from './Teacher';
+export * from './Labs';
+export * from './Room';

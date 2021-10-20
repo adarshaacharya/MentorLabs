@@ -729,9 +729,9 @@ body {
 }
 
 /*==============================================================================
- Section : Labs(Student)
+ Section : Labs(Student and Teacher)
 ==============================================================================*/
-.student-labs {
+.labs {
   background-color: var(--bg-color);
   margin-top: 10vh;
 }
