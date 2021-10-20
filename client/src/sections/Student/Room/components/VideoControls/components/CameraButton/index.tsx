@@ -6,7 +6,7 @@ export const CameraButton = () => {
   const [isLocalVideoDisabled, setIsLocalVideoDisabled] = React.useState(false);
 
   const handleCameraButtonPressed = () => {
-    webRTCHandler.toggleCamera(!isLocalVideoDisabled);
+    webRTCHandler.toggleCamera(isLocalVideoDisabled);
     setIsLocalVideoDisabled(!isLocalVideoDisabled);
   };
 
