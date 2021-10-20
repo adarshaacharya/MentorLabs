@@ -1,7 +1,6 @@
 import { Repository } from 'typeorm';
 import { Role } from '../../common/enums';
 import { Profile } from './entities/profile.entity';
-import { User } from './entities/user.entity';
 import { UserRepository } from './repositories/users.repository';
 import { UsersService } from './users.service';
 
@@ -27,7 +26,6 @@ describe('UsersService', () => {
 
   describe('createAccount', () => {
     const service = new UsersService(usersRepository, profileRepository);
-    const repository = new UserRepository();
 
     it('should add user to the database', async () => {
       const spy = jest.spyOn(service, 'createAccount').mockResolvedValueOnce(userData);
