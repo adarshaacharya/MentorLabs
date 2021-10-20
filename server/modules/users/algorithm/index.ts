@@ -1,6 +1,6 @@
 import { Role } from '../../../common/enums';
 import { CleanUserData, JaccardUser, User } from '../../../common/types';
-import { quickSort } from './quickSort';
+import { quicksortHoare } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
 const BASE_JACCARD_INDEX = 5;
@@ -28,7 +28,7 @@ export const getRecommendation = (me: User, mentors: User[]) => {
 
   const sortedmentorswithJaccardIndex =
     mentorswithJaccardIndex.length > 0
-      ? quickSort(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1)
+      ? quicksortHoare(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1)
       : mentorswithJaccardIndex;
 
   const results: Array<User> = [];

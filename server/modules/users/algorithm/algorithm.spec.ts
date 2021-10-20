@@ -1,4 +1,4 @@
-import { quickSort } from './quickSort';
+import { quicksortHoare } from './quickSort';
 
 const arr = [
   {
@@ -19,4 +19,4 @@ const arr = [
   },
 ];
 
-console.log(quickSort(arr, 0, arr.length - 1).reverse());
+console.log(quicksortHoare(arr, 0, arr.length - 1).reverse());
