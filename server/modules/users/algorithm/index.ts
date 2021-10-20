@@ -1,9 +1,9 @@
 import { Role } from '../../../common/enums';
 import { CleanUserData, JaccardUser, User } from '../../../common/types';
-import { quicksortLomuto } from './quickSort';
+import { quickSort } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
-const BASE_JACCARD_INDEX = 0;
+const BASE_JACCARD_INDEX = 5;
 
 /**
  * clean the data to be feed to the algorithm
@@ -24,8 +24,12 @@ export const getRecommendation = (me: User, mentors: User[]) => {
   const menteeArr = [cleanUserData(me)];
   const mentorsArr = mentors.map((mentor) => cleanUserData(mentor));
   const mentorswithJaccardIndex = recommenderKNN(menteeArr, mentorsArr) as Array<JaccardUser>;
+  console.log(mentorswithJaccardIndex);
 
-  const sortedmentorswithJaccardIndex = quicksortLomuto(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1);
+  const sortedmentorswithJaccardIndex =
+    mentorswithJaccardIndex.length > 0
+      ? quickSort(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1)
+      : mentorswithJaccardIndex;
 
   const results: Array<User> = [];
 
@@ -38,5 +42,6 @@ export const getRecommendation = (me: User, mentors: User[]) => {
     });
   });
 
+  console.log(results);
   return results;
 };

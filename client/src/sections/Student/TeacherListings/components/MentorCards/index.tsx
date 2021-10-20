@@ -1,6 +1,7 @@
 import { Col, Row, Typography } from 'antd';
 import { EmptyPageMessage, UserCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
+import * as React from 'react';
 import { User } from 'types';
 
 const { Paragraph } = Typography;
@@ -14,7 +15,7 @@ export const MentorCards: React.FC<MentorCardsProps> = ({ mentors, recommendMent
   const { user } = useAppSelector((state) => state.profile);
   const { status } = useAppSelector((state) => state.users);
 
-  if (status === 'pending') {
+  if (status === 'pending' || !mentors) {
     return (
       <section className="loading">
         <div className="container">
@@ -38,7 +39,7 @@ export const MentorCards: React.FC<MentorCardsProps> = ({ mentors, recommendMent
     return (
       <section className="teacher-listings">
         <div className="container">
-          <EmptyPageMessage message="Can't recocommend mentors. Make sure you have enter correct information in your profile field." />
+          <EmptyPageMessage message="Our algorithm can't find matching mentor for you. Make sure you have enter appropriate information in your profile field." />
         </div>
       </section>
     );

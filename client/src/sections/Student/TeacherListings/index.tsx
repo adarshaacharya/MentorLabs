@@ -10,6 +10,8 @@ const { Paragraph } = Typography;
 export const TeacherListings = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.profile);
+  const { user: authUser } = useAppSelector((state) => state.auth);
+
   const { mentors, status } = useAppSelector((state) => state.users);
   const [recommendMentors, setRecommendMentors] = React.useState(false);
 
@@ -27,7 +29,7 @@ export const TeacherListings = () => {
     return dispatch(fetchMentors());
   };
 
-  if (!user) {
+  if (!user.profile && !authUser.profile) {
     return (
       <section className="teacher-listings">
         <Helmet>

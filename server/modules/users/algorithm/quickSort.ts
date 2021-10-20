@@ -1,37 +1,52 @@
+// https://www.section.io/engineering-education/sorting-algorithms-in-js/
 import { JaccardUser } from '../../../common/types';
 
-const swap = (array: JaccardUser[], i: number, j: number) => {
-  const temp = array[i];
-  array[i] = array[j];
-  array[j] = temp;
-};
+function partition(items: JaccardUser[], left: number, right: number) {
+  //rem that left and right are pointers.
 
-const partitionLomuto = (array: JaccardUser[], left: number, right: number) => {
-  const pivot = right;
-  let i = left;
-  let j = left;
-  for (; j < right; j++) {
-    if (array[j].jaccardIndex <= array[pivot].jaccardIndex) {
-      swap(array, i, j);
+  const pivot = items[Math.floor((right + left) / 2)];
+  let i = left, //left pointer
+    j = right; //right pointer
+
+  while (i <= j) {
+    //increment left pointer if the value is less than the pivot
+    while (items[i].jaccardIndex < pivot.jaccardIndex) {
       i++;
     }
+
+    //decrement right pointer if the value is more than the pivot
+    while (items[j].jaccardIndex > pivot.jaccardIndex) {
+      j--;
+    }
+
+    //else we swap.
+    if (i <= j) {
+      [items[i], items[j]] = [items[j], items[i]];
+      i++;
+      j--;
+    }
   }
-  swap(array, i, j);
+
+  //return the left pointer
   return i;
-};
+}
 
-export const quicksortLomuto = (array: JaccardUser[], left: number, right: number) => {
-  left = left || 0;
-  right = right || array.length - 1;
+export function quickSort(items: JaccardUser[], left: number, right: number) {
+  let index;
 
-  const pivot = partitionLomuto(array, left, right);
+  if (items.length > 1) {
+    index = partition(items, left, right); //get the left pointer returned
 
-  if (left < pivot - 1) {
-    quicksortLomuto(array, left, pivot - 1);
+    if (left < index - 1) {
+      //more elements on the left side
+      quickSort(items, left, index - 1);
+    }
+
+    if (index < right) {
+      //more elements on the right side
+      quickSort(items, index, right);
+    }
   }
 
-  if (right > pivot) {
-    quicksortLomuto(array, pivot - 1, right);
-  }
-  return array;
-};
+  return items; //return the sorted array
+}
