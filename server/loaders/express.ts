@@ -1,7 +1,8 @@
 import { errorHandler } from '../common/middlewares';
 import cors from 'cors';
 import helmet from 'helmet';
-import express from 'express';
+import express, { Response } from 'express';
+import path from 'path';
 import cookieParser from 'cookie-parser';
 import { router as usersRoutes } from '../modules/users/users.route';
 import { router as mentorshipsRoutes } from '../modules/mentorships/mentorships.route';
@@ -20,4 +21,12 @@ export default (app: express.Application) => {
   app.use('/api/room', roomRoutes);
 
   app.use(errorHandler);
+
+  // Serve static files in prod env
+  if (process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'client')));
+    app.get('*', (_, res: Response): void => {
+      res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
+    });
+  }
 };
