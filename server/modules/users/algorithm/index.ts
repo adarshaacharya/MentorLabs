@@ -24,7 +24,6 @@ export const getRecommendation = (me: User, mentors: User[]) => {
   const menteeArr = [cleanUserData(me)];
   const mentorsArr = mentors.map((mentor) => cleanUserData(mentor));
   const mentorswithJaccardIndex = recommenderKNN(menteeArr, mentorsArr) as Array<JaccardUser>;
-  console.log(mentorswithJaccardIndex);
 
   const sortedmentorswithJaccardIndex =
     mentorswithJaccardIndex.length > 0
@@ -42,6 +41,5 @@ export const getRecommendation = (me: User, mentors: User[]) => {
     });
   });
 
-  console.log(results);
   return results;
 };
