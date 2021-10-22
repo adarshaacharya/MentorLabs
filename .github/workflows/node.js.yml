@@ -34,14 +34,14 @@ jobs:
       run : yarn install
       
     - name: Server Build
-      run : yarn server:build
+      run : yarn run server:build
       
     - name: Client Build
-      run : yarn client:build
+      run : yarn run client:build
       env: 
         CI: false
     
     - name: Server Test
-      run : yarn test
+      run : yarn run test
       env:
         NODE_ENV : test
