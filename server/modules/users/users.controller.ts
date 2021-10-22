@@ -5,7 +5,7 @@ import { validateIdOrThrow } from '../../common/validator';
 import { UsersService } from './users.service';
 import { AUTH_COOKIE, THIRTY_DAY_COOKIE } from '../../common/constants/cookies';
 
-class UsersController {
+export class UsersController {
   public async me(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       validateIdOrThrow(req.user?.id);
@@ -49,7 +49,7 @@ class UsersController {
       const userId = req.user?.id;
       const usersServiceInstance = Container.get(UsersService);
       const profile = userId && (await usersServiceInstance.creatProfile(userId, req.body));
-      res.status(400).json({ profile });
+      res.status(200).json({ profile });
     } catch (e) {
       next(e);
     }
@@ -57,10 +57,10 @@ class UsersController {
 
   public async findOneById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const userId = validateIdOrThrow(+req.params.userId);
+      const userId = validateIdOrThrow(req.params.id);
       const usersServiceInstance = Container.get(UsersService);
       const user = userId && (await usersServiceInstance.findOneById(userId));
-      res.status(400).json(user);
+      res.status(200).json(user);
     } catch (e) {
       next(e);
     }
@@ -69,8 +69,8 @@ class UsersController {
   public async getTeachers(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const usersServiceInstance = Container.get(UsersService);
-      const teachers = await usersServiceInstance.getTeachers();
-      res.status(400).json(teachers);
+      const mentors = await usersServiceInstance.getTeachers();
+      res.status(200).json(mentors);
     } catch (e) {
       next(e);
     }
@@ -80,7 +80,7 @@ class UsersController {
     try {
       const usersServiceInstance = Container.get(UsersService);
       const students = await usersServiceInstance.getStudents();
-      res.status(400).json(students);
+      res.status(200).json(students);
     } catch (e) {
       next(e);
     }

@@ -19,7 +19,7 @@ export class CreateAccountInput {
 
 export class CreateAccountOutput {
   token: string;
-  id: number;
+  id: string;
   name: string;
   email: string;
   avatar: string;

@@ -1,8 +1,13 @@
+export interface Socials {
+  facebook?: string;
+  linkedin?: string;
+  twitter?: string;
+  portfolio?: string;
+  slack?: string;
+  github?: string;
+}
+
 export interface Channel {
-  slack: string;
-  linkedin: string;
-  facebook: string;
-  twitter: string;
-  github: string;
-  website: string;
+  site: keyof Socials;
+  link: string;
 }

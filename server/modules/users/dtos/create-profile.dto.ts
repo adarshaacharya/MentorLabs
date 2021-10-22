@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsOptional, IsString } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Channel } from '../../../common/interfaces/channel.interface';
 
 export class CreateProfileInput {
@@ -10,8 +10,8 @@ export class CreateProfileInput {
   description: string;
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(3)
+  @ArrayMinSize(3)
+  @ArrayMaxSize(5)
   @IsString({
     each: true,
   })
@@ -21,15 +21,18 @@ export class CreateProfileInput {
   country: string;
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ArrayMaxSize(3)
+  @ArrayMinSize(2)
+  @ArrayMaxSize(5)
   @IsString({
     each: true,
   })
   languages: string[];
 
-  // @IsJSON()
-  channels: Channel;
+  @IsArray()
+  @ArrayMinSize(3)
+  @ArrayMaxSize(5)
+  @ValidateNested({ each: true })
+  channels: Channel[];
 }
 
 export class CreateProfileOutput {}

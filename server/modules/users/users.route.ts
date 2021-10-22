@@ -42,19 +42,19 @@ router.post('/logout', [checkJwt], usersController.logout);
 
 /**
  * @method GET
- * @route /api/users/teachers
- * @description get all teachers with their profile
+ * @route /api/users/mentors
+ * @description get all mentors with their profile
  * @access private
  */
-router.get('/teachers', [checkJwt, checkRole([Role.STUDENT])], usersController.getTeachers);
+router.get('/mentors', [checkJwt, checkRole([Role.STUDENT])], usersController.getTeachers);
 
 /**
  * @method GET
- * @route /api/users/students
- * @description get all students with their profile
+ * @route /api/users/mentees
+ * @description get all mentees with their profile
  * @access private
  */
-router.get('/students', [checkJwt, checkRole([Role.TEACHER])], usersController.getStudents);
+router.get('/mentees', [checkJwt, checkRole([Role.TEACHER])], usersController.getStudents);
 
 /**
  * @method GET

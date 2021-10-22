@@ -5,6 +5,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { router as usersRoutes } from '../modules/users/users.route';
 import { router as mentorshipsRoutes } from '../modules/mentorships/mentorships.route';
+import { router as roomRoutes } from '../modules/room/room.route';
 
 export default (app: express.Application) => {
   app.use(express.json());
@@ -16,6 +17,7 @@ export default (app: express.Application) => {
 
   app.use('/api/users', usersRoutes);
   app.use('/api/mentorships', mentorshipsRoutes);
+  app.use('/api/room', roomRoutes);
 
   app.use(errorHandler);
 };

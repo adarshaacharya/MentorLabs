@@ -7,5 +7,7 @@ declare namespace NodeJS {
     DB_PASS: string;
     JWT_SECRET: string;
     JWT_EXPIRATION: string;
+    TWILIO_ACCOUNT_SID: string;
+    TWILIO_AUTH_TOKEN: string;
   }
 }

@@ -5,7 +5,6 @@ import { message, notification } from 'antd';
  *
  * @param message
  * @param description
- * @returns {Function}
  */
 export function displaySuccessNotification(message: string, description?: string) {
   return notification['success']({

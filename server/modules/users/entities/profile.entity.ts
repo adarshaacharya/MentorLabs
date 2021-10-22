@@ -21,7 +21,7 @@ export class Profile extends CoreEntity {
   languages: string[];
 
   @Column({ type: 'json' })
-  channels: Channel;
+  channels: Channel[];
 
   // this automatically forms column named userId on profile, plus make it bidirectional
   @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' }) // if user gets deletd delete its record in profile too..
@@ -30,5 +30,5 @@ export class Profile extends CoreEntity {
 
   // created already but implicity defined so that we can pass userid from jwt
   @Column()
-  userId: number;
+  userId: string;
 }

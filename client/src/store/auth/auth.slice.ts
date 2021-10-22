@@ -23,6 +23,7 @@ const authSlice = createSlice({
       state.status = 'pending';
     });
 
+    // handles auth/loadCurrentUser
     builder.addCase(loadCurrentUser.fulfilled, (state, { payload }) => {
       state.isAuthenticated = true;
       state.status = 'resolved';

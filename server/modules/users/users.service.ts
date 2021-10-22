@@ -1,3 +1,4 @@
+import normalizeUrl from 'normalize-url';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
@@ -22,7 +23,7 @@ export class UsersService {
     private readonly profileRepository: Repository<Profile>,
   ) {}
 
-  public async me(id: number | undefined) {
+  public async me(id: string | undefined) {
     const user = await this.userRepository.findOne({
       select: ['id', 'name', 'email', 'role', 'avatar'],
       where: { id },
@@ -62,8 +63,21 @@ export class UsersService {
     return { token, id, name, email, avatar, role };
   }
 
-  public async creatProfile(userId: number, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
-    const profile = await this.profileRepository.save(this.profileRepository.create({ userId, ...createProfileInput }));
+  public async creatProfile(userId: string, createProfileInput: CreateProfileInput): Promise<CreateProfileOutput> {
+    const channels = [...createProfileInput.channels];
+
+    // normalizing channels url
+    channels.forEach((channel) => {
+      for (const [_, val] of Object.entries(channel)) {
+        if (val && val.length > 0) {
+          channel.link = normalizeUrl(val, { forceHttps: true });
+        }
+      }
+    });
+
+    const profile = await this.profileRepository.save(
+      this.profileRepository.create({ userId, ...createProfileInput, channels }),
+    );
 
     return {
       title: profile.title,
@@ -76,8 +90,12 @@ export class UsersService {
     };
   }
 
-  public async findOneById(userId: number) {
-    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['profile'] });
+  public async findOneById(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
     if (!user) {
       throw new NotFound("User with given id doesn't exists");
@@ -86,13 +104,22 @@ export class UsersService {
   }
 
   public async getTeachers() {
-    const teachers = await this.userRepository.find({ where: { role: Role.TEACHER }, relations: ['profile'] });
+    const teachers = await this.userRepository.find({
+      where: { role: Role.TEACHER },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
-    return teachers;
+    const teachersWithProfile = teachers.filter((teacher) => teacher.profile !== null);
+    return teachersWithProfile;
   }
 
   public async getStudents() {
-    const students = await this.userRepository.find({ where: { role: Role.STUDENT }, relations: ['profile'] });
+    const students = await this.userRepository.find({
+      where: { role: Role.STUDENT },
+      relations: ['profile'],
+      select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
+    });
 
     return students;
   }
