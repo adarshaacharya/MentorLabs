@@ -1,29 +1,27 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "target": "ES2018",
+    "target": "esnext",
     "module": "CommonJS",
-    "lib": ["dom", "es2017"],
-    "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
+    "outDir": "./prod",
     "downlevelIteration": true,
     "strict": true,
-    "noImplicitAny": true, // should always assign value to params (recheck it)
+    "noImplicitAny": false,
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
-    "noUnusedLocals": true, // change later
-    "noUnusedParameters": false, // params should be used
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false, // optional,
-    // "baseUrl": "./server", // import from common/.. i,e base utl is server
+    "strictPropertyInitialization": false, // optional
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "baseUrl": "./server",
     "typeRoots": ["server/common/types", "./node_modules/@types"]
   },
   "include": ["server/**/*.ts"],
-  "exclude": ["node_modules", "client", "./utils"]
+  "exclude": ["node_modules", "client"]
 }
