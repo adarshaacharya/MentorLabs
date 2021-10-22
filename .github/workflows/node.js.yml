@@ -39,6 +39,7 @@ jobs:
     - name: Client Build
       run : yarn run client:build
       env: 
+        CI: false
         SKIP_PREFLIGHT_CHECK: true
     
     - name: Server Test
