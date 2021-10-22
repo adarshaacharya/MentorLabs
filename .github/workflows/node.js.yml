@@ -34,7 +34,7 @@ jobs:
       run : yarn install
       
     - name: Server Build
-      run : yarn run server:build
+      run : yarn server:build
       
     - name: Client Build
       run : yarn client:build
