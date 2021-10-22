@@ -25,5 +25,5 @@
     "typeRoots": ["server/common/types", "./node_modules/@types"]
   },
   "include": ["server/**/*.ts"],
-  "exclude": ["node_modules", "client"]
+  "exclude": ["node_modules", "client", "./utils"]
 }
