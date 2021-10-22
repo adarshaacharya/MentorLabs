@@ -9,7 +9,7 @@
     "dev": "concurrently \"yarn server:dev\" \"yarn client:dev\"",
     "client:dev": "cd client && yarn start",
     "server:dev": "cross-env NODE_ENV=development nodemon server/main.ts",
-    "server:build": "tsc -p tsconfig.json",
+    "server:build": "tsc -p tsconfig.prod.json",
     "client:build": "yarn --prefix ./client run build && yarn run client:move-build",
     "client:move-build": "ts-node utils/move-from-to.ts client/build prod/client",
     "lint": "eslint server/**/*.ts",
