@@ -5,8 +5,8 @@
   "main": "server/server.ts",
   "license": "MIT",
   "engines": {
-    "node": "14.17.1",
-    "yarn": "1.22.10"
+    "node": "14.18.1",
+    "yarn": "1.22.17"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node prod/server.js",
