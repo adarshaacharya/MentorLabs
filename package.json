@@ -2,14 +2,14 @@
   "name": "server",
   "version": "1.0.0",
   "description": "server code for mentor labs",
-  "main": "server/server.ts",
+  "main": "server/main.ts",
   "license": "MIT",
   "engines": {
     "node": "14.18.1",
     "yarn": "1.22.17"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node prod/server.js",
+    "start": "cross-env NODE_ENV=production node prod/main.js",
     "dev": "concurrently \"yarn server:dev\" \"yarn client:dev\"",
     "client:dev": "cd client && yarn start",
     "server:dev": "cross-env NODE_ENV=development nodemon server/main.ts",
