@@ -18,6 +18,10 @@ async function bootstrap(): Promise<void> {
   if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client')));
     app.get('*', (_, res: Response): void => {
+      res.set(
+        'Content-Security-Policy',
+        "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'",
+      );
       res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
     });
   }
