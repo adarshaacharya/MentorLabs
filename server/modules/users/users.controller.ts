@@ -66,10 +66,12 @@ export class UsersController {
     }
   }
 
-  public async getTeachers(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async getTeachers(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
+      validateIdOrThrow(req.user?.id);
+      const userId = req.user?.id;
       const usersServiceInstance = Container.get(UsersService);
-      const mentors = await usersServiceInstance.getTeachers();
+      const mentors = userId && (await usersServiceInstance.getTeachers(userId));
       res.status(200).json(mentors);
     } catch (e) {
       next(e);
@@ -81,6 +83,18 @@ export class UsersController {
       const usersServiceInstance = Container.get(UsersService);
       const students = await usersServiceInstance.getStudents();
       res.status(200).json(students);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async getTeachersRecommendations(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      validateIdOrThrow(req.user?.id);
+      const userId = req.user?.id;
+      const usersServiceInstance = Container.get(UsersService);
+      const mentors = userId && (await usersServiceInstance.getTeachersRecommendations(userId));
+      res.status(200).json(mentors);
     } catch (e) {
       next(e);
     }

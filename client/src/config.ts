@@ -10,10 +10,12 @@ const config = {
       createAccount: '/users/create-account',
       logout: '/users/logout',
       me: '/users/me',
+      profile: '/users/profile',
     },
     users: {
       fetchMentors: '/users/mentors',
       fetchMentees: '/users/mentees',
+      fetchRecommendedMentors: 'users/recommended-mentors',
     },
     profile: {
       fetchProfile: '/users',

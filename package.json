@@ -5,10 +5,13 @@
   "main": "server/server.ts",
   "license": "MIT",
   "scripts": {
+    "start": "cross-env NODE_ENV=production node prod/server.js",
     "dev": "concurrently \"yarn server:dev\" \"yarn client:dev\"",
     "client:dev": "cd client && yarn start",
     "server:dev": "cross-env NODE_ENV=development nodemon server/main.ts",
-    "build": "rm -rf ./build && tsc",
+    "server:build": "tsc -p tsconfig.json",
+    "client:build": "yarn --prefix ./client run build && yarn run client:move-build",
+    "client:move-build": "ts-node utils/move-from-to.ts client/build prod/client",
     "lint": "eslint server/**/*.ts",
     "lint:fix": "eslint server/**/*.ts --fix",
     "format": "prettier --write \"server/**/*.{ts,tsx,js,jsx}\" \"client/**/*.{ts,tsx,js,jsx}\"",
@@ -17,7 +20,9 @@
     "test:cov": "NODE_ENV=test jest --coverage",
     "dotenv-types:gen": "npx gen-env-types .env -o server/common/types/env.d.ts -e .",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "heroku-prebuild": "cd client && yarn install --dev",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn run server:build && yarn run client:install && yarn run client:build"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
@@ -50,6 +55,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "danfojs-node": "^0.3.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "gravatar": "^1.8.1",

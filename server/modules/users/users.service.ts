@@ -6,6 +6,7 @@ import { Role } from '../../common/enums';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
 import { generateJwtToken } from '../../common/utils/generate-jwt';
 import { Gravatar } from '../../services/Gravatar';
+import { getRecommendation } from './algorithm';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
 import { CreateProfileInput, CreateProfileOutput } from './dtos/create-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
@@ -27,6 +28,7 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       select: ['id', 'name', 'email', 'role', 'avatar'],
       where: { id },
+      relations: ['profile'],
     });
 
     return user;
@@ -103,13 +105,20 @@ export class UsersService {
     return user;
   }
 
-  public async getTeachers() {
+  public async getTeachers(id: string) {
+    const me = await this.findOneById(id);
+
+    if (!me.profile) {
+      throw new BadRequest("You can't view teachers list without creating profile.");
+    }
+
     const teachers = await this.userRepository.find({
       where: { role: Role.TEACHER },
       relations: ['profile'],
       select: ['id', 'name', 'email', 'role', 'avatar', 'profile'],
     });
 
+    // only teachers with profile gets recommended
     const teachersWithProfile = teachers.filter((teacher) => teacher.profile !== null);
     return teachersWithProfile;
   }
@@ -122,5 +131,18 @@ export class UsersService {
     });
 
     return students;
+  }
+
+  public async getTeachersRecommendations(id: string) {
+    const me = await this.findOneById(id);
+
+    if (!me.profile) {
+      throw new BadRequest("You can't get use recommendation feature without creating profile.");
+    }
+
+    const mentors = await this.getTeachers(id);
+
+    const teachers = me && getRecommendation(me, mentors);
+    return teachers;
   }
 }

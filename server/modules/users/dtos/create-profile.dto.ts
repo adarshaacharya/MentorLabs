@@ -4,7 +4,7 @@ import { Channel } from '../../../common/interfaces/channel.interface';
 export class CreateProfileInput {
   @IsOptional()
   @IsString()
-  title?: string;
+  title: string;
 
   @IsString()
   description: string;

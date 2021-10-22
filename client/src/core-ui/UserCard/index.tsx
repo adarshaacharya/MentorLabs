@@ -5,8 +5,11 @@ import { ImLocation } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 import { User } from 'types';
 
+type JaccardIndex = {
+  jaccardIndex?: number;
+};
 type UserCardProps = {
-  user: User;
+  user: User & JaccardIndex;
 };
 
 const { Paragraph } = Typography;
@@ -16,11 +19,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
     return <p>Loading user..</p>;
   }
 
-  const userTagsElement = user.profile.tags.map((tag) => (
-    <Tag color="processing" key={tag}>
-      {tag}
-    </Tag>
-  ));
+  const userTagsElement = user.profile.tags.map((tag) => <Tag key={tag}>{tag}</Tag>);
 
   return (
     <div className="card">
@@ -41,6 +40,11 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
       <div className="card__links">
         <SocialChannels channels={user.profile.channels} isUserCard={true} />
       </div>
+      {user.jaccardIndex && (
+        <div className="card__index">
+          <Tag color="#87d068">{user.jaccardIndex}%</Tag>
+        </div>
+      )}
     </div>
   );
 };

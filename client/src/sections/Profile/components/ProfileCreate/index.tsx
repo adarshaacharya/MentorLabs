@@ -2,11 +2,11 @@ import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { countries, languages, socials } from 'data';
 import { tags } from 'data/tags';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import * as React from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlus } from 'react-icons/ai';
 import { createProfile } from 'store/profile/profile.action';
 import { CreateProfileData } from 'types';
-import { displayErrorMessage, displaySuccessNotification } from 'utils/notifications';
-import * as React from 'react';
+import { displayErrorMessage } from 'utils/notifications';
 
 const { Item, List } = Form;
 const { Title, Text } = Typography;
@@ -66,6 +66,10 @@ export const ProfileCreate = () => {
                 required: true,
                 message: 'Please describe about you in short!',
               },
+              {
+                min: 100,
+                message: 'Minimum length should be 100 characters!',
+              },
             ]}
           >
             <Input.TextArea
@@ -88,9 +92,9 @@ export const ProfileCreate = () => {
             ]}
           >
             <Select showSearch placeholder="Select a country">
-              {countries.map((country) => (
-                <Option value={country.name} key={country.code}>
-                  {country.name} {country.emoji}
+              {countries.map((country, index) => (
+                <Option value={country} key={index}>
+                  {country}
                 </Option>
               ))}
             </Select>

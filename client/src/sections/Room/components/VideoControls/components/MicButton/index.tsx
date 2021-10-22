@@ -6,7 +6,7 @@ export const MicButton = () => {
   const [isMicMuted, setIsMicMuted] = React.useState(false); // at first mic isn't muted
 
   const handleMicButtonPressed = () => {
-    webRTCHandler.toggleMic(!isMicMuted);
+    webRTCHandler.toggleMic(isMicMuted);
     setIsMicMuted(!isMicMuted);
   };
 

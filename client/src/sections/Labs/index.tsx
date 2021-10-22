@@ -7,7 +7,7 @@ const { Title, Paragraph, Text } = Typography;
 
 type Tab = 'create' | 'join';
 
-export const StudentLabs = () => {
+export const Labs = () => {
   const [tab, setTab] = React.useState<Tab>('create');
 
   const handleTabChange = (e: RadioChangeEvent) => {
@@ -17,14 +17,14 @@ export const StudentLabs = () => {
   const tabFormElement = tab === 'create' ? <CreateRoom /> : <JoinRoom />;
 
   return (
-    <div className="student-labs">
+    <div className="labs">
       <Helmet>
-        <title>Student Labs</title>
+        <title>Labs</title>
       </Helmet>
 
       <div className="container">
         <Divider orientation="left">
-          <Title level={4}>Student Labs.</Title>
+          <Title level={4}>Labs.</Title>
         </Divider>
         <Paragraph type="secondary">
           Make sure you have camera properly setup before joining labs. We highly recommend you to use Chrome or Firefox

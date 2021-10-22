@@ -1,10 +1,12 @@
 import { Col, Divider, Row, Typography } from 'antd';
+import * as React from 'react';
 import { FeatureCard } from 'core-ui';
-import { useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { Helmet } from 'react-helmet-async';
 import { FaChalkboardTeacher, FaFacebookMessenger } from 'react-icons/fa';
 import { ImLab } from 'react-icons/im';
 import { Link } from 'react-router-dom';
+import { loadCurrentUserProfile } from 'store/auth/auth.actions';
 const { Title, Paragraph } = Typography;
 
 export const studentDashboardFeatures = [
@@ -30,6 +32,7 @@ export const studentDashboardFeatures = [
 
 export const StudentDashboard = () => {
   const { user } = useAppSelector((state) => state.auth);
+
   return (
     <div className="student-dashboard">
       <Helmet>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import config from 'config';
-import { CreateAccountData, LoginData, User } from 'types';
+import { CreateAccountData, LoginData, Profile, User } from 'types';
 import http from 'utils/http';
 
 export const loadCurrentUser = createAsyncThunk('auth/loadCurrentUser', async (_, thunkAPI) => {
@@ -9,7 +9,18 @@ export const loadCurrentUser = createAsyncThunk('auth/loadCurrentUser', async (_
     const {
       data: { user },
     } = await http.get<{ user: User }>(url);
+    console.log(user);
     return user;
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response.data.message);
+  }
+});
+
+export const loadCurrentUserProfile = createAsyncThunk('auth/loadCurrentUserProfile', async (_, thunkAPI) => {
+  try {
+    const url = config.endpoints.auth.profile;
+    const { data } = await http.get<Profile>(url);
+    return data;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data.message);
   }
