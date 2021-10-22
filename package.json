@@ -26,7 +26,7 @@
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "heroku-prebuild": "cd client && yarn install --dev",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn server:build && yarn client:install && yarn run client:build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn run server:build && yarn run client:install && yarn run client:build"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
