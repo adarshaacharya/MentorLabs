@@ -4,8 +4,8 @@
  */
 export const calculateJacardIndex = (text: string) => {
   const arr = text.split(',');
-  const dataWithoutRepetiton = [...new Set(arr)];
+  const setData = [...new Set(arr)];
   const arrlength = arr.length;
-  const noRepeatLength = dataWithoutRepetiton.length;
+  const noRepeatLength = setData.length;
   return ((arrlength - noRepeatLength) / noRepeatLength) * 100;
 };
