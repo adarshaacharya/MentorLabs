@@ -62,11 +62,11 @@ export const recommenderKNN = (menteeArr: CleanUserData[], mentorsArr: CleanUser
     columns: ['type', 'title', 'country', 'title_1', 'country_1', 'interests', 'languages', 'skills', 'languages_1'],
   });
 
-  const finaleTag = dfd.concat({ df_list: [onlyId, finalTag], axis: 1 });
+  const finaleTag = dfd.concat({ df_list: [onlyId, finalTag], axis: 1 }); // id, tags column
 
   finaleTag.rename({ mapper: { '0': 'Tags' }, inplace: true });
 
-  const result = finaleTag.apply((data: string[]) => calculateJacardIndex(data[1]), { axis: 0 });
+  const result = finaleTag.apply((data: string[]) => calculateJacardIndex(data[1]), { axis: 0 }); // ❤️
 
   const finalResult = finaleTag.addColumn({
     column: 'jaccardIndex',
