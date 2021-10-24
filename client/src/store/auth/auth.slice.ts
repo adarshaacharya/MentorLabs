@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from 'types';
-import { createAccount, loadCurrentUser, loadCurrentUserProfile, logIn, logOut } from './auth.actions';
+import { createAccount, loadCurrentUser, logIn, logOut } from './auth.actions';
 
 export const initialState: AuthState = Object.freeze({
   isAuthenticated: false,

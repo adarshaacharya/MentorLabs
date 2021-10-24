@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router';
 import { fetchMentorshipRequestOfMentor } from 'store/mentorship/mentorship.action';
 import { displayErrorMessage } from 'utils/notifications';
-import { TeacherMentorshipRequestDetails, MentorshipResponseForm } from './components';
+import { MentorshipResponseForm, TeacherMentorshipRequestDetails } from './components';
 import { TeacherMentorshipResponseDetails } from './components/MentorshipResponseDetails';
 import { MentorshipStatusUpdate } from './components/MentorshipStatusUpdate';
 

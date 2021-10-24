@@ -9,7 +9,6 @@ export const loadCurrentUser = createAsyncThunk('auth/loadCurrentUser', async (_
     const {
       data: { user },
     } = await http.get<{ user: User }>(url);
-    console.log(user);
     return user;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data.message);
