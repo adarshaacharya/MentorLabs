@@ -5,7 +5,7 @@ import { Role } from '../../../common/enums';
 import { Mentorship } from '../../mentorships/entities/mentorship.entity';
 import { Profile } from './profile.entity';
 
-@Entity()
+@Entity({ name: 'user' })
 export class User extends CoreEntity {
   @Column({ nullable: false })
   name: string;

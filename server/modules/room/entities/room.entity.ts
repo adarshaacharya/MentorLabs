@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities';
 import { User } from '../../users/entities/user.entity';
 
-@Entity()
+@Entity({ name: 'room' })
 export class Room extends CoreEntity {
   @Column({ nullable: true })
   title: string;

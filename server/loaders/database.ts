@@ -7,7 +7,6 @@ export const dbConnection = {
     // typedi + typeorm
     useContainer(Container);
 
-    console.log(ormconfig.entities);
     try {
       const conn = await createConnection(ormconfig);
       console.log(
