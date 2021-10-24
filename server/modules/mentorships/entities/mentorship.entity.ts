@@ -7,7 +7,7 @@ import { Response } from './response.entity';
 /**
  * mentorship application
  */
-@Entity()
+@Entity({ name: 'mentorship' })
 export class Mentorship extends CoreEntity {
   @Column()
   title: string;

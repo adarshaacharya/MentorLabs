@@ -3,7 +3,7 @@ import { CoreEntity } from '../../../common/entities';
 import { Channel } from '../../../common/interfaces';
 import { User } from './user.entity';
 
-@Entity()
+@Entity({ name: 'profile' })
 export class Profile extends CoreEntity {
   @Column()
   title: string; // user profession

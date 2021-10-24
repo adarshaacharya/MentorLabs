@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { CoreEntity } from '../../../common/entities';
 import { Mentorship } from './mentorship.entity';
 
-@Entity()
+@Entity({ name: 'response' })
 export class Response extends CoreEntity {
   @Column()
   date: string;
