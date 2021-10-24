@@ -1,10 +1,5 @@
-import { Typography } from 'antd';
 import { useAppSelector } from 'hooks';
-import React from 'react';
-import { AiOutlineLine } from 'react-icons/ai';
-import { GiTrafficLightsGreen } from 'react-icons/gi';
 
-const { Title } = Typography;
 export const Participants = () => {
   const { participants } = useAppSelector((state) => state.room);
 

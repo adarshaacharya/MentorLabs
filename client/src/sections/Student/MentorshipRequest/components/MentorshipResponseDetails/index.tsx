@@ -1,5 +1,4 @@
 import { Card, Divider, Typography } from 'antd';
-import { Link } from 'react-router-dom';
 import { MentorshipResponseData } from 'types';
 import { displaySuccessNotification } from 'utils/notifications';
 
