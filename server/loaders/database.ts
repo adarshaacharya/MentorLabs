@@ -7,8 +7,8 @@ export const dbConnection = {
     // typedi + typeorm
     useContainer(Container);
 
+    console.log(ormconfig.entities);
     try {
-      console.log(ormconfig.entities);
       const conn = await createConnection(ormconfig);
       console.log(
         `✅  Database connection success. Connection name: '${conn.name}' Database: '${conn.options.database}'`,
