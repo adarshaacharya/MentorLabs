@@ -3,7 +3,9 @@
  * The object are nested on basis of redux store
  */
 const config = {
+  env: process.env.NODE_ENV,
   baseURI: '/api', // http://localhost:5000/api since we config proxy = 5000
+  sentryDSN: process.env.REACT_APP_SENTRY_DSN,
   endpoints: {
     auth: {
       login: '/users/login',

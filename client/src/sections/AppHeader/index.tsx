@@ -13,7 +13,6 @@ export const AppHeader = () => {
           <img src={logo} alt="TinyHouse logo" />
         </Link>
       </div>
-
       <div className="app-header__menu-section">
         <MenuItems />
       </div>

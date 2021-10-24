@@ -7,6 +7,9 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 
 import reportWebVitals from './reportWebVitals';
+import { init } from 'init';
+
+init();
 
 ReactDOM.render(
   <Provider store={store}>
