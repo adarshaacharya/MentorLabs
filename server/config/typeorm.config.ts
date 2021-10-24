@@ -16,7 +16,7 @@ export const ormconfig: ConnectionOptions = {
         database: process.env.DB_NAME,
       }),
   synchronize: true,
-  logging: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test', // in dev : 1 && 1 = 1
+  logging: true,
   entities: [path.join(__dirname, '..', 'modules', '**', '*.entity{.ts,.js}')],
   namingStrategy: new SnakeNamingStrategy(),
 };
