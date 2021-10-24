@@ -8,7 +8,7 @@ if (process.argv.length < 3 && process.argv.length > 4) {
 const source = path.resolve(__dirname, '..', process.argv[2]);
 const dest = path.resolve(__dirname, '..', process.argv[3]);
 
-fs.move(source, dest, (err) => {
+fs.move(source, dest, (err : Error) => {
   if (err) {
     return console.error(err);
   }
