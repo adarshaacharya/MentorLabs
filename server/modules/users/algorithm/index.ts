@@ -3,7 +3,7 @@ import { CleanUserData, JaccardUser, User } from '../../../common/types';
 import { quicksortHoare } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
-const BASE_JACCARD_INDEX = 5;
+const BASE_JACCARD_INDEX = 5; // 5%
 
 /**
  * clean the data to be feed to the algorithm
