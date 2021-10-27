@@ -6,7 +6,7 @@ import { logIn } from 'store/auth/auth.actions';
 import { clearAuthError } from 'store/auth/auth.slice';
 import { LoginData } from 'types';
 import { displayErrorMessage } from 'utils/notifications';
-import loginImg from './assets/login1.svg';
+import loginImg from './assets/login.svg';
 
 const { Item } = Form;
 

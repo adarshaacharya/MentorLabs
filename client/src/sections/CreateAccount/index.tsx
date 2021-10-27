@@ -23,7 +23,6 @@ export const CreateAccount = () => {
     dispatch(createAccount(formData));
   };
 
-  // @TODO : need to fix this , error should be displayed on screen not as toast
   useEffect(() => {
     if (error) {
       displayErrorMessage(error);
