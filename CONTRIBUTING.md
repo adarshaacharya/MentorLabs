@@ -1,4 +1,4 @@
-# Contribution Guideles
+# Contribution Guidelines
 
 - If you're planning to implement a new feature I will recommend you to discuss with me before you start coding so you won't end up working on something that I don't want to implement. Create an Issue with proper name and content for discussion.
 - Similarly, for huge bug fix you can create issue and we can discuss about it further.
