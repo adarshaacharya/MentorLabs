@@ -3,7 +3,7 @@
 <img src="media/logo.svg"  alt="logo" height="100px" width="200"/>
 </a>
 
-<h3 align="center">Taking learning platform to the moon.</h3>
+<h3 align="center">Learn, Collab & Grow Together.</h3>
 </p>
 
 <p align="center">
@@ -23,8 +23,10 @@
 </p>
 
 <p align="center">
-Apply for mentorship to the top mentors recommended by our powerful algorithm based on your profile. Enjoy one-to-one live video mentorship in our interactive labs totally for free.
+Apply for mentorship to the top mentors recommended by our powerful algorithm based on your profile. Enjoy one-to-one live mentorship in our interactive video streaming labs for free. 
 </p>
+
+> This is pre-released (alpha) version of Mentor Labs. That means we are still working to improve the site and breaking changes may occur anytime. So please avoid providing your real profile details as the app isn't fully secure and data may get erased any time.
 
 ## Features
 
@@ -52,7 +54,7 @@ Apply for mentorship to the top mentors recommended by our powerful algorithm ba
 Before running app locally make sure that you've install flowiing things in your machine:
 
 - Node.js version _v14.18.1_ (if you are using nvm try `nvm use 14.18.1` ) and yarn version _v1.22.17_
-- PostgreSQL >= 12.8
+- PostgreSQL >= _v12.8_
 - Download and install [Beekeeperstudio](https://www.beekeeperstudio.io/) as database toolkit for easy database setup. (Optional)
 
 #### Step 1: Clone the repo
@@ -66,7 +68,7 @@ https://github.com/adarshaacharya/MentorLabs.git
 cd into the directory
 
 ```sh
-cd MentorLabs
+ cd MentorLabs
 ```
 
 In the root folder do:
@@ -105,7 +107,11 @@ In the root folder do:
 
 8. For client too, we have small issue (might be fixed on near future). Go to `client` folder and create `.env` file.
 
-9. Copy everything on [.env.example](./client/.env.example) and paste it inside `.env` file of client directory. (You ca leave `REACT_APP_SENTRY_DSN` field empty)
+```sh
+  cd client  && touch .env
+```
+
+9. Copy everything of [.env.example](./client/.env.example) located inside client directory and paste it inside `.env` file of client directory. (You ca leave `REACT_APP_SENTRY_DSN` field empty)
 
 _The configuration is quite hard tbh, if you encounter any problems in setup you can directy create [issue](github.com/adarshaacharya/MentorLabs/issues). We will try to work on that._
 
