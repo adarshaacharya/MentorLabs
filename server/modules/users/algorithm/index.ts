@@ -3,7 +3,7 @@ import { CleanUserData, JaccardUser, User } from '../../../common/types';
 import { quicksortHoare } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
-const BASE_JACCARD_INDEX = 5; // 5%
+const BASE_JACCARD_INDEX = 10; // 5%
 
 /**
  * clean the data to be feed to the algorithm
@@ -27,8 +27,8 @@ export const getRecommendation = (me: User, mentors: User[]) => {
 
   const sortedmentorswithJaccardIndex =
     mentorswithJaccardIndex.length > 0
-      ? quicksortHoare(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1)
-      : mentorswithJaccardIndex;
+      ? quicksortHoare(mentorswithJaccardIndex, 0, mentorswithJaccardIndex.length - 1).reverse()
+      : mentorswithJaccardIndex.reverse();
 
   const results: Array<User> = [];
 

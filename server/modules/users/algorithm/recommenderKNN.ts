@@ -65,7 +65,6 @@ export const recommenderKNN = (menteeArr: CleanUserData[], mentorsArr: CleanUser
   const finaleTag = dfd.concat({ df_list: [onlyId, finalTag], axis: 1 }); // id, tags column
 
   finaleTag.rename({ mapper: { '0': 'Tags' }, inplace: true });
-
   const result = finaleTag.apply((data: string[]) => calculateJacardIndex(data[1]), { axis: 0 }); // ❤️
 
   const finalResult = finaleTag.addColumn({
