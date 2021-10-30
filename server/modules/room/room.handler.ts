@@ -10,7 +10,7 @@ import {
   SignalingData,
 } from './dtos/socket.dto';
 import { RoomService } from './room.service';
-import { SOCKETS_EVENT } from '../../common/constants/socketEvents';
+import { socketEvents } from '../../common/constants/socketEvents';
 
 let connectedUsers: Array<ConnectedUser> = [];
 let rooms: Array<Room> = [];
@@ -38,7 +38,7 @@ export const createNewRoom = (socket: Socket, data: CreateNewRoom) => {
 
   rooms = [...rooms, newRoom];
 
-  socket.emit(SOCKETS_EVENT.ROOM_UPDATE, { connectedUsers: newRoom.connectedUsers });
+  socket.emit(socketEvents.ROOM_UPDATE, { connectedUsers: newRoom.connectedUsers });
 };
 
 export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
@@ -73,7 +73,7 @@ export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
 
     rooms = [...rooms, newRoom];
 
-    socket.emit(SOCKETS_EVENT.ROOM_UPDATE, { connectedUsers: newRoom.connectedUsers });
+    socket.emit(socketEvents.ROOM_UPDATE, { connectedUsers: newRoom.connectedUsers });
   } else {
     room.connectedUsers = [...room.connectedUsers, newUser];
 
@@ -85,11 +85,11 @@ export const joinRoom = async (io: Server, socket: Socket, data: JoinRoom) => {
       if (user.socketId !== socket.id) {
         const data = { connUserSocketId: socket.id };
 
-        io.to(user.socketId).emit(SOCKETS_EVENT.CONN_PREPARE, data);
+        io.to(user.socketId).emit(socketEvents.CONN_PREPARE, data);
       }
     });
 
-    io.to(roomId).emit(SOCKETS_EVENT.ROOM_UPDATE, { connectedUsers: room.connectedUsers });
+    io.to(roomId).emit(socketEvents.ROOM_UPDATE, { connectedUsers: room.connectedUsers });
   }
 };
 
@@ -98,7 +98,7 @@ export const signalingHandler = (io: Server, socket: Socket, data: SignalingData
 
   const signalingData = { signal, connUserSocketId: socket.id }; // set to ther socket id of sender
 
-  io.to(connUserSocketId).emit(SOCKETS_EVENT.CONN_SIGNAL, signalingData);
+  io.to(connUserSocketId).emit(socketEvents.CONN_SIGNAL, signalingData);
 };
 
 export const initializeConnectionHandler = (io: Server, socket: Socket, data: ConnUserData) => {
@@ -108,14 +108,14 @@ export const initializeConnectionHandler = (io: Server, socket: Socket, data: Co
     connUserSocketId: socket.id,
   };
 
-  io.to(connUserSocketId).emit(SOCKETS_EVENT.CONN_INIT, initData);
+  io.to(connUserSocketId).emit(socketEvents.CONN_INIT, initData);
 };
 
 export const sendMessage = (io: Server, messageData: MessageData) => {
   try {
     const { userId, name, roomId, text } = messageData;
     const data = { userId, name, text };
-    io.to(roomId).emit(SOCKETS_EVENT.UPDATE_MESSAGE, data);
+    io.to(roomId).emit(socketEvents.UPDATE_MESSAGE, data);
   } catch (error) {
     console.log(error);
   }
@@ -133,9 +133,9 @@ export const disconnect = (io: Server, socket: Socket) => {
       socket.leave(user.roomId);
 
       if (room.connectedUsers.length > 0) {
-        io.to(room.id).emit(SOCKETS_EVENT.USER_DISCONNECTED, { socketId: socket.id });
+        io.to(room.id).emit(socketEvents.USER_DISCONNECTED, { socketId: socket.id });
 
-        io.to(room.id).emit(SOCKETS_EVENT.ROOM_UPDATE, {
+        io.to(room.id).emit(socketEvents.ROOM_UPDATE, {
           connectedUsers: room.connectedUsers,
         });
       } else {
