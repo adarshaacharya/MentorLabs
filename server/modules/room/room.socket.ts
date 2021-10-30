@@ -16,29 +16,29 @@ export const roomSocket = (httpServer: http.Server) => {
   io.on(SOCKETS_EVENT.CONNECT, (socket: Socket) => {
     console.log('✅ user connected to room.', socket.id);
 
-    socket.on('create-new-room', (data: CreateNewRoom) => {
+    socket.on(SOCKETS_EVENT.CREATE_NEW_ROOM, (data: CreateNewRoom) => {
       socketHandler.createNewRoom(socket, data);
     });
 
-    socket.on('join-room', (data: JoinRoom) => {
+    socket.on(SOCKETS_EVENT.JOIN_ROOM, (data: JoinRoom) => {
       socketHandler.joinRoom(io, socket, data);
     });
 
-    socket.on('conn-signal', (data: SignalingData) => {
+    socket.on(SOCKETS_EVENT.CONN_SIGNAL, (data: SignalingData) => {
       socketHandler.signalingHandler(io, socket, data);
     });
 
-    socket.on('conn-init', (data: ConnUserData) => {
+    socket.on(SOCKETS_EVENT.CONN_INIT, (data: ConnUserData) => {
       socketHandler.initializeConnectionHandler(io, socket, data);
     });
 
     // disconnect is listened automatically once user left room
-    socket.on('disconnect', () => {
+    socket.on(SOCKETS_EVENT.DISCONNECT, () => {
       socketHandler.disconnect(io, socket);
     });
 
     // send message
-    socket.on('update-message', (messageData: MessageData) => {
+    socket.on(SOCKETS_EVENT.UPDATE_MESSAGE, (messageData: MessageData) => {
       socketHandler.sendMessage(io, messageData);
     });
   });
