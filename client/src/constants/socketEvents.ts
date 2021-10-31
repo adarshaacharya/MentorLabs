@@ -1,4 +1,4 @@
-export const SOCKETS_EVENT = {
+export const socketEvents = {
   CONNECT: `connect`, // fixed value
   DISCONNECT: `disconnect`, // fixed value
   CREATE_NEW_ROOM: `create-new-room`,
