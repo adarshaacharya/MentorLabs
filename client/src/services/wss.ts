@@ -4,6 +4,7 @@ import { Message, Participant, SignalingData } from 'types';
 import { socket } from 'utils/socketConfig';
 import * as webRTCHandler from './webrtc';
 import Peer from 'simple-peer';
+import { socketEvents } from 'constants/socketEvents';
 
 type SignalData = {
   signal: Peer.SignalData;
@@ -21,21 +22,21 @@ type MessageData = {
   text: string;
 };
 
-socket.on('connect', () => {
+socket.on(socketEvents.CONNECT, () => {
   console.log('sucessfully connected with socket io server', socket.id);
 });
 
-socket.on('room-update', (data: { connectedUsers: Participant[] }) => {
+socket.on(socketEvents.ROOM_UPDATE, (data: { connectedUsers: Participant[] }) => {
   const { connectedUsers } = data;
   store.dispatch(setParticipants(connectedUsers));
 });
 
 // prepare for webrtc conn
-socket.on('conn-prepare', (data: ConnUserData) => {
+socket.on(socketEvents.CONN_PREPARE, (data: ConnUserData) => {
   const { connUserSocketId } = data;
   webRTCHandler.prepareNewPeerConnection(connUserSocketId, false);
 
-  socket.emit('conn-init', { connUserSocketId }); // initialize conn
+  socket.emit(socketEvents.CONN_INIT, { connUserSocketId }); // initialize conn
 });
 
 // signaling data is coming from server
@@ -44,16 +45,16 @@ socket.on('conn-signal', (data: SignalingData) => {
 });
 
 // for the user who just join the room
-socket.on('conn-init', (data: ConnUserData) => {
+socket.on(socketEvents.CONN_INIT, (data: ConnUserData) => {
   const { connUserSocketId } = data;
   webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
 });
 
-socket.on('update-message', (data: Message) => {
+socket.on(socketEvents.UPDATE_MESSAGE, (data: Message) => {
   store.dispatch(setRoomMessages(data));
 });
 
-socket.on('user-disconnected', (data: { socketId: string }) => {
+socket.on(socketEvents.USER_DISCONNECTED, (data: { socketId: string }) => {
   webRTCHandler.removePeerConnection(data);
 });
 
@@ -63,7 +64,7 @@ Functions
 
 export const createNewRoom = (userId: string, identity: string, roomId: string) => {
   const data = { userId, identity, roomId };
-  socket.emit('create-new-room', data);
+  socket.emit(socketEvents.CREATE_NEW_ROOM, data);
 };
 
 export const joinRoom = (userId: string, identity: string, roomId: string) => {
@@ -72,14 +73,14 @@ export const joinRoom = (userId: string, identity: string, roomId: string) => {
     roomId,
     identity,
   };
-  socket.emit('join-room', data);
+  socket.emit(socketEvents.JOIN_ROOM, data);
 };
 
 // signal to other peer
 export const signalPeerData = (data: SignalData) => {
-  socket.emit('conn-signal', data);
+  socket.emit(socketEvents.CONN_SIGNAL, data);
 };
 
 export const sendNewMessage = (data: MessageData) => {
-  socket.emit('update-message', data);
+  socket.emit(socketEvents.UPDATE_MESSAGE, data);
 };
