@@ -14,7 +14,7 @@ interface Props {
  * If not authenticated, redirects the user to Login page.
  */
 const PrivateElement: React.FC<Props> = ({ element, requiredRoles }) => {
-  let location = useLocation();
+  const location = useLocation();
 
   const { isAuthenticated, user, status } = useAppSelector((state) => state.auth);
 
