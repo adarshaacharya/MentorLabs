@@ -13,7 +13,6 @@ const PublicElement = ({ element }: any) => {
   return !isAuthenticated ? element : <Navigate to={dashboard} state={{ from: location }} />;
 };
 
-//@ts-ignore
 export const PublicRoute = ({ element, ...rest }) => {
   return <Route {...rest} element={<PublicElement element={element} />} />;
 };

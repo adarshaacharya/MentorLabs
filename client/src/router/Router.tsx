@@ -4,8 +4,10 @@ import { Route, Routes } from 'react-router-dom';
 import {
   CreateAccount,
   Home,
+  Labs,
   Login,
   NotFound,
+  Room,
   StudentDashboard,
   StudentMentorshipRequest,
   StudentMentorshipRequests,
@@ -13,12 +15,10 @@ import {
   TeacherListings,
   TeacherMentorshipRequest,
   TeacherMentorshipRequests,
-  Labs,
-  Room,
 } from 'sections';
 import { Profile } from 'sections/Profile';
-import { PrivateRoute } from './PrivateRoute';
-import { PublicRoute } from './PublicRoute';
+import { AuthRoute } from './AuthRoute';
+import { NonAuthRoute } from './NonAuthRoute';
 
 /**
  * Top level application router
@@ -28,35 +28,111 @@ import { PublicRoute } from './PublicRoute';
 export const Router = () => {
   return (
     <Routes>
-      <PublicRoute path={routes.HOME} element={<Home />} />
-      <PublicRoute path={routes.CREATE_ACCOUNT} element={<CreateAccount />} />
-      <PublicRoute path={routes.LOGIN} element={<Login />} />
-      <PrivateRoute path={routes.STUDENT_DASHBOARD} element={<StudentDashboard />} requiredRoles={[Role.STUDENT]} />
-      <PrivateRoute path={routes.TEACHER_LISTINGS} element={<TeacherListings />} requiredRoles={[Role.STUDENT]} />
-      <PrivateRoute path={routes.TEACHER_DASHBOARD} element={<TeacherDashboard />} requiredRoles={[Role.TEACHER]} />
-      <PrivateRoute path={routes.USER_PROFILE} element={<Profile />} requiredRoles={[Role.STUDENT, Role.TEACHER]} />
-      <PrivateRoute
+      <Route
+        path={routes.HOME}
+        element={
+          <NonAuthRoute>
+            <Home />
+          </NonAuthRoute>
+        }
+      />
+      <Route
+        path={routes.CREATE_ACCOUNT}
+        element={
+          <NonAuthRoute>
+            <CreateAccount />
+          </NonAuthRoute>
+        }
+      />
+      <Route
+        path={routes.LOGIN}
+        element={
+          <NonAuthRoute>
+            <Login />
+          </NonAuthRoute>
+        }
+      />
+      <Route
+        path={routes.STUDENT_DASHBOARD}
+        element={
+          <AuthRoute roles={[Role.STUDENT]}>
+            <StudentDashboard />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path={routes.TEACHER_LISTINGS}
+        element={
+          <AuthRoute roles={[Role.STUDENT]}>
+            <TeacherListings />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path={routes.TEACHER_DASHBOARD}
+        element={
+          <AuthRoute roles={[Role.TEACHER]}>
+            <TeacherDashboard />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path={routes.USER_PROFILE}
+        element={
+          <AuthRoute roles={[Role.STUDENT, Role.TEACHER]}>
+            <Profile />
+          </AuthRoute>
+        }
+      />
+      <Route
         path={routes.STUDENT_MENTORSHIP_REQUESTS}
-        element={<StudentMentorshipRequests />}
-        requiredRoles={[Role.STUDENT]}
+        element={
+          <AuthRoute roles={[Role.STUDENT]}>
+            <StudentMentorshipRequests />
+          </AuthRoute>
+        }
       />
-      <PrivateRoute
+      <Route
         path={routes.STUDENT_MENTORSHIP_REQUEST}
-        element={<StudentMentorshipRequest />}
-        requiredRoles={[Role.STUDENT]}
+        element={
+          <AuthRoute roles={[Role.STUDENT]}>
+            <StudentMentorshipRequest />
+          </AuthRoute>
+        }
       />
-      <PrivateRoute
+      <Route
         path={routes.TEACHER_MENTORSHIP_REQUESTS}
-        element={<TeacherMentorshipRequests />}
-        requiredRoles={[Role.TEACHER]}
+        element={
+          <AuthRoute roles={[Role.TEACHER]}>
+            <TeacherMentorshipRequests />
+          </AuthRoute>
+        }
       />
-      <PrivateRoute
+
+      <Route
         path={routes.TEACHER_MENTORSHIP_REQUEST}
-        element={<TeacherMentorshipRequest />}
-        requiredRoles={[Role.TEACHER]}
-      />{' '}
-      <PrivateRoute path={routes.STUDENT_LABS} element={<Labs />} requiredRoles={[Role.STUDENT, Role.TEACHER]} />
-      <PrivateRoute path={routes.ROOM} element={<Room />} requiredRoles={[Role.STUDENT, Role.TEACHER]} />
+        element={
+          <AuthRoute roles={[Role.TEACHER]}>
+            <TeacherMentorshipRequest />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path={routes.LABS}
+        element={
+          <AuthRoute roles={[Role.STUDENT, Role.TEACHER]}>
+            <Labs />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path={routes.ROOM}
+        element={
+          <AuthRoute roles={[Role.STUDENT, Role.TEACHER]}>
+            <Room />
+          </AuthRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

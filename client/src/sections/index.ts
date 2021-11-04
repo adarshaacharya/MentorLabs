@@ -7,3 +7,4 @@ export * from './Student';
 export * from './Teacher';
 export * from './Labs';
 export * from './Room';
+export * from './AccessDenied';

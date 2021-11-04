@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store';
 import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
@@ -13,13 +13,13 @@ init();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <BrowserRouter>
       <HelmetProvider>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </HelmetProvider>
-    </Router>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
 );
