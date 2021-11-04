@@ -4,6 +4,11 @@ import * as routes from 'constants/routes';
 import { Role } from 'enums';
 import { AccessDenied } from 'sections';
 
+/**
+ * A wrapper around the element which checks if the user is authenticated
+ * If authenticated, renders the passed element
+ * If not authenticated, redirects the user to Login page.
+ */
 export const AuthRoute = ({ children, roles }: { children: JSX.Element; roles: Array<Role> }) => {
   let location = useLocation();
 
