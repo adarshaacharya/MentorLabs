@@ -10,12 +10,16 @@ import gravatar from 'gravatar';
 export const Gravatar = {
   generateUrl: (email: string): string => {
     return normalizeUrl(
-      gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm',
-      }),
-      { forceHttp: true },
+      gravatar.url(
+        email,
+        {
+          protocol: 'https',
+          s: '200',
+          r: 'pg',
+          d: 'mm',
+        },
+        true,
+      ),
     );
   },
 };
