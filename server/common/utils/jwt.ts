@@ -14,29 +14,3 @@ export const generateJwtToken = ({ id, role }: { id: string; role: Role }): stri
     expiresIn: process.env.JWT_EXPIRATION,
   });
 };
-
-// export const createAccessToken = ({ id, role }: { id: string; role: Role }): string => {
-//   const payload: JwtPayload = {
-//     user: {
-//       id,
-//       role,
-//     },
-//   };
-
-//   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET as string, {
-//     expiresIn: "10m",
-//   });
-// };
-
-// export const createRefreshToken = ({ id, role }: { id: string; role: Role }): string => {
-//   const payload: JwtPayload = {
-//     user: {
-//       id,
-//       role,
-//     },
-//   };
-
-//   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET as string, {
-//     expiresIn: "1d",
-//   });
-// };
