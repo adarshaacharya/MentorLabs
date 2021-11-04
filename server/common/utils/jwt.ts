@@ -10,7 +10,7 @@ export const generateJwtToken = ({ id, role }: { id: string; role: Role }): stri
     },
   };
 
-  return jwt.sign(payload, process.env.JWT_SECRET!, {
+  return jwt.sign(payload, process.env.JWT_SECRET as string, {
     expiresIn: process.env.JWT_EXPIRATION,
   });
 };

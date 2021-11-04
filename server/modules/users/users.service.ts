@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Role } from '../../common/enums';
 import { BadRequest, NotFound, Unauthorized } from '../../common/exceptions';
-import { generateJwtToken } from '../../common/utils/generate-jwt';
+import { generateJwtToken } from '../../common/utils/jwt';
 import { Gravatar } from '../../services/Gravatar';
 import { getRecommendation } from './algorithm';
 import { CreateAccountInput, CreateAccountOutput } from './dtos/create-account.dto';
