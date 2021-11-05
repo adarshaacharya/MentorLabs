@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import { useAppDispatch, useAppSelector, useScrollToTop } from 'hooks';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -21,10 +21,12 @@ export const Profile = () => {
 
   useScrollToTop();
 
-  if (status === 'pending' && !user) {
+  if (status === 'pending' || !user) {
     return (
-      <section className="loading">
-        <div className="container">Loading account...</div>
+      <section className="body-center">
+        <div className="container">
+          <Spin size="large" tip="Loading profile.." />
+        </div>
       </section>
     );
   }

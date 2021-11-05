@@ -4,7 +4,7 @@ import * as routes from 'constants/routes';
 import { Role } from 'enums';
 
 export const NonAuthRoute = ({ children }: { children: JSX.Element }) => {
-  let location = useLocation();
+  const location = useLocation();
 
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
