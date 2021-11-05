@@ -1,4 +1,4 @@
-import { Empty, Typography } from 'antd';
+import { Button, Empty, Result, Typography } from 'antd';
 import { useScrollToTop } from 'hooks';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -15,17 +15,16 @@ export const NotFound = () => {
       </Helmet>
       <div className="container">
         <div className="not-found__wrapper">
-          <Empty
-            description={
-              <>
-                <Text className="not-found__description-title">Uh oh! Something went wrong :( </Text>
-                <Text className="not-found__description-subtitle">The page you're looking for can't be found.</Text>
-              </>
+          <Result
+            status="404"
+            title="404"
+            subTitle="The page you're looking for can't be found."
+            extra={
+              <Button type="primary">
+                <Link to="/">Back Home</Link>
+              </Button>
             }
           />
-          <Link to="/" className="btn--primary not-found__btn">
-            Go to home
-          </Link>
         </div>
       </div>
     </section>

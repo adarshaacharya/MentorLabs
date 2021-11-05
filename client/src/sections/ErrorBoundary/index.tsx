@@ -1,5 +1,7 @@
+import { Button, Result } from 'antd';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import * as sentry from 'utils/sentry';
 
 interface ErrorBoundaryState {
@@ -27,9 +29,19 @@ export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
           <Helmet>
             <title>Error | Mentor Labs</title>
           </Helmet>
-          <p>We're sorry — something went wrong.</p>
-          <p>Our team has been notified.</p>
-          <p>You can directly report this issue by contacting via : adarshaofficial@gmail.com</p>
+          <Result
+            status="500"
+            title="500"
+            subTitle={`We're sorry — something went wrong.
+              Our team has been notified. This issue must be fixed soon.
+             But, you can directly report this issue by contacting via : adarshaofficial@gmail.com
+              `}
+            extra={
+              <Button type="primary">
+                <Link to="/">Back Home</Link>
+              </Button>
+            }
+          />
         </div>
       );
     }
