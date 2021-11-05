@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Spin, Typography } from 'antd';
 import { EmptyPageMessage, UserCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
 import * as React from 'react';
@@ -17,9 +17,9 @@ export const MentorCards: React.FC<MentorCardsProps> = ({ mentors, recommendMent
 
   if (status === 'pending' || !mentors) {
     return (
-      <section className="loading">
+      <section className="body-center">
         <div className="container">
-          <Paragraph type="secondary">Loading mentors..</Paragraph>
+          <Spin size="large" tip="Loading mentors.." />
         </div>
       </section>
     );

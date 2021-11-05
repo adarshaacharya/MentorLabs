@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router';
 import * as routes from 'constants/routes';
 import { Role } from 'enums';
 import { AccessDenied } from 'sections';
+import { Spin } from 'antd';
 
 /**
  * A wrapper around the element which checks if the user is authenticated
@@ -14,7 +15,12 @@ export const AuthRoute = ({ children, roles }: { children: JSX.Element; roles: A
 
   const { isAuthenticated, user, status } = useAppSelector((state) => state.auth);
 
-  if (status === 'idle' || status === 'pending') return <p className="container">Checking in..</p>;
+  if (status === 'idle' || status === 'pending')
+    return (
+      <div className="body-center container">
+        <Spin size="large" tip="Checking in.." />
+      </div>
+    );
 
   const userHasRequiredRole = user && roles.includes(user.role) ? true : false;
 

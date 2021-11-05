@@ -142,6 +142,14 @@ body {
   max-width: 100%;
 }
 
+.body-center {
+  margin-top: 10vh;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*==============================================================================
  Section : Ant Design utility classes
 ==============================================================================*/
@@ -420,7 +428,7 @@ body {
   margin-top: 1em;
 }
 /*==============================================================================
- Section : Not Found
+ Section : access denied
 ==============================================================================*/
 .access-denied {
   margin-top: 10vh;

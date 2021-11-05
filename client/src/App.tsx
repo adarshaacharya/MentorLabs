@@ -14,7 +14,6 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadCurrentUser());
   }, []);
-
   return (
     <ErrorBoundary>
       <Layout id="app">
