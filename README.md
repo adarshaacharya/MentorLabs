@@ -26,8 +26,7 @@
 Apply for mentorship to the top mentors recommended by our powerful algorithm based on your profile. Enjoy one-to-one live mentorship in our interactive video streaming labs for free. 
 </p>
 
-> ⚠️ This is pre-released (experimental) version of [Mentor Labs website](https://mentorlabs.herokuapp.com). That means we are still working to improve the site and breaking changes may occur anytime. So please avoid providing your real profile details as the app isn't fully secure and data may get erased any time. Meanwhile, you can help us by [raising an issue](https://github.com/adarshaacharya/MentorLabs/issues/new/choose) if you find any bugs in the project. 
-
+> ⚠️ This is pre-released (experimental) version of [Mentor Labs website](https://mentorlabs.herokuapp.com). That means we are still working to improve the site and breaking changes may occur anytime. So please avoid providing your real profile details as the app isn't fully secure and data may get erased any time. Meanwhile, you can help us by [raising an issue](https://github.com/adarshaacharya/MentorLabs/issues/new/choose) if you find any bugs in the project.
 
 ## Features
 
@@ -44,10 +43,10 @@ Apply for mentorship to the top mentors recommended by our powerful algorithm ba
 - **Frontend** : Typescript, React.js, Redux Toolkit
 - **Styling** : Ant Design, Custom Css with BEM naming convention
 - **Backend** : Typescript, Node.js, Express.js
-- **Database** : TypeORM with PostgresSQL database
+- **Database** : TypeORM with PostgreSQL database
 - **Tesing** : Jest, React Testing Library
 - **Realtime Communication** : simple-peer (WebRTC), Socket.io
-- **Algorithms** : Jaccard Similarity, Supervised recommendation algorithm
+- **Algorithms** : Jaccard Similarity, Supervised recommendation algorithm, QuickSort Hoare
 - **Deployment** : Server, Client and Database hosted on Heroku
 
 ## Local Development
