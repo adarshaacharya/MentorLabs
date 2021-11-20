@@ -19,7 +19,8 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
     return <p>Loading user..</p>;
   }
 
-  const userTagsElement = user.profile.tags.map((tag) => <Tag key={tag}>{tag}</Tag>);
+  const filteredUserTags = user.profile.tags.slice(0, 3);
+  const userTagsElement = filteredUserTags.map((tag) => <Tag key={tag}>{tag}</Tag>);
 
   return (
     <div className="card">
