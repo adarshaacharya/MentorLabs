@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-Apply for mentorship to the top mentors recommended by our powerful algorithm based on your profile. Enjoy one-to-one live mentorship in our interactive video streaming labs for free. 
+MentorLabs is a a WebRTC based video conferencing app. Apply for mentorship to the top mentors recommended by our powerful algorithm based on your profile. Enjoy one-to-one live mentorship in our interactive video streaming labs for free. 
 </p>
 
 > ⚠️ This is pre-released (experimental) version of [Mentor Labs website](https://mentorlabs.herokuapp.com). That means we are still working to improve the site and breaking changes may occur anytime. So please avoid providing your real profile details as the app isn't fully secure and data may get erased any time. Meanwhile, you can help us by [raising an issue](https://github.com/adarshaacharya/MentorLabs/issues/new/choose) if you find any bugs in the project.
