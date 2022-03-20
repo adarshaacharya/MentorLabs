@@ -35,7 +35,7 @@ export const recommenderKNN = (menteeArr: CleanUserData[], mentorsArr: CleanUser
   const menteeForLowerCase = menteeFor.apply(lowerCase, { axis: 0 });
   const menteeTrimmedSpace = menteeForLowerCase.apply(spaceTrimmer, { axis: 0 });
 
-  // remove untrimmed and lowercased data
+  // remove untrimmed and uppercased data
   mentorsRequired.drop({ columns: normalizeColumns, inplace: true });
   menteeRequired.drop({ columns: normalizeColumns, inplace: true });
 
@@ -49,14 +49,14 @@ export const recommenderKNN = (menteeArr: CleanUserData[], mentorsArr: CleanUser
   const readyForTag = merge_df.loc({ columns: ['interests', 'languages', 'skills', 'languages_1'] });
   merge_df.drop({ columns: ['interests', 'languages', 'skills', 'languages_1'], inplace: true });
 
-  const allString = readyForTag.apply_map((datas: any[]) => datas.join(','));
+  const allString = readyForTag.apply_map((datas: unknown[]) => datas.join(','));
 
   const mergedStringDataFrame = dfd.concat({ df_list: [merge_df, allString], axis: 1 });
   const lastTag = mergedStringDataFrame.loc({
     columns: ['type', 'interests', 'languages', 'title', 'country', 'skills', 'languages_1', 'title_1', 'country_1'],
   });
 
-  const finalTag = lastTag.apply((data: any[]) => data.join(','), { axis: 0 });
+  const finalTag = lastTag.apply((data: unknown[]) => data.join(','), { axis: 0 });
 
   const onlyId = mergedStringDataFrame.drop({
     columns: ['type', 'title', 'country', 'title_1', 'country_1', 'interests', 'languages', 'skills', 'languages_1'],

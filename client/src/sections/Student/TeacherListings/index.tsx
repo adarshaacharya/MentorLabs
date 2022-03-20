@@ -12,7 +12,7 @@ export const TeacherListings = () => {
   const { user } = useAppSelector((state) => state.profile);
   const { user: authUser } = useAppSelector((state) => state.auth);
 
-  const { mentors, status } = useAppSelector((state) => state.users);
+  const { mentors } = useAppSelector((state) => state.users);
   const [recommendMentors, setRecommendMentors] = React.useState(false);
 
   React.useEffect(() => {
