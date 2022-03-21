@@ -1,9 +1,7 @@
-import { Button, Empty, Result, Typography } from 'antd';
+import { Button, Result } from 'antd';
 import { useScrollToTop } from 'hooks';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-
-const { Text } = Typography;
 
 export const NotFound = () => {
   useScrollToTop();

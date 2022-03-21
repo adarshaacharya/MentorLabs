@@ -1,4 +1,4 @@
-import { Button, Card, Divider, Typography } from 'antd';
+import { Card, Divider, Typography } from 'antd';
 import { MentorshipResponseData } from 'types';
 import { displaySuccessNotification } from 'utils/notifications';
 

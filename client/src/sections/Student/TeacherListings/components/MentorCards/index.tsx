@@ -1,10 +1,8 @@
-import { Col, Row, Spin, Typography } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import { EmptyPageMessage, UserCard } from 'core-ui';
 import { useAppSelector } from 'hooks';
 import * as React from 'react';
 import { User } from 'types';
-
-const { Paragraph } = Typography;
 
 type MentorCardsProps = {
   mentors: User[];
