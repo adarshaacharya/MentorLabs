@@ -5,6 +5,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { Unauthorized } from '../../common/exceptions';
 import { AuthRequest, JwtPayload } from '../../common/interfaces';
+import { getEnv } from '../utils';
 
 /**
  * Middleware to check if user is authticated or not
@@ -18,7 +19,7 @@ export const checkJwt = (req: AuthRequest, _res: Response, next: NextFunction) =
   const token = req.cookies[AUTH_COOKIE];
   if (!token) throw new Unauthorized('Access denied. No token provided');
   try {
-    const decoded: JwtPayload = <any>jwt.verify(token, process.env.JWT_SECRET as string);
+    const decoded: JwtPayload = <any>jwt.verify(token, getEnv('JWT_SECRET') as string);
 
     req.user = decoded.user; // attach user from decoded.user to req.user so it can be accessed easily
     next();

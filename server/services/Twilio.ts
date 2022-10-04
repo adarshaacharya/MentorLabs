@@ -1,9 +1,10 @@
 import twilio from 'twilio';
+import { getEnv } from '../common/utils';
 
 export const Twilio = {
   getToken: async () => {
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const accountSid = getEnv('TWILIO_ACCOUNT_SID');
+    const authToken = getEnv('TWILIO_AUTH_TOKEN');
 
     const client = twilio(accountSid, authToken);
 

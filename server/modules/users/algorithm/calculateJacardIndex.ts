@@ -1,5 +1,6 @@
 /*
  * Calculate and return jaard similarity
+ * Formula : (A intersection B) / (A union B)
  * @returns jacard index
  */
 export const calculateJacardIndex = (text: string) => {

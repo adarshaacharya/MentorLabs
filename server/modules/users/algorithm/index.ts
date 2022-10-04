@@ -3,7 +3,7 @@ import { CleanUserData, JaccardUser, User } from '../../../common/types';
 import { quicksortHoare } from './quickSort';
 import { recommenderKNN } from './recommenderKNN';
 
-const BASE_JACCARD_INDEX = 10; // 5%
+const BASE_JACCARD_INDEX = 10; // 10%
 
 /**
  * clean the data to be feed to the algorithm
@@ -20,6 +20,12 @@ const cleanUserData = (user: User): CleanUserData => {
   return { id, name, skills: tags, title, country, languages, type: 'user' };
 };
 
+/**
+ * @description main recommendation algorithm using jaccard index
+ * @param me
+ * @param mentors
+ * @returns
+ */
 export const getRecommendation = (me: User, mentors: User[]) => {
   const menteeArr = [cleanUserData(me)];
   const mentorsArr = mentors.map((mentor) => cleanUserData(mentor));
@@ -33,9 +39,9 @@ export const getRecommendation = (me: User, mentors: User[]) => {
   const results: Array<User> = [];
 
   mentors.forEach((mentor) => {
-    sortedmentorswithJaccardIndex.forEach((mj) => {
-      if (mentor.id === mj.id && mj.jaccardIndex > BASE_JACCARD_INDEX) {
-        const result = { ...mentor, jaccardIndex: Number(mj.jaccardIndex).toFixed(1) };
+    sortedmentorswithJaccardIndex.forEach((mentorWithJaccardIndex) => {
+      if (mentor.id === mentorWithJaccardIndex.id && mentorWithJaccardIndex.jaccardIndex > BASE_JACCARD_INDEX) {
+        const result = { ...mentor, jaccardIndex: Number(mentorWithJaccardIndex.jaccardIndex).toFixed(1) };
         results.push(result);
       }
     });
